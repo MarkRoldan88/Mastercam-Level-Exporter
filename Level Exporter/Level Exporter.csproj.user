@@ -4,5 +4,6 @@
     <StartWorkingDirectory>C:\Program Files\Mastercam 2021\Mastercam\</StartWorkingDirectory>
     <StartProgram>C:\Program Files\Mastercam 2021\Mastercam\mastercam.exe</StartProgram>
     <StartAction>Program</StartAction>
+    <StartArguments>copy "%24%28TargetPath%29" " C:\Program Files\Mastercam 2021\Mastercam\chooks" copy "%24%28ProjectDir%29Resources\FunctionTable\%24%28TargetName%29.ft" " C:\Program Files\Mastercam 2021\Mastercam \chooks"</StartArguments>
   </PropertyGroup>
 </Project>
