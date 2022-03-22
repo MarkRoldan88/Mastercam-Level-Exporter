@@ -1,0 +1,50 @@
+﻿###############################################################################
+# NETHook function table			
+###############################################################################
+#
+# Name		: Level_Exporter.ft
+# NETHook 	: Level_Exporter.dll
+# Date		: March 22, 2022
+# Author	: mark.roldan
+# Notes		: Contact sdk@mastercam.com for additional assistance.  
+#             Attention: Mick George
+# Language	: C#
+#
+###############################################################################
+
+
+######################
+# ASSIGN A UNIQUE NAME
+######################
+APPLICATION "_Level_Exporter_"
+
+######################
+# NETHook LOCATION
+######################
+#
+FUNC_DLL   "CHOOKS\Level_Exporter.dll"
+RES_DLL    "SAME"
+dnRES_NAME "Level_Exporter.Resources.FunctionTable.NETHook"
+CATEGORY   "NET-Hook Add-In"
+
+##############################################################################
+# Public functions here
+##############################################################################
+#
+
+FUNCTION NET "Run"
+    dnSPNG "Run16"
+    dnLPNG "Run32"
+    dnTIP  "Run"
+END_FUNCTION
+
+# User entry point
+FUNCTION NET "RunUserDefined"
+    dnSPNG "Run16"
+    dnLPNG "Run32"
+    dnTIP  "RunUserDefined"
+END_FUNCTION
+
+
+#
+# EOF
