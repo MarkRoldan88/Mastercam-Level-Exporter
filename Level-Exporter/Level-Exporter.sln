@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.32228.343
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Level Exporter", "Level Exporter.csproj", "{3895BAB5-218B-49E2-8A2C-4A22E24BD74C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Level-Exporter", "Level-Exporter.csproj", "{3895BAB5-218B-49E2-8A2C-4A22E24BD74C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

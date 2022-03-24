@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Level_Exporter</RootNamespace>
-    <AssemblyName>Level Exporter</AssemblyName>
+    <AssemblyName>Level-Exporter</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -86,6 +86,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>NETHook.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\WindowStrings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>WindowStrings.resx</DependentUpon>
+    </Compile>
     <Compile Include="Services\ResourceReaderService.cs" />
     <Compile Include="Services\SingletonBehaviour.cs" />
     <Compile Include="Converters\StringToImageSourceConverter.cs" />
@@ -105,6 +110,10 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>NETHook.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\WindowStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>WindowStrings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Page Include="Views\MainView.xaml">
@@ -120,7 +129,7 @@
     </None>
     <None Include="ReadMe\ProjectSetup.docx" />
     <None Include="ReadMe\ProjectSetup.pdf" />
-    <None Include="Resources\FunctionTable\Level_Exporter.ft" />
+    <None Include="Resources\FunctionTable\Level-Exporter.ft" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Assets\cancel_24.png" />
@@ -140,7 +149,7 @@
     </PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PostBuildEvent>
-    </PostBuildEvent>
+    <PostBuildEvent>copy "$(TargetPath)" "C:\Program Files\Mastercam 2021\Mastercam\chooks" 
+copy "$(ProjectDir)Resources\FunctionTable\$(TargetName).ft" "C:\Program Files\Mastercam 2021\Mastercam\chooks"</PostBuildEvent>
   </PropertyGroup>
 </Project>
