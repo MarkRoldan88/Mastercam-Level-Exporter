@@ -7,6 +7,8 @@
     xmlns:local="clr-namespace:Level_Exporter.Views"
     xmlns:converters="clr-namespace:Level_Exporter"
     xmlns:res="clr-namespace:Level_Exporter.Properties"
+    xmlns:resources="clr-namespace:Level_Exporter.Resources"
+    xmlns:resx ="clr-namespace:Level_Exporter.Resources"
     Title="{x:Static res:Resources.Title}"
     Width="800"
     Height="450"
@@ -55,10 +57,13 @@
             HorizontalAlignment="Center"
             VerticalAlignment="Center">
             <TextBlock
-                Text="{x:Static res:Resources.MainView}"
+                Text="{x:Static resx:WindowStrings.MainPrompt }"
                 FontSize="32"
                 Width="300" />
-
+            <ComboBox>
+                <ComboBoxItem FontSize="16">STL</ComboBoxItem>
+            </ComboBox>
+            
         </StackPanel>
 
         <StackPanel
@@ -93,7 +98,6 @@
                         Source="{Binding CancelResource, Converter={StaticResource StringToImageSourceConverter}}" />
                 </Button.Content>
             </Button>
-
         </StackPanel>
 
     </Grid>
