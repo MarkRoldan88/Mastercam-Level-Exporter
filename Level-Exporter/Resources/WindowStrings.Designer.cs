@@ -63,9 +63,27 @@ namespace Level_Exporter.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Select a CAD Format.
         /// </summary>
-        public static string MainPrompt {
+        public static string CadTypePrompt {
             get {
-                return ResourceManager.GetString("MainPrompt", resourceCulture);
+                return ResourceManager.GetString("CadTypePrompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to STL.
+        /// </summary>
+        public static string CadTypeStl {
+            get {
+                return ResourceManager.GetString("CadTypeStl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to STEP (stp).
+        /// </summary>
+        public static string CadTypeStp {
+            get {
+                return ResourceManager.GetString("CadTypeStp", resourceCulture);
             }
         }
     }

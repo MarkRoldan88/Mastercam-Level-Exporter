@@ -54,15 +54,30 @@
         <StackPanel
             x:Uid="TextBlockStackPanel"
             Grid.Row="0"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center">
+            HorizontalAlignment="Right"
+            VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5">
+            <StackPanel.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform/>
+                    <TranslateTransform X="-25"/>
+                </TransformGroup>
+            </StackPanel.RenderTransform>
             <TextBlock
-                Text="{x:Static resx:WindowStrings.MainPrompt }"
+                Text="{x:Static resx:WindowStrings.CadTypePrompt }"
                 FontSize="32"
-                Width="300" />
+                Width="300" RenderTransformOrigin="0.493,0.585" />
             <ComboBox>
-                <ComboBoxItem FontSize="16">STL</ComboBoxItem>
+                <ComboBoxItem FontSize="16" 
+                              Content="{x:Static resources:WindowStrings.CadTypeStl}"/>
+                <ComboBoxItem FontSize="16"
+                              Content="{x:Static resources:WindowStrings.CadTypeStp}"/>
             </ComboBox>
+
+        </StackPanel>
+
+        <StackPanel Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center">
             
         </StackPanel>
 
@@ -77,13 +92,15 @@
                 x:Name="OkButton"
                 x:Uid="OkButton"
                 Style="{StaticResource AppButtonStyle}"
-                Command="{Binding OkCommand}">
-                <Button.Content>
+                Command="{Binding OkCommand}" Width="98">
+                <StackPanel HorizontalAlignment="Left">
                     <Image
                         Height="24"
                         Width="24"
                         Source="{Binding OkResource, Converter={StaticResource StringToImageSourceConverter}}" />
-                </Button.Content>
+                    <TextBlock FontSize="14">Export CAD</TextBlock>
+                </StackPanel>
+
             </Button>
             <Button
                 x:Name="CloseButton"

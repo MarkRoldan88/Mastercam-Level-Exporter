@@ -117,7 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="MainPrompt" xml:space="preserve">
+  <data name="CadTypePrompt" xml:space="preserve">
     <value>Select a CAD Format</value>
+  </data>
+  <data name="CadTypeStl" xml:space="preserve">
+    <value>STL</value>
+  </data>
+  <data name="CadTypeStp" xml:space="preserve">
+    <value>STEP (stp)</value>
   </data>
 </root>
