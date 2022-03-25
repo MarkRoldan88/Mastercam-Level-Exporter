@@ -78,7 +78,11 @@
         </StackPanel>
 
         <StackPanel Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center">
-            
+            <ItemsControl>
+                <ItemsControl.Template>
+
+                </ItemsControl.Template>
+            </ItemsControl>
         </StackPanel>
 
         <StackPanel
