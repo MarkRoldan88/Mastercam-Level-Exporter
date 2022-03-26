@@ -16,6 +16,11 @@ using System.Windows.Input;
 
 namespace Level_Exporter.ViewModels
 {
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using System.Linq;
+    using System.Windows.Forms;
+
     /// <summary>
     /// The main view model.
     /// </summary>
@@ -30,9 +35,25 @@ namespace Level_Exporter.ViewModels
         {
             this.OkCommand = new DelegateCommand(this.OnOkCommand, this.CanOkCommand);
             this.CloseCommand = new DelegateCommand<Window>(this.OnCloseCommand);
+            this.OnReadLevelsCommand = new DelegateCommand(this.ReadMasterCamLevels);
         }
 
         #endregion
+
+        private string _listItem;
+
+        public List<string> LevelNames { get; set; }
+
+        public string ListItem
+        {
+            get => _listItem;
+            set
+            {
+                if (_listItem == value) return;
+                _listItem = value;
+                OnPropertyChanged(nameof(ListItem));
+            }
+        }
 
         #region Commands
 
@@ -45,6 +66,8 @@ namespace Level_Exporter.ViewModels
         /// Gets the close command.
         /// </summary>
         public ICommand CloseCommand { get; }
+
+        public ICommand OnReadLevelsCommand { get; }
 
         #endregion
 
@@ -88,6 +111,12 @@ namespace Level_Exporter.ViewModels
         /// <param name="view"> The view. </param>
         private void OnCloseCommand(Window view) => view?.Close();
 
+        private void ReadMasterCamLevels()
+        {
+            this.ListItem = "test";
+        }
+
         #endregion
     }
+
 }
