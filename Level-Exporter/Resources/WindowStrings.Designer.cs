@@ -86,5 +86,14 @@ namespace Level_Exporter.Resources {
                 return ResourceManager.GetString("CadTypeStp", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Get Mastercam Levels.
+        /// </summary>
+        public static string GetLevelsButton {
+            get {
+                return ResourceManager.GetString("GetLevelsButton", resourceCulture);
+            }
+        }
     }
 }

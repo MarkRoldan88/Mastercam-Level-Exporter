@@ -126,4 +126,7 @@
   <data name="CadTypeStp" xml:space="preserve">
     <value>STEP (stp)</value>
   </data>
+  <data name="GetLevelsButton" xml:space="preserve">
+    <value>Get Mastercam Levels</value>
+  </data>
 </root>
