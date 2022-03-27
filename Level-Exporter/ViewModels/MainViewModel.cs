@@ -16,6 +16,11 @@ using System.Windows.Input;
 
 namespace Level_Exporter.ViewModels
 {
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using System.Linq;
+    using System.Windows.Forms;
+
     /// <summary>
     /// The main view model.
     /// </summary>
@@ -23,11 +28,14 @@ namespace Level_Exporter.ViewModels
     {
         #region Construction
 
+        public LevelInfoViewModel LevelInfoViewModel { get; }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="MainViewModel"/> class.
         /// </summary>
         public MainViewModel()
         {
+            this.LevelInfoViewModel = new LevelInfoViewModel();
             this.OkCommand = new DelegateCommand(this.OnOkCommand, this.CanOkCommand);
             this.CloseCommand = new DelegateCommand<Window>(this.OnCloseCommand);
         }
@@ -88,6 +96,9 @@ namespace Level_Exporter.ViewModels
         /// <param name="view"> The view. </param>
         private void OnCloseCommand(Window view) => view?.Close();
 
+
+
         #endregion
     }
+
 }

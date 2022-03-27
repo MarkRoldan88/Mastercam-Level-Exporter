@@ -3,10 +3,13 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Level_Exporter.Views"
     xmlns:converters="clr-namespace:Level_Exporter"
     xmlns:res="clr-namespace:Level_Exporter.Properties"
+    xmlns:resources="clr-namespace:Level_Exporter.Resources"
+    xmlns:resx ="clr-namespace:Level_Exporter.Resources" xmlns:viewmodels="clr-namespace:Level_Exporter.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
     Title="{x:Static res:Resources.Title}"
     Width="800"
     Height="450"
@@ -15,7 +18,7 @@
 
     <Window.Resources>
         <ResourceDictionary>
-
+            
             <!-- Converts string name of asset to image source -->
             <converters:StringToImageSourceConverter
                 x:Key="StringToImageSourceConverter" />
@@ -52,13 +55,35 @@
         <StackPanel
             x:Uid="TextBlockStackPanel"
             Grid.Row="0"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center">
+            HorizontalAlignment="Right"
+            VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5">
+            <StackPanel.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform/>
+                    <TranslateTransform X="-25"/>
+                </TransformGroup>
+            </StackPanel.RenderTransform>
             <TextBlock
-                Text="{x:Static res:Resources.MainView}"
+                Text="{x:Static resx:WindowStrings.CadTypePrompt }"
                 FontSize="32"
-                Width="300" />
+                Width="300" RenderTransformOrigin="0.493,0.585" />
+            <ComboBox>
+                <ComboBoxItem FontSize="16" 
+                              Content="{x:Static resources:WindowStrings.CadTypeStl}"/>
+                <ComboBoxItem FontSize="16"
+                              Content="{x:Static resources:WindowStrings.CadTypeStp}"/>
+            </ComboBox>
 
+        </StackPanel>
+
+        <StackPanel DataContext="{Binding LevelInfoViewModel}" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" >
+            <Button Content="{x:Static resources:WindowStrings.GetLevelsButton}" 
+                    Margin="50,0,0,0"
+                    Command="{Binding ReadMastercamLevels}"/>
+
+            <ListBox ItemsSource="{Binding LevelNames}"/>
         </StackPanel>
 
         <StackPanel
@@ -72,13 +97,15 @@
                 x:Name="OkButton"
                 x:Uid="OkButton"
                 Style="{StaticResource AppButtonStyle}"
-                Command="{Binding OkCommand}">
-                <Button.Content>
+                Command="{Binding OkCommand}" Width="98">
+                <StackPanel HorizontalAlignment="Left">
                     <Image
                         Height="24"
                         Width="24"
                         Source="{Binding OkResource, Converter={StaticResource StringToImageSourceConverter}}" />
-                </Button.Content>
+                    <TextBlock FontSize="14">Export CAD</TextBlock>
+                </StackPanel>
+
             </Button>
             <Button
                 x:Name="CloseButton"
@@ -93,7 +120,6 @@
                         Source="{Binding CancelResource, Converter={StaticResource StringToImageSourceConverter}}" />
                 </Button.Content>
             </Button>
-
         </StackPanel>
 
     </Grid>
