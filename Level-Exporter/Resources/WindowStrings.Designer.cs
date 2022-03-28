@@ -88,11 +88,29 @@ namespace Level_Exporter.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Export CAD.
+        /// </summary>
+        public static string ExportButton {
+            get {
+                return ResourceManager.GetString("ExportButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Get Mastercam Levels.
         /// </summary>
         public static string GetLevelsButton {
             get {
                 return ResourceManager.GetString("GetLevelsButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sync Mastercam Levels.
+        /// </summary>
+        public static string SyncLevelsButton {
+            get {
+                return ResourceManager.GetString("SyncLevelsButton", resourceCulture);
             }
         }
     }
