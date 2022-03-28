@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +9,7 @@ namespace Level_Exporter.ViewModels
     using System.Windows.Input;
     using System.Windows.Navigation;
     using Level_Exporter.Commands;
+    using Level_Exporter.Models;
     using Mastercam.IO;
 
     public class LevelInfoViewModel : BaseViewModel
