@@ -1,4 +1,4 @@
-<Window
+﻿<Window
     x:Class="Level_Exporter.Views.MainView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -22,6 +22,16 @@
             <!-- Converts string name of asset to image source -->
             <converters:StringToImageSourceConverter
                 x:Key="StringToImageSourceConverter" />
+
+            <Style x:Key="SyncLevelsText" TargetType="{x:Type Button}">
+                <Setter Property="Content" 
+                        Value="{x:Static resources:WindowStrings.SyncLevelsButton}"/>
+            </Style>
+
+            <Style x:Key="ReadLevelsText" TargetType="{x:Type Button}">
+                <Setter Property="Content" 
+                        Value="{x:Static resources:WindowStrings.GetLevelsButton}"/>
+            </Style>
 
             <Style
                 x:Key="AppButtonStyle"
@@ -78,10 +88,30 @@
 
         </StackPanel>
 
-        <StackPanel DataContext="{Binding LevelInfoViewModel}" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" >
-            <Button Content="{x:Static resources:WindowStrings.GetLevelsButton}" 
-                    Margin="50,0,0,0"
-                    Command="{Binding ReadMastercamLevels}"/>
+        <StackPanel DataContext="{Binding LevelInfoViewModel}" 
+                    Grid.Row="0" 
+                    HorizontalAlignment="Left" 
+                    VerticalAlignment="Center" >
+            <Button x:Name="GetLevelsButton" 
+                    Margin="50,0,0,0" 
+                    Command="{Binding ReadMastercamLevels}">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}" 
+                           BasedOn="{StaticResource ReadLevelsText}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsSyncButton}" Value="false">
+                                <Setter Property="Content" 
+                                        Value="{x:Static resources:WindowStrings.GetLevelsButton}"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding IsSyncButton}" Value="true">
+                                <Setter Property="Content" 
+                                        Value="{x:Static resources:WindowStrings.SyncLevelsButton}"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+    
+            </Button>
 
             <Grid>
                 <DataGrid CanUserAddRows="False" AutoGenerateColumns="False"

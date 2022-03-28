@@ -25,7 +25,7 @@ namespace Level_Exporter.ViewModels
 
         #region Private properties
         private ObservableCollection<string> _levelNames;
-        private ObservableCollection<int> _levelNumbers;
+        private bool _isSyncButton;
         private bool _levelListIsPopulated;
 
         #endregion
@@ -41,23 +41,13 @@ namespace Level_Exporter.ViewModels
             }
         }
 
-        public ObservableCollection<int> LevelNumbers
+        public bool IsSyncButton
         {
-            get => _levelNumbers;
+            get => _isSyncButton;
             set
             {
-                _levelNumbers = value;
-                OnPropertyChanged(nameof(LevelNumbers));
-            }
-        }
-
-        public bool LevelListIsPopulated
-        {
-            get => _levelListIsPopulated;
-            set
-            {
-                _levelListIsPopulated = LevelNames?.Count > 0 || value;
-                OnPropertyChanged(nameof(LevelListIsPopulated));
+                _isSyncButton = value;
+                OnPropertyChanged(nameof(IsSyncButton));
             }
         }
 
@@ -73,7 +63,7 @@ namespace Level_Exporter.ViewModels
 
         private void OnReadMastercamLevels()
         {
-            if (LevelsManager.GetLevelNumbersWithGeometry().Length > 0)
+            IsSyncButton = true;
             {
                 LevelNumbers = new ObservableCollection<int>(LevelsManager.GetLevelNumbersWithGeometry());
                 LevelNames = new ObservableCollection<string>(LevelsManager.GetLevelNumbersWithGeometry()
