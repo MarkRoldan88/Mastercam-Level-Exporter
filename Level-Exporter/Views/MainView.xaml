@@ -1,4 +1,4 @@
-﻿<Window
+<Window
     x:Class="Level_Exporter.Views.MainView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -83,7 +83,22 @@
                     Margin="50,0,0,0"
                     Command="{Binding ReadMastercamLevels}"/>
 
-            <ListBox ItemsSource="{Binding LevelNames}"/>
+            <Grid>
+                <DataGrid CanUserAddRows="False" AutoGenerateColumns="False"
+                          ItemsSource="{Binding Levels}">
+                    <DataGrid.Columns>
+                        <DataGridTemplateColumn Header="Select">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <CheckBox/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTextColumn Header="#" Binding="{Binding Number}"/>
+                        <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
         </StackPanel>
 
         <StackPanel
@@ -103,7 +118,8 @@
                         Height="24"
                         Width="24"
                         Source="{Binding OkResource, Converter={StaticResource StringToImageSourceConverter}}" />
-                    <TextBlock FontSize="14">Export CAD</TextBlock>
+                    <TextBlock FontSize="14" 
+                               Text="{x:Static resources:WindowStrings.ExportButton}"/>
                 </StackPanel>
 
             </Button>
