@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,25 +19,25 @@ namespace Level_Exporter.ViewModels
         public LevelInfoViewModel()
         {
             ReadMastercamLevels = new DelegateCommand(OnReadMastercamLevels);
+            Levels = new ObservableCollection<Level>();
         }
 
         #endregion
 
         #region Private properties
-        private ObservableCollection<string> _levelNames;
+        private ObservableCollection<Level> _levels;
         private bool _isSyncButton;
-        private bool _levelListIsPopulated;
 
         #endregion
 
         #region Public Properties
-        public ObservableCollection<string> LevelNames
+        public ObservableCollection<Level> Levels
         {
-            get => _levelNames;
+            get => _levels;
             set
             {
-                _levelNames = value;
-                OnPropertyChanged(nameof(LevelNames));
+                _levels = value;
+                OnPropertyChanged(nameof(Levels));
             }
         }
 
@@ -64,15 +64,32 @@ namespace Level_Exporter.ViewModels
         private void OnReadMastercamLevels()
         {
             IsSyncButton = true;
-            {
-                LevelNumbers = new ObservableCollection<int>(LevelsManager.GetLevelNumbersWithGeometry());
-                LevelNames = new ObservableCollection<string>(LevelsManager.GetLevelNumbersWithGeometry()
-                    .Select(LevelsManager.GetLevelName));
+            Levels.Clear();
 
-                LevelListIsPopulated = true;
+            foreach (var level in LevelNameAndNumber())
+            {
+                Levels.Add(new Level() { Name = level.Value, Number = level.Key });
             }
+
         }
 
         #endregion
+
+        #region Helpers
+
+        /// <summary>
+        /// Get Dictionary of Level name and number
+        /// </summary>
+        /// <param name="levelNumbers"></param>
+        /// <returns></returns>
+        private static Dictionary<int, string> LevelNameAndNumber()
+        {
+            return LevelsManager.GetLevelNumbersWithGeometry().ToDictionary(n => n, LevelsManager.GetLevelName);
+        }
+
+
+        #endregion
     }
+
 }
+
