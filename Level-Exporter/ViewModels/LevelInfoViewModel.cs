@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -31,16 +31,23 @@ namespace Level_Exporter.ViewModels
         #endregion
 
         #region Public Properties
+
+        /// <summary>
+        ///  Gets and sets List of levels for view
+        /// </summary>
         public ObservableCollection<Level> Levels
         {
             get => _levels;
             set
             {
                 _levels = value;
-                OnPropertyChanged(nameof(Levels));
+                OnPropertyChanged(nameof(Levels)); // For MvvM Event
             }
         }
 
+        /// <summary>
+        ///  Gets and Sets bool for button state
+        /// </summary>
         public bool IsSyncButton
         {
             get => _isSyncButton;
@@ -55,12 +62,18 @@ namespace Level_Exporter.ViewModels
 
         #region Public Commands
 
+        /// <summary>
+        /// Gets ICommand for read mastercam levels button command
+        /// </summary>
         public ICommand ReadMastercamLevels { get; }
 
         #endregion
 
         #region Private Methods
 
+        /// <summary>
+        /// Command for button to read Mc Levels
+        /// </summary>
         private void OnReadMastercamLevels()
         {
             IsSyncButton = true;
@@ -82,7 +95,7 @@ namespace Level_Exporter.ViewModels
         /// </summary>
         /// <param name="levelNumbers"></param>
         /// <returns></returns>
-        private static Dictionary<int, string> LevelNameAndNumber()
+        private static Dictionary<int, string> GetLevelNameAndNumber()
         {
             return LevelsManager.GetLevelNumbersWithGeometry().ToDictionary(n => n, LevelsManager.GetLevelName);
         }
