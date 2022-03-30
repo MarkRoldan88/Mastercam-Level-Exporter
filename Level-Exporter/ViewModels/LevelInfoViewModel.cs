@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -76,14 +76,15 @@ namespace Level_Exporter.ViewModels
         /// </summary>
         private void OnReadMastercamLevels()
         {
-            IsSyncButton = true;
-            Levels.Clear();
+            if (GetLevelNameAndNumber().Count == 0) return;
+            
+            IsSyncButton = true; 
+            Levels.Clear(); // Clear instead of comparing and doing a 'proper sync'
 
-            foreach (var level in LevelNameAndNumber())
+            foreach (var level in GetLevelNameAndNumber())
             {
                 Levels.Add(new Level() { Name = level.Value, Number = level.Key });
             }
-
         }
 
         #endregion
