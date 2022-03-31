@@ -1,4 +1,4 @@
-namespace Level_Exporter.ViewModels
+﻿namespace Level_Exporter.ViewModels
 {
     using System;
     using System.Collections.Generic;
@@ -75,14 +75,20 @@ namespace Level_Exporter.ViewModels
         /// </summary>
         private void OnReadMastercamLevels()
         {
-            if (GetLevelNameAndNumber().Count == 0) return;
-            
-            IsSyncButton = true; 
+            if (LevelInfo().Item1.Count == 0) return;
+
+            IsSyncButton = true;
             Levels.Clear(); // Clear instead of comparing and doing a 'proper sync'
 
-            foreach (var level in GetLevelNameAndNumber())
+            // Loop through mastercam level info and add new levels to observable collection
+            for (int levelNumber = 1; levelNumber < LevelInfo().Item1.Count + 1; levelNumber++)
             {
-                Levels.Add(new Level() { Name = level.Value, Number = level.Key });
+                if (!LevelInfo().Item1.ContainsKey(levelNumber)) continue;
+
+                string name = LevelInfo().Item1[levelNumber];
+                int entityCount = LevelInfo().Item2[levelNumber];
+
+                Levels.Add(new Level() { Name = name, Number = levelNumber, EntityCount = entityCount});
             }
         }
 
@@ -91,15 +97,22 @@ namespace Level_Exporter.ViewModels
         #region Helpers
 
         /// <summary>
-        /// Get Dictionary of Level name and number
+        ///  Gets Level name, number, and entity count
         /// </summary>
-        /// <param name="levelNumbers"></param>
-        /// <returns></returns>
-        private static Dictionary<int, string> GetLevelNameAndNumber()
+        /// <returns> Returns a Tuple containing two dictionaries
+        /// </returns>
+        private static Tuple<Dictionary<int, string>, Dictionary<int,int>> LevelInfo()
         {
-            return LevelsManager.GetLevelNumbersWithGeometry().ToDictionary(n => n, LevelsManager.GetLevelName);
-        }
+            Dictionary<int, string> levelNameAndNum = LevelsManager.GetLevelNumbersWithGeometry()
+                .ToDictionary(n => n, LevelsManager.GetLevelName);
 
+            Dictionary<int,int> entityCount = 
+                LevelsManager.GetLevelsEntityCounts(false)
+                .Where(level => level.Value > 0) //Filter out levels with no entities
+                .ToDictionary(n => n.Key, n => n.Value);
+
+            return Tuple.Create(levelNameAndNum, entityCount);
+        }
 
         #endregion
     }
