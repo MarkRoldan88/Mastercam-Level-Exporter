@@ -126,7 +126,13 @@
   <data name="CadTypeStp" xml:space="preserve">
     <value>STEP (stp)</value>
   </data>
+  <data name="ExportButton" xml:space="preserve">
+    <value>Export CAD</value>
+  </data>
   <data name="GetLevelsButton" xml:space="preserve">
     <value>Get Mastercam Levels</value>
+  </data>
+  <data name="SyncLevelsButton" xml:space="preserve">
+    <value>Sync Mastercam Levels</value>
   </data>
 </root>

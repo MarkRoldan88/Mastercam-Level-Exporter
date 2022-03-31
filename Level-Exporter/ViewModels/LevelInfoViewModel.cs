@@ -9,6 +9,7 @@ namespace Level_Exporter.ViewModels
     using System.Windows.Input;
     using System.Windows.Navigation;
     using Level_Exporter.Commands;
+    using Level_Exporter.Models;
     using Mastercam.IO;
 
     public class LevelInfoViewModel : BaseViewModel
@@ -18,45 +19,42 @@ namespace Level_Exporter.ViewModels
         public LevelInfoViewModel()
         {
             ReadMastercamLevels = new DelegateCommand(OnReadMastercamLevels);
+            Levels = new ObservableCollection<Level>();
         }
 
         #endregion
 
         #region Private properties
-        private ObservableCollection<string> _levelNames;
-        private ObservableCollection<int> _levelNumbers;
-        private bool _levelListIsPopulated;
+        private ObservableCollection<Level> _levels;
+        private bool _isSyncButton;
 
         #endregion
 
         #region Public Properties
-        public ObservableCollection<string> LevelNames
+
+        /// <summary>
+        ///  Gets and sets List of levels for view
+        /// </summary>
+        public ObservableCollection<Level> Levels
         {
-            get => _levelNames;
+            get => _levels;
             set
             {
-                _levelNames = value;
-                OnPropertyChanged(nameof(LevelNames));
+                _levels = value;
+                OnPropertyChanged(nameof(Levels)); // For MvvM Event
             }
         }
 
-        public ObservableCollection<int> LevelNumbers
+        /// <summary>
+        ///  Gets and Sets bool for button state
+        /// </summary>
+        public bool IsSyncButton
         {
-            get => _levelNumbers;
+            get => _isSyncButton;
             set
             {
-                _levelNumbers = value;
-                OnPropertyChanged(nameof(LevelNumbers));
-            }
-        }
-
-        public bool LevelListIsPopulated
-        {
-            get => _levelListIsPopulated;
-            set
-            {
-                _levelListIsPopulated = LevelNames?.Count > 0 || value;
-                OnPropertyChanged(nameof(LevelListIsPopulated));
+                _isSyncButton = value;
+                OnPropertyChanged(nameof(IsSyncButton));
             }
         }
 
@@ -64,24 +62,48 @@ namespace Level_Exporter.ViewModels
 
         #region Public Commands
 
+        /// <summary>
+        /// Gets ICommand for read mastercam levels button command
+        /// </summary>
         public ICommand ReadMastercamLevels { get; }
 
         #endregion
 
         #region Private Methods
 
+        /// <summary>
+        /// Command for button to read Mc Levels
+        /// </summary>
         private void OnReadMastercamLevels()
         {
-            if (LevelsManager.GetLevelNumbersWithGeometry().Length > 0)
-            {
-                LevelNumbers = new ObservableCollection<int>(LevelsManager.GetLevelNumbersWithGeometry());
-                LevelNames = new ObservableCollection<string>(LevelsManager.GetLevelNumbersWithGeometry()
-                    .Select(LevelsManager.GetLevelName));
+            if (GetLevelNameAndNumber().Count == 0) return;
+            
+            IsSyncButton = true; 
+            Levels.Clear(); // Clear instead of comparing and doing a 'proper sync'
 
-                LevelListIsPopulated = true;
+            foreach (var level in GetLevelNameAndNumber())
+            {
+                Levels.Add(new Level() { Name = level.Value, Number = level.Key });
             }
         }
 
         #endregion
+
+        #region Helpers
+
+        /// <summary>
+        /// Get Dictionary of Level name and number
+        /// </summary>
+        /// <param name="levelNumbers"></param>
+        /// <returns></returns>
+        private static Dictionary<int, string> GetLevelNameAndNumber()
+        {
+            return LevelsManager.GetLevelNumbersWithGeometry().ToDictionary(n => n, LevelsManager.GetLevelName);
+        }
+
+
+        #endregion
     }
+
 }
+
