@@ -124,8 +124,12 @@
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
-                        <DataGridTextColumn Header="#" Binding="{Binding Number}"/>
-                        <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
+                        <DataGridTextColumn Header="#" 
+                                            Binding="{Binding Number}"/>
+                        <DataGridTextColumn Header="Name" 
+                                            Binding="{Binding Name}"/>
+                        <DataGridTextColumn Header="Entity Count" 
+                                            Binding="{Binding EntityCount}" />
                     </DataGrid.Columns>
                 </DataGrid>
             </Grid>

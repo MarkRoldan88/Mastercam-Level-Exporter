@@ -17,6 +17,11 @@ namespace Level_Exporter.Models
         /// </summary>
         public int Number { get; set; }
 
+        /// <summary>
+        /// Gets Entity count of level
+        /// </summary>
+        public int EntityCount { get; set; }
+
         #endregion
     }
 }
