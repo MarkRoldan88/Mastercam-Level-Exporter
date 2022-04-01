@@ -4,6 +4,8 @@ using System.Linq;
 
 namespace Level_Exporter.Models
 {
+    using Mastercam.Database;
+
     public class Level
     {
         #region Public Properties
@@ -18,9 +20,14 @@ namespace Level_Exporter.Models
         public int Number { get; set; }
 
         /// <summary>
-        /// Gets Entity count of level
+        /// Gets and Sets Entity count
         /// </summary>
         public int EntityCount { get; set; }
+
+        /// <summary>
+        /// Gets and Sets Geometries
+        /// </summary>
+        public Geometry[] Geometries { get; set; }
 
         #endregion
     }

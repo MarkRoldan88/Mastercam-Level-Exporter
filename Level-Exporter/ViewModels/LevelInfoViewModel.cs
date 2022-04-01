@@ -10,6 +10,7 @@
     using Level_Exporter.Commands;
     using Level_Exporter.Models;
     using Mastercam.IO;
+    using Mastercam.Support;
 
     public class LevelInfoViewModel : BaseViewModel
     {
@@ -18,6 +19,7 @@
         public LevelInfoViewModel()
         {
             ReadMastercamLevels = new DelegateCommand(OnReadMastercamLevels);
+            ExportLevelGeometry = new DelegateCommand(OnExportLevelGeometry);
             Levels = new ObservableCollection<Level>();
         }
 
@@ -66,6 +68,11 @@
         /// </summary>
         public ICommand ReadMastercamLevels { get; }
 
+        /// <summary>
+        /// Gets ICommand for export levels geometry button command
+        /// </summary>
+        public ICommand ExportLevelGeometry { get; }
+
         #endregion
 
         #region Private Methods
@@ -81,15 +88,23 @@
             Levels.Clear(); // Clear instead of comparing and doing a 'proper sync'
 
             // Loop through mastercam level info and add new levels to observable collection
-            for (int levelNumber = 1; levelNumber < LevelInfo().Item1.Count + 1; levelNumber++)
+            for (int num = 1; num < LevelInfo().Item1.Count + 1; num++)
             {
-                if (!LevelInfo().Item1.ContainsKey(levelNumber)) continue;
+                if (!LevelInfo().Item1.ContainsKey(num)) continue;
 
-                string name = LevelInfo().Item1[levelNumber];
-                int entityCount = LevelInfo().Item2[levelNumber];
-
-                Levels.Add(new Level() { Name = name, Number = levelNumber, EntityCount = entityCount});
+                Levels.Add(new Level
+                {
+                    Name = LevelInfo().Item1[num],
+                    Number = num,
+                    EntityCount = LevelInfo().Item2[num],
+                    Geometries = SearchManager.GetGeometry(num),
+                });
             }
+        }
+
+        private void OnExportLevelGeometry()
+        {
+
         }
 
         #endregion
