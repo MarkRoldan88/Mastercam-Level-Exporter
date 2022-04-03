@@ -19,6 +19,7 @@
     <Window.Resources>
         <ResourceDictionary>
             
+            
             <!-- Converts string name of asset to image source -->
             <converters:StringToImageSourceConverter
                 x:Key="StringToImageSourceConverter" />
@@ -110,30 +111,40 @@
                         </Style.Triggers>
                     </Style>
                 </Button.Style>
-    
             </Button>
-
             <Grid>
-                <DataGrid CanUserAddRows="False" AutoGenerateColumns="False"
-                          ItemsSource="{Binding Levels}">
+                <DataGrid CanUserAddRows="False" 
+                          AutoGenerateColumns="False"
+                          ItemsSource="{Binding Path=Levels}">
                     <DataGrid.Columns>
-                        <DataGridTemplateColumn Header="Select">
+                        <DataGridTemplateColumn >
+                            <DataGridTemplateColumn.Header> 
+                                <CheckBox Content="Select"
+                                          Command="{Binding SelectAll}"
+
+                                          IsChecked="{Binding Path=IsSelectAll, UpdateSourceTrigger=PropertyChanged}"/>
+                            </DataGridTemplateColumn.Header>
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <CheckBox/>
+                                    <CheckBox IsChecked="{
+                                        Binding Path=IsSelected, 
+                                        UpdateSourceTrigger=PropertyChanged}"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
-                        <DataGridTextColumn Header="#" 
+                        <DataGridTextColumn Header="#"
+                                            IsReadOnly="True"
                                             Binding="{Binding Number}"/>
                         <DataGridTextColumn Header="Name" 
                                             Binding="{Binding Name}"/>
-                        <DataGridTextColumn Header="Entity Count" 
+                        <DataGridTextColumn Header="Entity Count"
+                                            IsReadOnly="True"
                                             Binding="{Binding EntityCount}" />
                     </DataGrid.Columns>
                 </DataGrid>
             </Grid>
         </StackPanel>
+
 
         <StackPanel
             x:Name="ButtonPanel"
