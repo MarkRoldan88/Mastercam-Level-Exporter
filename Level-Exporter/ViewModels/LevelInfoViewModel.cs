@@ -90,29 +90,29 @@ namespace Level_Exporter.ViewModels
         /// </summary>
         private void OnReadMastercamLevels()
         {
-            if (LevelInfo().Item1.Count == 0) return;
+            // Refresh Level manager in Mastercam to get rid of empty levels, named levels are not removed
+            LevelsManager.RefreshLevelsManager();
+
+            if (LevelInfo().Count == 0) return;
 
             IsSyncButton = true;
             Levels.Clear(); // Clear instead of comparing and doing a 'proper sync'
-
-            // Loop through mastercam level info and add new levels to observable collection
-            for (int num = 1; num < LevelInfo().Item1.Count + 1; num++)
+            
+            foreach (var level in LevelInfo())
             {
-                if (!LevelInfo().Item1.ContainsKey(num)) continue;
-
                 Levels.Add(new Level
                 {
-                    Name = LevelInfo().Item1[num],
-                    Number = num,
-                    EntityCount = LevelInfo().Item2[num],
-                    Geometries = SearchManager.GetGeometry(num),
+                    Name = level.Value,
+                    Number = level.Key,
+                    EntityCount = LevelsManager.GetLevelEntityCount(level.Key, false),
+                    Geometries = SearchManager.GetGeometry(level.Key),
                 });
             }
         }
 
-        private void OnExportLevelGeometry()
+        private void OnSelectAll()
         {
-
+            // TODO Logic for switching isSelected bool in levels class
         }
 
         #endregion
