@@ -61,6 +61,15 @@ namespace Level_Exporter.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Browse.
+        /// </summary>
+        public static string BrowseButton {
+            get {
+                return ResourceManager.GetString("BrowseButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select a CAD Format.
         /// </summary>
         public static string CadTypePrompt {
@@ -84,6 +93,15 @@ namespace Level_Exporter.Resources {
         public static string CadTypeStp {
             get {
                 return ResourceManager.GetString("CadTypeStp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Destination Directory (leave blank to open file dialog on export).
+        /// </summary>
+        public static string DestinationPrompt {
+            get {
+                return ResourceManager.GetString("DestinationPrompt", resourceCulture);
             }
         }
         

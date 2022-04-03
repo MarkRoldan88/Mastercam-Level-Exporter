@@ -46,11 +46,6 @@ namespace Level_Exporter.Models
         public int EntityCount { get; set; }
 
         /// <summary>
-        /// Gets and Sets Geometries
-        /// </summary>
-        public Geometry[] Geometries { get; set; }
-
-        /// <summary>
         /// Gets and Sets isSelected
         /// </summary>
         public bool IsSelected { 
