@@ -31,6 +31,8 @@ namespace Level_Exporter.ViewModels
         /// </param>
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-            => this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        {
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }

@@ -1,12 +1,18 @@
-﻿namespace Level_Exporter.ViewModels
+namespace Level_Exporter.ViewModels
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
     using System.Collections.ObjectModel;
+    using System.ComponentModel;
+    using System.Data;
+    using System.Runtime.CompilerServices;
+    using System.Windows;
+    using System.Windows.Controls;
     using System.Windows.Input;
     using System.Windows.Navigation;
+    using Level_Exporter.Annotations;
     using Level_Exporter.Commands;
     using Level_Exporter.Models;
     using Mastercam.IO;
@@ -25,7 +31,9 @@
 
         #endregion
 
+
         #region Private properties
+
         private ObservableCollection<Level> _levels;
         private bool _isSyncButton;
 
@@ -116,17 +124,9 @@
         /// </summary>
         /// <returns> Returns a Tuple containing two dictionaries
         /// </returns>
-        private static Tuple<Dictionary<int, string>, Dictionary<int,int>> LevelInfo()
+        private static Dictionary<int, string> LevelInfo()
         {
-            Dictionary<int, string> levelNameAndNum = LevelsManager.GetLevelNumbersWithGeometry()
-                .ToDictionary(n => n, LevelsManager.GetLevelName);
-
-            Dictionary<int,int> entityCount = 
-                LevelsManager.GetLevelsEntityCounts(false)
-                .Where(level => level.Value > 0) //Filter out levels with no entities
-                .ToDictionary(n => n.Key, n => n.Value);
-
-            return Tuple.Create(levelNameAndNum, entityCount);
+            return LevelsManager.GetLevelNumbersWithGeometry().ToDictionary(n => n, LevelsManager.GetLevelName);
         }
 
         #endregion
