@@ -56,6 +56,9 @@
 
         #region Public Properties
 
+        /// <summary>
+        /// Gets and sets IsSelectAll for datagrid column header
+        /// </summary>
         public bool IsSelectAll
         {
             get => _isSelectAll;
@@ -67,7 +70,7 @@
         }
 
         /// <summary>
-        /// Gets and sets IsSelected for level checkboxes
+        /// Gets and sets IsSelected for level checkboxes, mirrored for setting Levels class
         /// </summary>
         public bool IsSelected
         {
@@ -138,6 +141,7 @@
                 .ToDictionary(n => n, LevelsManager.GetLevelName);
 
             IsSyncButton = true;
+
             Levels.Clear(); // Clear instead of comparing and doing a 'proper sync'
 
             foreach (var level in levelInfo)

@@ -117,13 +117,19 @@
                           AutoGenerateColumns="False"
                           ItemsSource="{Binding Path=Levels}">
                     <DataGrid.Columns>
-                        <DataGridTemplateColumn >
-                            <DataGridTemplateColumn.Header> 
-                                <CheckBox Content="Select"
-                                          Command="{Binding SelectAll}"
+                        <DataGridTemplateColumn>
+                            <DataGridTemplateColumn.HeaderTemplate>
+                                    <DataTemplate>
+                                        <CheckBox Content="Select"
+                                                  IsChecked="{Binding DataContext.IsSelectAll, 
+                                                                RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}},
+                                                                UpdateSourceTrigger=PropertyChanged}"
+                                                  Command="{Binding DataContext.SelectAll, 
+                                                            RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}"/>
+                                        <!-- Since Datagrid column *header* is not part of UI logic, must use relative source to bump up and get properties datagrid -->
+                                    </DataTemplate>
+                            </DataGridTemplateColumn.HeaderTemplate>
 
-                                          IsChecked="{Binding Path=IsSelectAll, UpdateSourceTrigger=PropertyChanged}"/>
-                            </DataGridTemplateColumn.Header>
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <CheckBox IsChecked="{
