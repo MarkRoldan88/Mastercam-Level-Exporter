@@ -61,11 +61,18 @@
             <RowDefinition />
             <RowDefinition
                 Height="Auto" />
+            <RowDefinition/>
         </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
 
         <StackPanel
             x:Uid="TextBlockStackPanel"
-            Grid.Row="0"
+            Grid.Row="0" 
+            Grid.Column="1"
             HorizontalAlignment="Right"
             VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5">
             <StackPanel.RenderTransform>
@@ -78,21 +85,38 @@
             </StackPanel.RenderTransform>
             <TextBlock
                 Text="{x:Static resx:WindowStrings.CadTypePrompt }"
-                FontSize="32"
+                FontSize="14"
                 Width="300" RenderTransformOrigin="0.493,0.585" />
-            <ComboBox>
+            <ComboBox IsReadOnly="True" 
+                      IsTextSearchEnabled="False"
+                      SelectedItem="{Binding CadFormatSelected}">
                 <ComboBoxItem FontSize="16" 
                               Content="{x:Static resources:WindowStrings.CadTypeStl}"/>
                 <ComboBoxItem FontSize="16"
                               Content="{x:Static resources:WindowStrings.CadTypeStp}"/>
             </ComboBox>
+        </StackPanel>
 
+        <StackPanel 
+            Grid.Row="1" 
+            Grid.Column="1"
+            HorizontalAlignment="Center" 
+            VerticalAlignment="Center">
+            <TextBlock Text="{x:Static resources:WindowStrings.DestinationPrompt}"/>
+            <StackPanel Orientation="Horizontal">
+                <TextBox Text="{Binding Path=DestinationDirectory}"/>
+                <Button 
+                    Content="{x:Static resources:WindowStrings.BrowseButton}"
+                    Command="{Binding Path=BrowseCommand}"/>
+            </StackPanel>
         </StackPanel>
 
         <StackPanel DataContext="{Binding LevelInfoViewModel}" 
-                    Grid.Row="0" 
-                    HorizontalAlignment="Left" 
-                    VerticalAlignment="Center" >
+                    Grid.Row="1" 
+                    Grid.Column="0"
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Top" >
+            <!--Button for getting Mastercam Level information -->
             <Button x:Name="GetLevelsButton" 
                     Margin="50,0,0,0" 
                     Command="{Binding ReadMastercamLevels}">
@@ -112,14 +136,17 @@
                     </Style>
                 </Button.Style>
             </Button>
+
+            <!--Data grid for Level information -->
             <Grid>
                 <DataGrid CanUserAddRows="False" 
                           AutoGenerateColumns="False"
                           ItemsSource="{Binding Path=Levels}">
                     <DataGrid.Columns>
-                        <DataGridTemplateColumn>
+                        <DataGridTemplateColumn CanUserSort="False">
                             <DataGridTemplateColumn.HeaderTemplate>
                                     <DataTemplate>
+                                        <!--Check box for selecting all levels -->
                                         <CheckBox Content="Select"
                                                   IsChecked="{Binding DataContext.IsSelectAll, 
                                                                 RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}},
@@ -132,20 +159,24 @@
 
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
+                                    <!-- Checkbox for selecting level for export -->
                                     <CheckBox IsChecked="{
                                         Binding Path=IsSelected, 
                                         UpdateSourceTrigger=PropertyChanged}"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
+
                         <DataGridTextColumn Header="#"
                                             IsReadOnly="True"
                                             Binding="{Binding Number}"/>
                         <DataGridTextColumn Header="Name" 
-                                            Binding="{Binding Name}"/>
+                                            Binding="{Binding Name}"
+                                            CanUserSort="False"/>
                         <DataGridTextColumn Header="Entity Count"
                                             IsReadOnly="True"
-                                            Binding="{Binding EntityCount}" />
+                                            Binding="{Binding EntityCount}" 
+                                            CanUserSort="False"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </Grid>
@@ -155,7 +186,8 @@
         <StackPanel
             x:Name="ButtonPanel"
             x:Uid="ButtonStackPanel"
-            Grid.Row="1"
+            Grid.Row="2" 
+            Grid.Column="1"
             Orientation="Horizontal"
             HorizontalAlignment="Right"
             VerticalAlignment="Bottom">
