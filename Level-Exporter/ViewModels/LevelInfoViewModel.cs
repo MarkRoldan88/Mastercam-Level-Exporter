@@ -1,4 +1,4 @@
-namespace Level_Exporter.ViewModels
+﻿namespace Level_Exporter.ViewModels
 {
     using System;
     using System.Collections.Generic;
@@ -22,7 +22,6 @@ namespace Level_Exporter.ViewModels
             ReadMastercamLevels = new DelegateCommand(OnReadMastercamLevels);
             SelectAll = new DelegateCommand(OnSelectAll);
             Levels = new ObservableCollection<Level>();
-            IsSelectAll = true;
         }
         #endregion
 
@@ -41,9 +40,8 @@ namespace Level_Exporter.ViewModels
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
-            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
 
         #endregion
 
@@ -76,8 +74,6 @@ namespace Level_Exporter.ViewModels
             get => _isSelected;
             set
             {
-                if (IsSelectAll) _isSelected = true;
-
                 _isSelected = value;
                 OnPropertyChanged(nameof(IsSelected));
             }
@@ -135,12 +131,16 @@ namespace Level_Exporter.ViewModels
             // Refresh Level manager in Mastercam to get rid of empty levels, named levels are not removed
             LevelsManager.RefreshLevelsManager();
 
-            if (LevelInfo().Count == 0) return;
+            if (LevelsManager.GetLevelNumbersWithGeometry().Length == 0) return;
+
+            // Get Level Info- Key: level num , Value: level name
+            var levelInfo = LevelsManager.GetLevelNumbersWithGeometry()
+                .ToDictionary(n => n, LevelsManager.GetLevelName);
 
             IsSyncButton = true;
             Levels.Clear(); // Clear instead of comparing and doing a 'proper sync'
-            
-            foreach (var level in LevelInfo())
+
+            foreach (var level in levelInfo)
             {
                 Levels.Add(new Level
                 {
@@ -152,24 +152,25 @@ namespace Level_Exporter.ViewModels
             }
         }
 
+        /// <summary>
+        /// Command for setting IsSelected property for level in levels collection
+        /// </summary>
         private void OnSelectAll()
         {
-            // TODO Logic for switching isSelected bool in levels class
+            if (Levels.Count == 0) return;
+
+            foreach (var lvl in Levels)
+            {
+                if (lvl.IsSelected == IsSelectAll) continue;
+
+                lvl.IsSelected = IsSelectAll;
+            }
+
         }
 
         #endregion
 
         #region Helpers
-
-        /// <summary>
-        ///  Gets Level name, number, and entity count
-        /// </summary>
-        /// <returns> Returns a Tuple containing two dictionaries
-        /// </returns>
-        private static Dictionary<int, string> LevelInfo()
-        {
-            return LevelsManager.GetLevelNumbersWithGeometry().ToDictionary(n => n, LevelsManager.GetLevelName);
-        }
 
         #endregion
     }
