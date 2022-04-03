@@ -14,13 +14,10 @@ using Mastercam.IO;
 using System.Windows;
 using System.Windows.Input;
 
+
 namespace Level_Exporter.ViewModels
 {
-    using System.Collections.Generic;
-    using System.Collections.ObjectModel;
-    using System.Linq;
-    using System.Windows.Forms;
-    using Level_Exporter.Models;
+    using Mastercam.Support;
 
     /// <summary>
     /// The main view model.
@@ -37,8 +34,12 @@ namespace Level_Exporter.ViewModels
         public MainViewModel()
         {
             this.LevelInfoViewModel = new LevelInfoViewModel();
+
             this.OkCommand = new DelegateCommand(this.OnOkCommand, this.CanOkCommand);
             this.CloseCommand = new DelegateCommand<Window>(this.OnCloseCommand);
+            this.BrowseCommand = new DelegateCommand(this.OnBrowseCommand);
+
+            this.DestinationDirectory = SettingsManager.CurrentDirectory;
         }
 
         #endregion
@@ -55,9 +56,41 @@ namespace Level_Exporter.ViewModels
         /// </summary>
         public ICommand CloseCommand { get; }
 
+        public ICommand BrowseCommand { get; }
+
+        #endregion
+
+        #region Private Fields
+
+        private object _cadFormatSelected;
+        private string _destinationDirectory;
+        
         #endregion
 
         #region Public Properties
+
+        /// <summary>
+        /// Default File directory path for destination text box
+        /// </summary>
+        public string DestinationDirectory
+        {
+            get => _destinationDirectory;
+            set
+            {
+                _destinationDirectory = value;
+                OnPropertyChanged(nameof(DestinationDirectory));
+            }
+        }
+
+        public object CadFormatSelected
+        {
+            get => _cadFormatSelected;
+            set
+            {
+                _cadFormatSelected = value;
+                OnPropertyChanged(nameof(CadFormatSelected));
+            }
+        }
 
         /// <summary>
         /// The ok image resource name.
@@ -90,6 +123,12 @@ namespace Level_Exporter.ViewModels
             DialogManager.OK(
                 message.IsSuccess ? message.Value : "Ok Button Pressed",
                 title.IsSuccess ? title.Value : "Mastercam");
+
+
+            foreach (var level in this.LevelInfoViewModel.Levels)
+            {
+                SearchManager.SelectAllGeometryOnLevel(level.Number, true);
+            }
         }
 
         /// <summary> Executes the close command action. </summary>
@@ -97,7 +136,11 @@ namespace Level_Exporter.ViewModels
         /// <param name="view"> The view. </param>
         private void OnCloseCommand(Window view) => view?.Close();
 
-
+        private void OnBrowseCommand()
+        {
+            // TODO: add logic for browse button to open windows dialogue and select folder
+            // (maybe windows api codepack? shell/source?)
+        }
 
         #endregion
     }
