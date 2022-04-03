@@ -13,40 +13,19 @@
     using Mastercam.IO;
     using Mastercam.Support;
 
-    public class LevelInfoViewModel : INotifyPropertyChanged
+    public class LevelInfoViewModel : BaseViewModel
     {
 
         #region Construction
         public LevelInfoViewModel()
         {
-            ReadMastercamLevels = new DelegateCommand(OnReadMastercamLevels);
-            SelectAll = new DelegateCommand(OnSelectAll);
-            Levels = new ObservableCollection<Level>();
+            this.ReadMastercamLevels = new DelegateCommand(OnReadMastercamLevels);
+            this.SelectAll = new DelegateCommand(OnSelectAll);
+            this.Levels = new ObservableCollection<Level>();
         }
         #endregion
-
-        #region INotifyPropertyChanged
-        /// <summary>
-        /// The property changed.
-        /// </summary>
-        public event PropertyChangedEventHandler PropertyChanged;
         
-        /// <summary>
-        /// The on property changed.
-        /// </summary>
-        /// <param name="propertyName">
-        /// The property name.
-        /// </param>
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        #endregion
-
-
-        #region Private properties
+        #region Private fields
 
         private ObservableCollection<Level> _levels;
         private bool _isSelectAll;
@@ -151,13 +130,12 @@
                     Name = level.Value,
                     Number = level.Key,
                     EntityCount = LevelsManager.GetLevelEntityCount(level.Key, false),
-                    Geometries = SearchManager.GetGeometry(level.Key),
                 });
             }
         }
 
         /// <summary>
-        /// Command for setting IsSelected property for level in levels collection
+        /// Command for Checkbox in header, sets IsSelected property of each level in levels collection
         /// </summary>
         private void OnSelectAll()
         {
