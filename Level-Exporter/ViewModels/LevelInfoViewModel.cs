@@ -1,33 +1,58 @@
-namespace Level_Exporter.ViewModels
+﻿namespace Level_Exporter.ViewModels
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Text;
     using System.Collections.ObjectModel;
     using System.ComponentModel;
-    using System.Data;
     using System.Runtime.CompilerServices;
-    using System.Windows;
-    using System.Windows.Controls;
     using System.Windows.Input;
-    using System.Windows.Navigation;
     using Level_Exporter.Annotations;
     using Level_Exporter.Commands;
     using Level_Exporter.Models;
     using Mastercam.IO;
     using Mastercam.Support;
 
-    public class LevelInfoViewModel : BaseViewModel
+    public class LevelInfoViewModel : INotifyPropertyChanged
     {
 
-        #region Constructor
+        #region Construction
         public LevelInfoViewModel()
         {
             ReadMastercamLevels = new DelegateCommand(OnReadMastercamLevels);
-            ExportLevelGeometry = new DelegateCommand(OnExportLevelGeometry);
+            SelectAll = new DelegateCommand(OnSelectAll);
             Levels = new ObservableCollection<Level>();
+            IsSelectAll = true;
         }
+        #endregion
+
+        #region INotifyPropertyChanged
+        /// <summary>
+        /// The property changed.
+        /// </summary>
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        /// <summary>
+        /// Notify property changed
+        /// </summary>
+        /// <param name="propertyName"></param>
+        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        /// <summary>
+        /// The on property changed.
+        /// </summary>
+        /// <param name="propertyName">
+        /// The property name.
+        /// </param>
+        [NotifyPropertyChangedInvocator]
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
 
         #endregion
 
@@ -35,11 +60,37 @@ namespace Level_Exporter.ViewModels
         #region Private properties
 
         private ObservableCollection<Level> _levels;
+        private bool _isSelectAll;
         private bool _isSyncButton;
-
+        private bool _isSelected;
         #endregion
 
         #region Public Properties
+
+        public bool IsSelectAll
+        {
+            get => _isSelectAll;
+            set
+            {
+                _isSelectAll = value;
+                OnPropertyChanged(nameof(IsSelectAll));
+            }
+        }
+
+        /// <summary>
+        /// Gets and sets IsSelected for level checkboxes
+        /// </summary>
+        public bool IsSelected
+        {
+            get => _isSelected;
+            set
+            {
+                if (IsSelectAll) _isSelected = true;
+
+                _isSelected = value;
+                OnPropertyChanged(nameof(IsSelected));
+            }
+        }
 
         /// <summary>
         ///  Gets and sets List of levels for view
@@ -77,9 +128,9 @@ namespace Level_Exporter.ViewModels
         public ICommand ReadMastercamLevels { get; }
 
         /// <summary>
-        /// Gets ICommand for export levels geometry button command
+        /// Gets ICommand for checking all level checkboxes
         /// </summary>
-        public ICommand ExportLevelGeometry { get; }
+        public ICommand SelectAll { get; }
 
         #endregion
 
