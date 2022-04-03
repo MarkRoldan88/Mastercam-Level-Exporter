@@ -14,17 +14,12 @@ namespace Level_Exporter.Models
         #region NotifyPropertyChanged
 
         public event PropertyChangedEventHandler PropertyChanged;
-        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
 
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-            => this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        {
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
 
         #endregion
 
@@ -62,6 +57,8 @@ namespace Level_Exporter.Models
             get => _isSelected;
             set
             {
+                if (value == _isSelected) return;
+
                 _isSelected = value;
                 OnPropertyChanged(nameof(IsSelected));
             }

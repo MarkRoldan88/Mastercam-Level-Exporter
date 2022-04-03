@@ -1,4 +1,4 @@
-﻿namespace Level_Exporter.ViewModels
+namespace Level_Exporter.ViewModels
 {
     using System;
     using System.Collections.Generic;
@@ -31,16 +31,7 @@
         /// The property changed.
         /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
-
-        /// <summary>
-        /// Notify property changed
-        /// </summary>
-        /// <param name="propertyName"></param>
-        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
+        
         /// <summary>
         /// The on property changed.
         /// </summary>
