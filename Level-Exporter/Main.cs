@@ -77,6 +77,8 @@ namespace Level_Exporter
             var _ = new System.Windows.Interop.WindowInteropHelper(view) { Owner = ownerWindowHandle };
             view.Show();
 
+            LevelsManager.RefreshLevelsManager();
+
             return MCamReturn.NoErrors;
         }
 
