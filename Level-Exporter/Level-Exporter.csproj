@@ -19,6 +19,8 @@
     <LangVersion>7.3</LangVersion>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <DebugSymbols>true</DebugSymbols>
@@ -94,6 +96,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>WindowStrings.resx</DependentUpon>
     </Compile>
+    <Compile Include="Services\Messenger.cs" />
     <Compile Include="Services\ResourceReaderService.cs" />
     <Compile Include="Services\SingletonBehaviour.cs" />
     <Compile Include="Converters\StringToImageSourceConverter.cs" />
