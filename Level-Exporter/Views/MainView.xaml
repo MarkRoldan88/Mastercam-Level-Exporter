@@ -18,8 +18,8 @@
 
     <Window.Resources>
         <ResourceDictionary>
-            
-            
+
+
             <!-- Converts string name of asset to image source -->
             <converters:StringToImageSourceConverter
                 x:Key="StringToImageSourceConverter" />
@@ -58,23 +58,23 @@
         x:Name="MainGrid"
         x:Uid="MainGrid">
         <Grid.RowDefinitions>
-            <RowDefinition />
-            <RowDefinition
-                Height="Auto" />
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
         <StackPanel
             x:Uid="TextBlockStackPanel"
             Grid.Row="0" 
             Grid.Column="1"
-            HorizontalAlignment="Right"
-            VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5">
+            HorizontalAlignment="Center" 
+            VerticalAlignment="Center" 
+            RenderTransformOrigin="0.5,0.5" Margin="0,59">
             <StackPanel.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -93,18 +93,21 @@
                 <ComboBoxItem FontSize="16" 
                               Content="{x:Static resources:WindowStrings.CadTypeStl}"/>
                 <ComboBoxItem FontSize="16"
-                              Content="{x:Static resources:WindowStrings.CadTypeStp}"/>
+                              Content="{x:Static resources:WindowStrings.CadTypeOther}"/>
             </ComboBox>
         </StackPanel>
 
         <StackPanel 
             Grid.Row="1" 
             Grid.Column="1"
-            HorizontalAlignment="Center" 
-            VerticalAlignment="Center">
+            VerticalAlignment="Center" 
+            Width="296">
             <TextBlock Text="{x:Static resources:WindowStrings.DestinationPrompt}"/>
             <StackPanel Orientation="Horizontal">
-                <TextBox Text="{Binding Path=DestinationDirectory}"/>
+                <TextBox Text="{Binding Path=DestinationDirectory}" 
+                         IsUndoEnabled="True"
+                         ToolTip="{x:Static resources:WindowStrings.BrowseTextFieldToolTip}" 
+                         VerticalAlignment="Center" MinWidth="193" Margin="0,0,25,0"/>
                 <Button 
                     Content="{x:Static resources:WindowStrings.BrowseButton}"
                     Command="{Binding Path=BrowseCommand}"/>
@@ -115,7 +118,7 @@
                     Grid.Row="1" 
                     Grid.Column="0"
                     HorizontalAlignment="Center" 
-                    VerticalAlignment="Top" >
+                    VerticalAlignment="Top" Margin="96,0,95,0" >
             <!--Button for getting Mastercam Level information -->
             <Button x:Name="GetLevelsButton" 
                     Margin="50,0,0,0" 
@@ -145,16 +148,16 @@
                     <DataGrid.Columns>
                         <DataGridTemplateColumn CanUserSort="False">
                             <DataGridTemplateColumn.HeaderTemplate>
-                                    <DataTemplate>
-                                        <!--Check box for selecting all levels -->
-                                        <CheckBox Content="Select"
+                                <DataTemplate>
+                                    <!--Check box for selecting all levels -->
+                                    <CheckBox Content="Select"
                                                   IsChecked="{Binding DataContext.IsSelectAll, 
                                                                 RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}},
                                                                 UpdateSourceTrigger=PropertyChanged}"
                                                   Command="{Binding DataContext.SelectAll, 
                                                             RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}"/>
-                                        <!-- Since Datagrid column *header* is not part of UI logic, must use relative source to bump up and get properties datagrid -->
-                                    </DataTemplate>
+                                    <!-- Since Datagrid column *header* is not part of UI logic, must use relative source to bump up and get properties datagrid -->
+                                </DataTemplate>
                             </DataGridTemplateColumn.HeaderTemplate>
 
                             <DataGridTemplateColumn.CellTemplate>
