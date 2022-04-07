@@ -70,6 +70,24 @@ namespace Level_Exporter.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to If this text field is blank, a save file dialog will open for every level to export..
+        /// </summary>
+        public static string BrowseTextFieldToolTip {
+            get {
+                return ResourceManager.GetString("BrowseTextFieldToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Other.
+        /// </summary>
+        public static string CadTypeOther {
+            get {
+                return ResourceManager.GetString("CadTypeOther", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select a CAD Format.
         /// </summary>
         public static string CadTypePrompt {
@@ -84,15 +102,6 @@ namespace Level_Exporter.Resources {
         public static string CadTypeStl {
             get {
                 return ResourceManager.GetString("CadTypeStl", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to STEP (stp).
-        /// </summary>
-        public static string CadTypeStp {
-            get {
-                return ResourceManager.GetString("CadTypeStp", resourceCulture);
             }
         }
         

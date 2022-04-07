@@ -57,6 +57,9 @@ namespace Level_Exporter.ViewModels
         /// </summary>
         public ICommand CloseCommand { get; }
 
+        /// <summary>
+        /// Gets the Browse button command
+        /// </summary>
         public ICommand BrowseCommand { get; }
 
         #endregion
@@ -71,7 +74,7 @@ namespace Level_Exporter.ViewModels
         #region Public Properties
 
         /// <summary>
-        /// Default File directory path for destination text box
+        /// Gets or Sets Default File directory path for destination text box
         /// </summary>
         public string DestinationDirectory
         {
@@ -121,15 +124,14 @@ namespace Level_Exporter.ViewModels
             var title = ResourceReaderService.GetString("Title");
             var message = ResourceReaderService.GetString("OkButtonMessage");
 
+            //DialogManager.YesNoCancel();
             DialogManager.OK(
                 message.IsSuccess ? message.Value : "Ok Button Pressed",
                 title.IsSuccess ? title.Value : "Mastercam");
 
+            this.ExportHelper();
+            
 
-            foreach (var level in this.LevelInfoViewModel.Levels)
-            {
-                SearchManager.SelectAllGeometryOnLevel(level.Number, true);
-            }
         }
 
         /// <summary> Executes the close command action. </summary>
@@ -139,8 +141,26 @@ namespace Level_Exporter.ViewModels
 
         private void OnBrowseCommand()
         {
-            // TODO: add logic for browse button to open windows dialogue and select folder
-            // (maybe windows api codepack? shell/source?)
+            using (var folderDialog = new FolderBrowserDialog
+            { Description = "Select Folder", SelectedPath = this.DestinationDirectory })
+            {
+                DialogResult result = folderDialog.ShowDialog();
+
+                if (result != DialogResult.OK) return;
+
+                this.DestinationDirectory = folderDialog.SelectedPath;
+            }
+        }
+
+        private void ExportHelper()
+        {
+            foreach (var level in this.LevelInfoViewModel.Levels)
+            {
+                if (!level.IsSelected) continue;
+
+                SearchManager.SelectAllGeometryOnLevel(level.Number, true);
+
+            }
         }
 
         #endregion
