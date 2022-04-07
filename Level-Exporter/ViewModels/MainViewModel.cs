@@ -17,6 +17,7 @@ using System.Windows.Input;
 
 namespace Level_Exporter.ViewModels
 {
+    using System.Windows.Forms;
     using Mastercam.Support;
 
     /// <summary>
@@ -35,9 +36,9 @@ namespace Level_Exporter.ViewModels
         {
             this.LevelInfoViewModel = new LevelInfoViewModel();
 
-            this.OkCommand = new DelegateCommand(this.OnOkCommand, this.CanOkCommand);
-            this.CloseCommand = new DelegateCommand<Window>(this.OnCloseCommand);
-            this.BrowseCommand = new DelegateCommand(this.OnBrowseCommand);
+            this.OkCommand = new DelegateCommand(OnOkCommand, CanOkCommand);
+            this.CloseCommand = new DelegateCommand<Window>(OnCloseCommand);
+            this.BrowseCommand = new DelegateCommand(OnBrowseCommand);
 
             this.DestinationDirectory = SettingsManager.CurrentDirectory;
         }
