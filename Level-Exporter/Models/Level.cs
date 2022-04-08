@@ -1,11 +1,10 @@
 using System.Linq;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using Level_Exporter.Annotations;
 
 namespace Level_Exporter.Models
 {
-    using System.ComponentModel;
-    using System.Runtime.CompilerServices;
-    using Level_Exporter.Annotations;
-
     public class Level : INotifyPropertyChanged
     {
         #region NotifyPropertyChanged

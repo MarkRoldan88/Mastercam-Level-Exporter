@@ -9,31 +9,32 @@
 
 using Level_Exporter.Annotations;
 using Level_Exporter.Commands;
-using Level_Exporter.Services;
 using Mastercam.IO;
 using System.Windows;
 using System.Windows.Input;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Windows.Controls;
+using System.Windows.Forms;
+using Level_Exporter.Models;
+using Level_Exporter.Resources;
+using Mastercam.IO.Types;
+using Mastercam.Support;
 
 
 namespace Level_Exporter.ViewModels
 {
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Linq;
-    using System.Windows.Controls;
-    using System.Windows.Forms;
-    using Level_Exporter.Resources;
-    using Mastercam.App.Exceptions;
-    using Mastercam.Support;
-
     /// <summary>
     /// The main view model.
     /// </summary>
     public class MainViewModel : BaseViewModel
     {
         #region Construction
-
+        /// <summary>
+        /// Gets LevelInfoViewModel
+        /// </summary>
         public LevelInfoViewModel LevelInfoViewModel { get; }
 
         /// <summary>

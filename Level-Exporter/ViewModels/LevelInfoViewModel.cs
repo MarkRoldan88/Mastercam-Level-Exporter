@@ -1,12 +1,12 @@
-﻿namespace Level_Exporter.ViewModels
-{
-    using System.Linq;
-    using System.Collections.ObjectModel;
-    using System.Windows.Input;
-    using Level_Exporter.Commands;
-    using Level_Exporter.Models;
-    using Mastercam.IO;
+﻿using System.Linq;
+using System.Collections.ObjectModel;
+using System.Windows.Input;
+using Level_Exporter.Commands;
+using Level_Exporter.Models;
+using Mastercam.IO;
 
+namespace Level_Exporter.ViewModels
+{
     public class LevelInfoViewModel : BaseViewModel
     {
 
