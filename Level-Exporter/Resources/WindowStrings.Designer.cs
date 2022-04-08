@@ -79,11 +79,56 @@ namespace Level_Exporter.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Other.
+        ///   Looks up a localized string similar to dwg.
         /// </summary>
-        public static string CadTypeOther {
+        public static string CadTypeDwg {
             get {
-                return ResourceManager.GetString("CadTypeOther", resourceCulture);
+                return ResourceManager.GetString("CadTypeDwg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to dxf.
+        /// </summary>
+        public static string CadTypeDxf {
+            get {
+                return ResourceManager.GetString("CadTypeDxf", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to emcam.
+        /// </summary>
+        public static string CadTypeEmcam {
+            get {
+                return ResourceManager.GetString("CadTypeEmcam", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to iges.
+        /// </summary>
+        public static string CadTypeIges {
+            get {
+                return ResourceManager.GetString("CadTypeIges", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to igs.
+        /// </summary>
+        public static string CadTypeIgs {
+            get {
+                return ResourceManager.GetString("CadTypeIgs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to mcam.
+        /// </summary>
+        public static string CadTypeMcam {
+            get {
+                return ResourceManager.GetString("CadTypeMcam", resourceCulture);
             }
         }
         
@@ -97,11 +142,65 @@ namespace Level_Exporter.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to STL.
+        ///   Looks up a localized string similar to sat.
+        /// </summary>
+        public static string CadTypeSat {
+            get {
+                return ResourceManager.GetString("CadTypeSat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to step.
+        /// </summary>
+        public static string CadTypeStep {
+            get {
+                return ResourceManager.GetString("CadTypeStep", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to stl.
         /// </summary>
         public static string CadTypeStl {
             get {
                 return ResourceManager.GetString("CadTypeStl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to stp.
+        /// </summary>
+        public static string CadTypeStp {
+            get {
+                return ResourceManager.GetString("CadTypeStp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to x_b.
+        /// </summary>
+        public static string CadTypeXb {
+            get {
+                return ResourceManager.GetString("CadTypeXb", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to xmt_txt.
+        /// </summary>
+        public static string CadTypeXmttxt {
+            get {
+                return ResourceManager.GetString("CadTypeXmttxt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to x_t.
+        /// </summary>
+        public static string CadTypeXt {
+            get {
+                return ResourceManager.GetString("CadTypeXt", resourceCulture);
             }
         }
         
