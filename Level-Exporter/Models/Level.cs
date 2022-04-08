@@ -37,7 +37,7 @@ namespace Level_Exporter.Models
             set
             {
                 var chars = value.ToCharArray();
-                var isValid = chars.Any(c =>
+                var isValid = chars.Any(c => // Check string for invalid path characters
                     c != '\"' || c != '<' || c != '>' || c != '|' || c != '*' || c != '?' || c > 32 || c != '+' ||
                     c != '/');
 

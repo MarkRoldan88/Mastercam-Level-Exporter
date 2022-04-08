@@ -90,7 +90,7 @@ namespace Level_Exporter.ViewModels
             set
             {
                 var chars = value.ToCharArray();
-                var isValid = chars.Any(c =>
+                var isValid = chars.Any(c => // Check string for invalid chars
                     c != '\"' || c != '<' || c != '>' || c != '|' || c != '*' || c != '?' || c > 32 || c != '+');
 
                 if (chars.Length == 0 || !isValid)
@@ -103,6 +103,9 @@ namespace Level_Exporter.ViewModels
             }
         }
 
+        /// <summary>
+        /// Gets or Sets cad format selected
+        /// </summary>
         public ComboBoxItem CadFormatSelected
         {
             get => _cadFormatSelected;
@@ -147,8 +150,6 @@ namespace Level_Exporter.ViewModels
                 title.IsSuccess ? title.Value : "Mastercam");
 
             this.ExportHelper();
-            
-
         }
 
         /// <summary> Executes the close command action. </summary>
@@ -169,30 +170,36 @@ namespace Level_Exporter.ViewModels
             }
         }
 
+        /// <summary>
+        /// Logic for export Button
+        /// </summary>
         private void ExportHelper()
         {
             // For checking if user has input duplicate level names
             var cachedNames = new Dictionary<string, int>();
 
+            // TODO: Try to clean up this function
+
             foreach (var level in this.LevelInfoViewModel.Levels)
             {
                 if (!level.IsSelected) continue;
 
-                if (cachedNames.ContainsKey(level.Name))
+                if (cachedNames.ContainsKey(level.Name)) 
                     level.Name += _nameIncrement++.ToString();
-                
+
                 else cachedNames.Add(level.Name, 1);
                 
+                // Mastercam select levels
                 SearchManager.SelectAllGeometryOnLevel(level.Number, true);
 
                 try
                 {
                     if (CadFormatSelected.Content.ToString() == WindowStrings.CadTypeStl)
-                    {
+                    { //TODO Add box for STL resolution
                         FileManager.WriteSTL(Path.Combine(DestinationDirectory, $"{level.Name}.{CadFormatSelected.Content}"), 0,
                             0.5, false,true, true, true, false);
                     }
-
+                    
                     if (CadFormatSelected.Content.ToString() != "STL" && FileManager.SaveSome(
                             Path.Combine(DestinationDirectory, $"{level.Name}.{CadFormatSelected.Content}"), true))
                     {
@@ -207,11 +214,6 @@ namespace Level_Exporter.ViewModels
                     Console.WriteLine(e);
                     throw;
                 }
-
-
-
-
-
             }
         }
 
