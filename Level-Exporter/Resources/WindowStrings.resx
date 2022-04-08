@@ -117,14 +117,23 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="BrowseButton" xml:space="preserve">
+    <value>Browse</value>
+  </data>
+  <data name="BrowseTextFieldToolTip" xml:space="preserve">
+    <value>If this text field is blank, a save file dialog will open for every level to export.</value>
+  </data>
+  <data name="CadTypeOther" xml:space="preserve">
+    <value>Other</value>
+  </data>
   <data name="CadTypePrompt" xml:space="preserve">
     <value>Select a CAD Format</value>
   </data>
   <data name="CadTypeStl" xml:space="preserve">
     <value>STL</value>
   </data>
-  <data name="CadTypeStp" xml:space="preserve">
-    <value>STEP (stp)</value>
+  <data name="DestinationPrompt" xml:space="preserve">
+    <value>Destination Directory (leave blank to open file dialog on export)</value>
   </data>
   <data name="ExportButton" xml:space="preserve">
     <value>Export CAD</value>

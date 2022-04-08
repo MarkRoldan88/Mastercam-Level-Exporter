@@ -18,16 +18,9 @@
 
     <Window.Resources>
         <ResourceDictionary>
-            
-            
             <!-- Converts string name of asset to image source -->
             <converters:StringToImageSourceConverter
                 x:Key="StringToImageSourceConverter" />
-
-            <Style x:Key="SyncLevelsText" TargetType="{x:Type Button}">
-                <Setter Property="Content" 
-                        Value="{x:Static resources:WindowStrings.SyncLevelsButton}"/>
-            </Style>
 
             <Style x:Key="ReadLevelsText" TargetType="{x:Type Button}">
                 <Setter Property="Content" 
@@ -58,53 +51,30 @@
         x:Name="MainGrid"
         x:Uid="MainGrid">
         <Grid.RowDefinitions>
-            <RowDefinition />
-            <RowDefinition
-                Height="Auto" />
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
         <StackPanel
-            x:Uid="TextBlockStackPanel"
-            Grid.Row="0"
-            HorizontalAlignment="Right"
-            VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5">
-            <StackPanel.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform/>
-                    <TranslateTransform X="-25"/>
-                </TransformGroup>
-            </StackPanel.RenderTransform>
-            <TextBlock
-                Text="{x:Static resx:WindowStrings.CadTypePrompt }"
-                FontSize="32"
-                Width="300" RenderTransformOrigin="0.493,0.585" />
-            <ComboBox>
-                <ComboBoxItem FontSize="16" 
-                              Content="{x:Static resources:WindowStrings.CadTypeStl}"/>
-                <ComboBoxItem FontSize="16"
-                              Content="{x:Static resources:WindowStrings.CadTypeStp}"/>
-            </ComboBox>
-
-        </StackPanel>
-
-        <StackPanel DataContext="{Binding LevelInfoViewModel}" 
-                    Grid.Row="0" 
-                    HorizontalAlignment="Left" 
-                    VerticalAlignment="Center" >
+            VerticalAlignment="Center">
+            <!--Button for getting Mastercam Level information -->
             <Button x:Name="GetLevelsButton" 
-                    Margin="50,0,0,0" 
-                    Command="{Binding ReadMastercamLevels}">
+                    Command="{Binding Path=LevelInfoViewModel.ReadMastercamLevels}" Width="Auto">
                 <Button.Style>
                     <Style TargetType="{x:Type Button}" 
                            BasedOn="{StaticResource ReadLevelsText}">
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding IsSyncButton}" Value="false">
+                            <DataTrigger Binding="{Binding Path=LevelInfoViewModel.IsSyncButton}" Value="false">
                                 <Setter Property="Content" 
                                         Value="{x:Static resources:WindowStrings.GetLevelsButton}"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding IsSyncButton}" Value="true">
+                            <DataTrigger Binding="{Binding Path=LevelInfoViewModel.IsSyncButton}" Value="true">
                                 <Setter Property="Content" 
                                         Value="{x:Static resources:WindowStrings.SyncLevelsButton}"/>
                             </DataTrigger>
@@ -112,40 +82,97 @@
                     </Style>
                 </Button.Style>
             </Button>
+        </StackPanel>
+
+        <StackPanel
+            x:Uid="TextBlockStackPanel"
+            Grid.Row="0" 
+            Grid.Column="1"
+            HorizontalAlignment="Center" 
+            VerticalAlignment="Center" 
+            Width="Auto" Height="Auto">
+            <TextBlock
+                Text="{x:Static resx:WindowStrings.CadTypePrompt }"
+                FontSize="14"
+                Width="300" RenderTransformOrigin="0.493,0.585" />
+            <ComboBox IsReadOnly="True" 
+                      IsTextSearchEnabled="False"
+                      SelectedValue="{Binding CadFormatSelected, Mode=TwoWay}">
+                <ComboBoxItem FontSize="14" 
+                              Content="{x:Static resources:WindowStrings.CadTypeStl}"/>
+                <ComboBoxItem FontSize="14"
+                              Content="{x:Static resources:WindowStrings.CadTypeOther}"/>
+            </ComboBox>
+        </StackPanel>
+
+        <StackPanel 
+            Grid.Row="1" 
+            Grid.Column="1"
+            VerticalAlignment="Center" 
+            Width="Auto">
+            <TextBlock Text="{x:Static resources:WindowStrings.DestinationPrompt}"/>
+            <StackPanel Orientation="Vertical" Width="Auto">
+                <TextBox Text="{Binding Path=DestinationDirectory, UpdateSourceTrigger=LostFocus}" 
+                         IsUndoEnabled="True"
+                         ToolTip="{x:Static resources:WindowStrings.BrowseTextFieldToolTip}" 
+                         VerticalAlignment="Center" HorizontalAlignment="Stretch" MinWidth="193" MaxWidth="250">
+                </TextBox>
+                <Button 
+                    Content="{x:Static resources:WindowStrings.BrowseButton}"
+                    Command="{Binding Path=BrowseCommand}"
+                    Width="125"/>
+            </StackPanel>
+        </StackPanel>
+
+        <StackPanel DataContext="{Binding LevelInfoViewModel}" 
+                    Grid.Row="1" 
+                    Grid.Column="0"
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Top" Margin="96,0,95,0" >
+
+
+            <!--Data grid for Level information -->
             <Grid>
-                <DataGrid CanUserAddRows="False" 
+                <DataGrid
+                    CanUserAddRows="False" 
                           AutoGenerateColumns="False"
-                          ItemsSource="{Binding Path=Levels}">
+                          ItemsSource="{Binding Path=Levels}" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible"
+                    Height="Auto">
                     <DataGrid.Columns>
-                        <DataGridTemplateColumn>
+                        <DataGridTemplateColumn CanUserSort="False">
                             <DataGridTemplateColumn.HeaderTemplate>
-                                    <DataTemplate>
-                                        <CheckBox Content="Select"
+                                <DataTemplate>
+                                    <!--Check box for selecting all levels -->
+                                    <CheckBox Content="Select"
                                                   IsChecked="{Binding DataContext.IsSelectAll, 
                                                                 RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}},
                                                                 UpdateSourceTrigger=PropertyChanged}"
                                                   Command="{Binding DataContext.SelectAll, 
                                                             RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}"/>
-                                        <!-- Since Datagrid column *header* is not part of UI logic, must use relative source to bump up and get properties datagrid -->
-                                    </DataTemplate>
+                                    <!-- Since Datagrid column *header* is not part of UI logic, must use relative source to bump up and get properties datagrid -->
+                                </DataTemplate>
                             </DataGridTemplateColumn.HeaderTemplate>
 
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
+                                    <!-- Checkbox for selecting level for export -->
                                     <CheckBox IsChecked="{
                                         Binding Path=IsSelected, 
                                         UpdateSourceTrigger=PropertyChanged}"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
+
                         <DataGridTextColumn Header="#"
                                             IsReadOnly="True"
                                             Binding="{Binding Number}"/>
                         <DataGridTextColumn Header="Name" 
-                                            Binding="{Binding Name}"/>
+                                            Binding="{Binding Name}"
+                                            CanUserSort="False"/>
                         <DataGridTextColumn Header="Entity Count"
                                             IsReadOnly="True"
-                                            Binding="{Binding EntityCount}" />
+                                            Binding="{Binding EntityCount}" 
+                                            CanUserSort="False"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </Grid>
@@ -155,7 +182,8 @@
         <StackPanel
             x:Name="ButtonPanel"
             x:Uid="ButtonStackPanel"
-            Grid.Row="1"
+            Grid.Row="2" 
+            Grid.Column="1"
             Orientation="Horizontal"
             HorizontalAlignment="Right"
             VerticalAlignment="Bottom">

@@ -1,4 +1,4 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="MainViewModel.cs" company="TODO: Company Name">
 //   Copyright (c) 2022 TODO: Company Name
 // </copyright>
@@ -14,13 +14,18 @@ using Mastercam.IO;
 using System.Windows;
 using System.Windows.Input;
 
+
 namespace Level_Exporter.ViewModels
 {
+    using System;
     using System.Collections.Generic;
-    using System.Collections.ObjectModel;
+    using System.IO;
     using System.Linq;
+    using System.Windows.Controls;
     using System.Windows.Forms;
-    using Level_Exporter.Models;
+    using Level_Exporter.Resources;
+    using Mastercam.App.Exceptions;
+    using Mastercam.Support;
 
     /// <summary>
     /// The main view model.
@@ -37,8 +42,12 @@ namespace Level_Exporter.ViewModels
         public MainViewModel()
         {
             this.LevelInfoViewModel = new LevelInfoViewModel();
-            this.OkCommand = new DelegateCommand(this.OnOkCommand, this.CanOkCommand);
-            this.CloseCommand = new DelegateCommand<Window>(this.OnCloseCommand);
+
+            this.OkCommand = new DelegateCommand(OnOkCommand, CanOkCommand);
+            this.CloseCommand = new DelegateCommand<Window>(OnCloseCommand);
+            this.BrowseCommand = new DelegateCommand(OnBrowseCommand);
+
+            this.DestinationDirectory = SettingsManager.CurrentDirectory;
         }
 
         #endregion
@@ -55,9 +64,57 @@ namespace Level_Exporter.ViewModels
         /// </summary>
         public ICommand CloseCommand { get; }
 
+        /// <summary>
+        /// Gets the Browse button command
+        /// </summary>
+        public ICommand BrowseCommand { get; }
+
+        #endregion
+
+        #region Private Fields
+
+        private ComboBoxItem _cadFormatSelected;
+        private string _destinationDirectory;
+        private int _nameIncrement;
+
         #endregion
 
         #region Public Properties
+
+        /// <summary>
+        /// Gets or Sets Default File directory path for destination text box
+        /// </summary>
+        public string DestinationDirectory
+        {
+            get => _destinationDirectory;
+            set
+            {
+                var chars = value.ToCharArray();
+                var isValid = chars.Any(c => // Check string for invalid chars
+                    c != '\"' || c != '<' || c != '>' || c != '|' || c != '*' || c != '?' || c > 32 || c != '+');
+
+                if (chars.Length == 0 || !isValid)
+                {
+                    value = string.Empty;
+                }
+
+                _destinationDirectory = Path.GetFullPath(value);
+                OnPropertyChanged(nameof(DestinationDirectory));
+            }
+        }
+
+        /// <summary>
+        /// Gets or Sets cad format selected
+        /// </summary>
+        public ComboBoxItem CadFormatSelected
+        {
+            get => _cadFormatSelected;
+            set
+            {
+                _cadFormatSelected = value;
+                OnPropertyChanged(nameof(CadFormatSelected));
+            }
+        }
 
         /// <summary>
         /// The ok image resource name.
@@ -87,9 +144,12 @@ namespace Level_Exporter.ViewModels
             var title = ResourceReaderService.GetString("Title");
             var message = ResourceReaderService.GetString("OkButtonMessage");
 
+            //DialogManager.YesNoCancel();
             DialogManager.OK(
                 message.IsSuccess ? message.Value : "Ok Button Pressed",
                 title.IsSuccess ? title.Value : "Mastercam");
+
+            this.ExportHelper();
         }
 
         /// <summary> Executes the close command action. </summary>
@@ -97,7 +157,65 @@ namespace Level_Exporter.ViewModels
         /// <param name="view"> The view. </param>
         private void OnCloseCommand(Window view) => view?.Close();
 
+        private void OnBrowseCommand()
+        {
+            using (var folderDialog = new FolderBrowserDialog
+            { Description = "Select Folder", SelectedPath = this.DestinationDirectory })
+            {
+                DialogResult result = folderDialog.ShowDialog();
 
+                if (result != DialogResult.OK) return;
+
+                this.DestinationDirectory = folderDialog.SelectedPath;
+            }
+        }
+
+        /// <summary>
+        /// Logic for export Button
+        /// </summary>
+        private void ExportHelper()
+        {
+            // For checking if user has input duplicate level names
+            var cachedNames = new Dictionary<string, int>();
+
+            // TODO: Try to clean up this function
+
+            foreach (var level in this.LevelInfoViewModel.Levels)
+            {
+                if (!level.IsSelected) continue;
+
+                if (cachedNames.ContainsKey(level.Name)) 
+                    level.Name += _nameIncrement++.ToString();
+
+                else cachedNames.Add(level.Name, 1);
+                
+                // Mastercam select levels
+                SearchManager.SelectAllGeometryOnLevel(level.Number, true);
+
+                try
+                {
+                    if (CadFormatSelected.Content.ToString() == WindowStrings.CadTypeStl)
+                    { //TODO Add box for STL resolution
+                        FileManager.WriteSTL(Path.Combine(DestinationDirectory, $"{level.Name}.{CadFormatSelected.Content}"), 0,
+                            0.5, false,true, true, true, false);
+                    }
+                    
+                    if (CadFormatSelected.Content.ToString() != "STL" && FileManager.SaveSome(
+                            Path.Combine(DestinationDirectory, $"{level.Name}.{CadFormatSelected.Content}"), true))
+                    {
+                        DialogManager.OK($"Levels exported to {DestinationDirectory} as {CadFormatSelected} files", "Success");
+                    }
+                }
+                catch (Exception e)
+                {
+                    DialogManager.Exception(new MastercamException(
+                        "Error Saving files to directory, double check path and make sure level names do not contain any symbols"));
+
+                    Console.WriteLine(e);
+                    throw;
+                }
+            }
+        }
 
         #endregion
     }

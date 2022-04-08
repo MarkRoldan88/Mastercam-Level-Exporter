@@ -1,19 +1,13 @@
 ﻿namespace Level_Exporter.ViewModels
 {
-    using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Collections.ObjectModel;
-    using System.ComponentModel;
-    using System.Runtime.CompilerServices;
     using System.Windows.Input;
-    using Level_Exporter.Annotations;
     using Level_Exporter.Commands;
     using Level_Exporter.Models;
     using Mastercam.IO;
-    using Mastercam.Support;
 
-    public class LevelInfoViewModel : INotifyPropertyChanged
+    public class LevelInfoViewModel : BaseViewModel
     {
 
         #region Construction
@@ -24,37 +18,30 @@
             Levels = new ObservableCollection<Level>();
         }
         #endregion
-
-        #region INotifyPropertyChanged
-        /// <summary>
-        /// The property changed.
-        /// </summary>
-        public event PropertyChangedEventHandler PropertyChanged;
         
-        /// <summary>
-        /// The on property changed.
-        /// </summary>
-        /// <param name="propertyName">
-        /// The property name.
-        /// </param>
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        #endregion
-
-
-        #region Private properties
+        #region Private fields
 
         private ObservableCollection<Level> _levels;
         private bool _isSelectAll;
         private bool _isSyncButton;
         private bool _isSelected;
+        private string _name;
         #endregion
 
         #region Public Properties
+
+
+        public string Name
+        {
+            get => _name;
+            set
+            {
+                if (_name == value) return;
+
+                _name = value;
+                OnPropertyChanged(nameof(Name));
+            }
+        }
 
         /// <summary>
         /// Gets and sets IsSelectAll for datagrid column header
@@ -151,13 +138,12 @@
                     Name = level.Value,
                     Number = level.Key,
                     EntityCount = LevelsManager.GetLevelEntityCount(level.Key, false),
-                    Geometries = SearchManager.GetGeometry(level.Key),
                 });
             }
         }
 
         /// <summary>
-        /// Command for setting IsSelected property for level in levels collection
+        /// Command for Checkbox in header, sets IsSelected property of each level in levels collection
         /// </summary>
         private void OnSelectAll()
         {
