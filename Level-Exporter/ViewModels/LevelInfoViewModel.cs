@@ -1,4 +1,4 @@
-namespace Level_Exporter.ViewModels
+﻿namespace Level_Exporter.ViewModels
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -14,9 +14,9 @@ namespace Level_Exporter.ViewModels
         #region Construction
         public LevelInfoViewModel()
         {
-            this.ReadMastercamLevels = new DelegateCommand(OnReadMastercamLevels);
-            this.SelectAll = new DelegateCommand(OnSelectAll);
-            this.Levels = new ObservableCollection<Level>();
+            ReadMastercamLevels = new DelegateCommand(OnReadMastercamLevels);
+            SelectAll = new DelegateCommand(OnSelectAll);
+            Levels = new ObservableCollection<Level>();
         }
         #endregion
         
@@ -26,9 +26,23 @@ namespace Level_Exporter.ViewModels
         private bool _isSelectAll;
         private bool _isSyncButton;
         private bool _isSelected;
+        private string _name;
         #endregion
 
         #region Public Properties
+
+
+        public string Name
+        {
+            get => _name;
+            set
+            {
+                if (_name == value) return;
+
+                _name = value;
+                OnPropertyChanged(nameof(Name));
+            }
+        }
 
         /// <summary>
         /// Gets and sets IsSelectAll for datagrid column header

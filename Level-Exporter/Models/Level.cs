@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Level_Exporter.Models
@@ -7,7 +5,6 @@ namespace Level_Exporter.Models
     using System.ComponentModel;
     using System.Runtime.CompilerServices;
     using Level_Exporter.Annotations;
-    using Mastercam.Database;
 
     public class Level : INotifyPropertyChanged
     {
@@ -26,6 +23,7 @@ namespace Level_Exporter.Models
         #region Private Properties
 
         private bool _isSelected;
+        private string _name;
 
         #endregion
 
@@ -33,7 +31,25 @@ namespace Level_Exporter.Models
         /// <summary>
         /// Gets and sets Level Name
         /// </summary>
-        public string Name { get; set; }
+        public string Name
+        {
+            get => _name;
+            set
+            {
+                var chars = value.ToCharArray();
+                var isValid = chars.Any(c =>
+                    c != '\"' || c != '<' || c != '>' || c != '|' || c != '*' || c != '?' || c > 32 || c != '+' ||
+                    c != '/');
+
+                if (chars.Length == 0 || !isValid)
+                {
+                    value = string.Empty;
+                }
+
+                _name = value;
+                OnPropertyChanged(nameof(Name));
+            }
+        }
 
         /// <summary>
         /// Gets and Sets Level number

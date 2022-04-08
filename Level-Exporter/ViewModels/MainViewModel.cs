@@ -17,7 +17,14 @@ using System.Windows.Input;
 
 namespace Level_Exporter.ViewModels
 {
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using System.Windows.Controls;
     using System.Windows.Forms;
+    using Level_Exporter.Resources;
+    using Mastercam.App.Exceptions;
     using Mastercam.Support;
 
     /// <summary>
@@ -66,9 +73,10 @@ namespace Level_Exporter.ViewModels
 
         #region Private Fields
 
-        private object _cadFormatSelected;
+        private ComboBoxItem _cadFormatSelected;
         private string _destinationDirectory;
-        
+        private int _nameIncrement;
+
         #endregion
 
         #region Public Properties
@@ -81,12 +89,21 @@ namespace Level_Exporter.ViewModels
             get => _destinationDirectory;
             set
             {
-                _destinationDirectory = value;
+                var chars = value.ToCharArray();
+                var isValid = chars.Any(c =>
+                    c != '\"' || c != '<' || c != '>' || c != '|' || c != '*' || c != '?' || c > 32 || c != '+');
+
+                if (chars.Length == 0 || !isValid)
+                {
+                    value = string.Empty;
+                }
+
+                _destinationDirectory = Path.GetFullPath(value);
                 OnPropertyChanged(nameof(DestinationDirectory));
             }
         }
 
-        public object CadFormatSelected
+        public ComboBoxItem CadFormatSelected
         {
             get => _cadFormatSelected;
             set
@@ -154,11 +171,46 @@ namespace Level_Exporter.ViewModels
 
         private void ExportHelper()
         {
+            // For checking if user has input duplicate level names
+            var cachedNames = new Dictionary<string, int>();
+
             foreach (var level in this.LevelInfoViewModel.Levels)
             {
                 if (!level.IsSelected) continue;
 
+                if (cachedNames.ContainsKey(level.Name))
+                    level.Name += _nameIncrement++.ToString();
+                
+                else cachedNames.Add(level.Name, 1);
+                
                 SearchManager.SelectAllGeometryOnLevel(level.Number, true);
+
+                try
+                {
+                    if (CadFormatSelected.Content.ToString() == WindowStrings.CadTypeStl)
+                    {
+                        FileManager.WriteSTL(Path.Combine(DestinationDirectory, $"{level.Name}.{CadFormatSelected.Content}"), 0,
+                            0.5, false,true, true, true, false);
+                    }
+
+                    if (CadFormatSelected.Content.ToString() != "STL" && FileManager.SaveSome(
+                            Path.Combine(DestinationDirectory, $"{level.Name}.{CadFormatSelected.Content}"), true))
+                    {
+                        DialogManager.OK($"Levels exported to {DestinationDirectory} as {CadFormatSelected} files", "Success");
+                    }
+                }
+                catch (Exception e)
+                {
+                    DialogManager.Exception(new MastercamException(
+                        "Error Saving files to directory, double check path and make sure level names do not contain any symbols"));
+
+                    Console.WriteLine(e);
+                    throw;
+                }
+
+
+
+
 
             }
         }
