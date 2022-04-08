@@ -96,7 +96,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>WindowStrings.resx</DependentUpon>
     </Compile>
-    <Compile Include="Services\Messenger.cs" />
     <Compile Include="Services\ResourceReaderService.cs" />
     <Compile Include="Services\SingletonBehaviour.cs" />
     <Compile Include="Converters\StringToImageSourceConverter.cs" />

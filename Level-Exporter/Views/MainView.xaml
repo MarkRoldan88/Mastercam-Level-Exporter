@@ -18,16 +18,9 @@
 
     <Window.Resources>
         <ResourceDictionary>
-
-
             <!-- Converts string name of asset to image source -->
             <converters:StringToImageSourceConverter
                 x:Key="StringToImageSourceConverter" />
-
-            <Style x:Key="SyncLevelsText" TargetType="{x:Type Button}">
-                <Setter Property="Content" 
-                        Value="{x:Static resources:WindowStrings.SyncLevelsButton}"/>
-            </Style>
 
             <Style x:Key="ReadLevelsText" TargetType="{x:Type Button}">
                 <Setter Property="Content" 
@@ -60,7 +53,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
-            <RowDefinition/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
@@ -69,30 +62,45 @@
         </Grid.ColumnDefinitions>
 
         <StackPanel
+            VerticalAlignment="Center">
+            <!--Button for getting Mastercam Level information -->
+            <Button x:Name="GetLevelsButton" 
+                    Command="{Binding Path=LevelInfoViewModel.ReadMastercamLevels}" Width="Auto">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}" 
+                           BasedOn="{StaticResource ReadLevelsText}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Path=LevelInfoViewModel.IsSyncButton}" Value="false">
+                                <Setter Property="Content" 
+                                        Value="{x:Static resources:WindowStrings.GetLevelsButton}"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Path=LevelInfoViewModel.IsSyncButton}" Value="true">
+                                <Setter Property="Content" 
+                                        Value="{x:Static resources:WindowStrings.SyncLevelsButton}"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+        </StackPanel>
+
+        <StackPanel
             x:Uid="TextBlockStackPanel"
             Grid.Row="0" 
             Grid.Column="1"
             HorizontalAlignment="Center" 
             VerticalAlignment="Center" 
-            RenderTransformOrigin="0.5,0.5" Margin="0,59">
-            <StackPanel.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform/>
-                    <TranslateTransform X="-25"/>
-                </TransformGroup>
-            </StackPanel.RenderTransform>
+            Width="Auto" Height="Auto">
             <TextBlock
                 Text="{x:Static resx:WindowStrings.CadTypePrompt }"
                 FontSize="14"
                 Width="300" RenderTransformOrigin="0.493,0.585" />
             <ComboBox IsReadOnly="True" 
                       IsTextSearchEnabled="False"
-                      SelectedItem="{Binding CadFormatSelected}">
-                <ComboBoxItem FontSize="16" 
+                      SelectedValue="{Binding CadFormatSelected, Mode=TwoWay}">
+                <ComboBoxItem FontSize="14" 
                               Content="{x:Static resources:WindowStrings.CadTypeStl}"/>
-                <ComboBoxItem FontSize="16"
+                <ComboBoxItem FontSize="14"
                               Content="{x:Static resources:WindowStrings.CadTypeOther}"/>
             </ComboBox>
         </StackPanel>
@@ -101,16 +109,18 @@
             Grid.Row="1" 
             Grid.Column="1"
             VerticalAlignment="Center" 
-            Width="296">
+            Width="Auto">
             <TextBlock Text="{x:Static resources:WindowStrings.DestinationPrompt}"/>
-            <StackPanel Orientation="Horizontal">
-                <TextBox Text="{Binding Path=DestinationDirectory}" 
+            <StackPanel Orientation="Vertical" Width="Auto">
+                <TextBox Text="{Binding Path=DestinationDirectory, UpdateSourceTrigger=LostFocus}" 
                          IsUndoEnabled="True"
                          ToolTip="{x:Static resources:WindowStrings.BrowseTextFieldToolTip}" 
-                         VerticalAlignment="Center" MinWidth="193" Margin="0,0,25,0"/>
+                         VerticalAlignment="Center" HorizontalAlignment="Stretch" MinWidth="193" MaxWidth="250">
+                </TextBox>
                 <Button 
                     Content="{x:Static resources:WindowStrings.BrowseButton}"
-                    Command="{Binding Path=BrowseCommand}"/>
+                    Command="{Binding Path=BrowseCommand}"
+                    Width="125"/>
             </StackPanel>
         </StackPanel>
 
@@ -119,32 +129,15 @@
                     Grid.Column="0"
                     HorizontalAlignment="Center" 
                     VerticalAlignment="Top" Margin="96,0,95,0" >
-            <!--Button for getting Mastercam Level information -->
-            <Button x:Name="GetLevelsButton" 
-                    Margin="50,0,0,0" 
-                    Command="{Binding ReadMastercamLevels}">
-                <Button.Style>
-                    <Style TargetType="{x:Type Button}" 
-                           BasedOn="{StaticResource ReadLevelsText}">
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding IsSyncButton}" Value="false">
-                                <Setter Property="Content" 
-                                        Value="{x:Static resources:WindowStrings.GetLevelsButton}"/>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding IsSyncButton}" Value="true">
-                                <Setter Property="Content" 
-                                        Value="{x:Static resources:WindowStrings.SyncLevelsButton}"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Button.Style>
-            </Button>
+
 
             <!--Data grid for Level information -->
             <Grid>
-                <DataGrid CanUserAddRows="False" 
+                <DataGrid
+                    CanUserAddRows="False" 
                           AutoGenerateColumns="False"
-                          ItemsSource="{Binding Path=Levels}">
+                          ItemsSource="{Binding Path=Levels}" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible"
+                    Height="Auto">
                     <DataGrid.Columns>
                         <DataGridTemplateColumn CanUserSort="False">
                             <DataGridTemplateColumn.HeaderTemplate>
