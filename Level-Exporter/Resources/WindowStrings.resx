@@ -123,14 +123,61 @@
   <data name="BrowseTextFieldToolTip" xml:space="preserve">
     <value>If this text field is blank, a save file dialog will open for every level to export.</value>
   </data>
-  <data name="CadTypeOther" xml:space="preserve">
-    <value>Other</value>
+  <data name="CadTypeDwg" xml:space="preserve">
+    <value>dwg</value>
+    <comment>AutoCad drawing</comment>
+  </data>
+  <data name="CadTypeDxf" xml:space="preserve">
+    <value>dxf</value>
+    <comment>AutoCad dxf</comment>
+  </data>
+  <data name="CadTypeEmcam" xml:space="preserve">
+    <value>emcam</value>
+    <comment>Educational Mastercam </comment>
+  </data>
+  <data name="CadTypeIges" xml:space="preserve">
+    <value>iges</value>
+    <comment>Iges Surface</comment>
+  </data>
+  <data name="CadTypeIgs" xml:space="preserve">
+    <value>igs</value>
+    <comment>Igs Surface</comment>
+  </data>
+  <data name="CadTypeMcam" xml:space="preserve">
+    <value>mcam</value>
+    <comment>Mastercam</comment>
   </data>
   <data name="CadTypePrompt" xml:space="preserve">
     <value>Select a CAD Format</value>
+    <comment>Prompt above Combobox</comment>
+  </data>
+  <data name="CadTypeSat" xml:space="preserve">
+    <value>sat</value>
+    <comment>ACIS kernal SAT</comment>
+  </data>
+  <data name="CadTypeStep" xml:space="preserve">
+    <value>step</value>
+    <comment>Step</comment>
   </data>
   <data name="CadTypeStl" xml:space="preserve">
-    <value>STL</value>
+    <value>stl</value>
+    <comment>Mesh</comment>
+  </data>
+  <data name="CadTypeStp" xml:space="preserve">
+    <value>stp</value>
+    <comment>Step</comment>
+  </data>
+  <data name="CadTypeXb" xml:space="preserve">
+    <value>x_b</value>
+    <comment>Parasolid Binary</comment>
+  </data>
+  <data name="CadTypeXmttxt" xml:space="preserve">
+    <value>xmt_txt</value>
+    <comment>Parasolid</comment>
+  </data>
+  <data name="CadTypeXt" xml:space="preserve">
+    <value>x_t</value>
+    <comment>Parasolid (Cannot use exported file in older mastercam version)</comment>
   </data>
   <data name="DestinationPrompt" xml:space="preserve">
     <value>Destination Directory (leave blank to open file dialog on export)</value>

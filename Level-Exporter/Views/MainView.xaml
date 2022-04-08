@@ -95,13 +95,36 @@
                 Text="{x:Static resx:WindowStrings.CadTypePrompt }"
                 FontSize="14"
                 Width="300" RenderTransformOrigin="0.493,0.585" />
+            <!-- Combox for Cad format selection-->
             <ComboBox IsReadOnly="True" 
                       IsTextSearchEnabled="False"
                       SelectedValue="{Binding CadFormatSelected, Mode=TwoWay}">
                 <ComboBoxItem FontSize="14" 
+                              Content="{x:Static resources:WindowStrings.CadTypeDwg}"/>
+                <ComboBoxItem FontSize="14"
+                              Content="{x:Static resources:WindowStrings.CadTypeDxf}"/>
+                <ComboBoxItem FontSize="14"
+                              Content="{x:Static resources:WindowStrings.CadTypeEmcam}"/>
+                <ComboBoxItem FontSize="14"
+                              Content="{x:Static resources:WindowStrings.CadTypeIges}"/>
+                <ComboBoxItem FontSize="14"
+                              Content="{x:Static resources:WindowStrings.CadTypeIgs}"/>
+                <ComboBoxItem FontSize="14"
+                              Content="{x:Static resources:WindowStrings.CadTypeMcam}"/>
+                <ComboBoxItem FontSize="14"
+                              Content="{x:Static resources:WindowStrings.CadTypeSat}"/>
+                <ComboBoxItem FontSize="14"
+                              Content="{x:Static resources:WindowStrings.CadTypeStep}"/>
+                <ComboBoxItem FontSize="14"
+                              Content="{x:Static resources:WindowStrings.CadTypeStp}"/>
+                <ComboBoxItem FontSize="14"
                               Content="{x:Static resources:WindowStrings.CadTypeStl}"/>
                 <ComboBoxItem FontSize="14"
-                              Content="{x:Static resources:WindowStrings.CadTypeOther}"/>
+                              Content="{x:Static resources:WindowStrings.CadTypeXb}"/>
+                <ComboBoxItem FontSize="14"
+                              Content="{x:Static resources:WindowStrings.CadTypeXmttxt}"/>
+                <ComboBoxItem FontSize="14"
+                              Content="{x:Static resources:WindowStrings.CadTypeXt}"/>
             </ComboBox>
         </StackPanel>
 
@@ -112,6 +135,7 @@
             Width="Auto">
             <TextBlock Text="{x:Static resources:WindowStrings.DestinationPrompt}"/>
             <StackPanel Orientation="Vertical" Width="Auto">
+                <!-- Text box for destination/output directory -->
                 <TextBox Text="{Binding Path=DestinationDirectory, UpdateSourceTrigger=LostFocus}" 
                          IsUndoEnabled="True"
                          ToolTip="{x:Static resources:WindowStrings.BrowseTextFieldToolTip}" 
