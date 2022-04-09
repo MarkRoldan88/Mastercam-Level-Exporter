@@ -77,6 +77,7 @@ namespace Level_Exporter.ViewModels
         private ComboBoxItem _cadFormatSelected;
         private string _destinationDirectory;
         private int _nameIncrement;
+        private double _stlResolution;
 
         #endregion
 
@@ -104,7 +105,23 @@ namespace Level_Exporter.ViewModels
             }
         }
 
-        //TODO Add box for STL resolution
+        //TODO Add box for STL resolution, VALIDATE INPUT
+        public double StlResolution
+        {
+            get => _stlResolution;
+            set
+            {
+                if (value < 0.002)
+                {
+                    value = 0.075;
+                    return;
+                } else if { }
+
+                _stlResolution = value;
+                OnPropertyChanged(nameof(StlResolution));
+            }
+        }
+
 
         /// <summary>
         /// Gets or Sets cad format selected
@@ -198,6 +215,12 @@ namespace Level_Exporter.ViewModels
 
                 this.DestinationDirectory = folderDialog.SelectedPath;
             }
+        }
+
+        private double SanitizeDouble(double value)
+        {
+            if (value < 0.002) return 0.008;
+            
         }
     }
     #endregion
