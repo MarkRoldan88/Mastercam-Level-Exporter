@@ -232,6 +232,15 @@ namespace Level_Exporter.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to STL Resolution.
+        /// </summary>
+        public static string StlResolution {
+            get {
+                return ResourceManager.GetString("StlResolution", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sync Mastercam Levels.
         /// </summary>
         public static string SyncLevelsButton {

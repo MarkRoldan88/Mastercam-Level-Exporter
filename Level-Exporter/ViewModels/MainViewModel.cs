@@ -145,12 +145,12 @@ namespace Level_Exporter.ViewModels
         {
             // User confirm
             if (DialogManager.YesNoCancel(
-                    $"Export Checked Levels as {this.CadFormatSelected} files to {this.DestinationDirectory}?",
-                    "Confirm") != DialogReturnType.Okay) return;
+                    $"Export checked levels as {this.CadFormatSelected.Content} files to {this.DestinationDirectory}?",
+                    "Confirm") != DialogReturnType.Yes) return;
 
             var cadExportHelper = string.Equals(this.CadFormatSelected.Content.ToString(), WindowStrings.CadTypeStl,
                 StringComparison.CurrentCultureIgnoreCase)
-                ? new CadExportHelper(this.DestinationDirectory, 0.75)
+                ? new CadExportHelper(this.DestinationDirectory, this.StlResolution)
                 : new CadExportHelper(this.DestinationDirectory, this.CadFormatSelected.Content.ToString());
 
             // For checking if user has input duplicate level names
@@ -175,7 +175,7 @@ namespace Level_Exporter.ViewModels
 
             if (isSuccess)
                 DialogManager.OK(
-                    $"Level entities saved to {this.DestinationDirectory} as {this.CadFormatSelected} files",
+                    $"Level entities saved to {this.DestinationDirectory} as {this.CadFormatSelected.Content} files",
                     "Success!");
         }
 

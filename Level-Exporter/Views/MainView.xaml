@@ -27,6 +27,10 @@
                         Value="{x:Static resources:WindowStrings.GetLevelsButton}"/>
             </Style>
 
+            <Style x:Key="ComboBoxStyle" TargetType="ComboBoxItem">
+                <Setter Property="FontSize" Value="12"/>
+            </Style>
+
             <Style
                 x:Key="AppButtonStyle"
                 TargetType="{x:Type Button}">
@@ -89,43 +93,37 @@
             Grid.Row="0" 
             Grid.Column="1"
             HorizontalAlignment="Center" 
-            VerticalAlignment="Center" 
+            VerticalAlignment="Bottom" 
             Width="Auto" Height="Auto">
             <TextBlock
-                Text="{x:Static resx:WindowStrings.CadTypePrompt }"
+                Text="{x:Static resx:WindowStrings.CadTypePrompt}"
                 FontSize="14"
-                Width="300" RenderTransformOrigin="0.493,0.585" />
-            <!-- Combox for Cad format selection-->
+                Width="300" RenderTransformOrigin="0.493,0.585" Margin="0" />
+            <!-- Combobox for Cad format selection-->
             <ComboBox IsReadOnly="True" 
                       IsTextSearchEnabled="False"
-                      SelectedValue="{Binding CadFormatSelected, Mode=TwoWay}">
-                <ComboBoxItem FontSize="14" 
-                              Content="{x:Static resources:WindowStrings.CadTypeDwg}"/>
-                <ComboBoxItem FontSize="14"
-                              Content="{x:Static resources:WindowStrings.CadTypeDxf}"/>
-                <ComboBoxItem FontSize="14"
-                              Content="{x:Static resources:WindowStrings.CadTypeEmcam}"/>
-                <ComboBoxItem FontSize="14"
-                              Content="{x:Static resources:WindowStrings.CadTypeIges}"/>
-                <ComboBoxItem FontSize="14"
-                              Content="{x:Static resources:WindowStrings.CadTypeIgs}"/>
-                <ComboBoxItem FontSize="14"
-                              Content="{x:Static resources:WindowStrings.CadTypeMcam}"/>
-                <ComboBoxItem FontSize="14"
-                              Content="{x:Static resources:WindowStrings.CadTypeSat}"/>
-                <ComboBoxItem FontSize="14"
-                              Content="{x:Static resources:WindowStrings.CadTypeStep}"/>
-                <ComboBoxItem FontSize="14"
-                              Content="{x:Static resources:WindowStrings.CadTypeStp}"/>
-                <ComboBoxItem FontSize="14"
-                              Content="{x:Static resources:WindowStrings.CadTypeStl}"/>
-                <ComboBoxItem FontSize="14"
-                              Content="{x:Static resources:WindowStrings.CadTypeXb}"/>
-                <ComboBoxItem FontSize="14"
-                              Content="{x:Static resources:WindowStrings.CadTypeXmttxt}"/>
-                <ComboBoxItem FontSize="14"
-                              Content="{x:Static resources:WindowStrings.CadTypeXt}"/>
+                      SelectedValue="{Binding CadFormatSelected, Mode=TwoWay}" ItemContainerStyle="{StaticResource ComboBoxStyle}">
+                <ComboBoxItem Content="{x:Static resources:WindowStrings.CadTypeDwg}"/>
+                <ComboBoxItem Content="{x:Static resources:WindowStrings.CadTypeDxf}"/>
+                <ComboBoxItem Content="{x:Static resources:WindowStrings.CadTypeEmcam}"/>
+                <ComboBoxItem Content="{x:Static resources:WindowStrings.CadTypeIges}"/>
+                <ComboBoxItem Content="{x:Static resources:WindowStrings.CadTypeIgs}"/>
+                <ComboBoxItem Content="{x:Static resources:WindowStrings.CadTypeMcam}"/>
+                <ComboBoxItem Content="{x:Static resources:WindowStrings.CadTypeSat}"/>
+                <ComboBoxItem Content="{x:Static resources:WindowStrings.CadTypeStep}"/>
+                <ComboBoxItem Content="{x:Static resources:WindowStrings.CadTypeStp}"/>
+                <ComboBoxItem Content="{x:Static resources:WindowStrings.CadTypeStl}"/>
+                <ComboBoxItem Content="{x:Static resources:WindowStrings.CadTypeXb}"/>
+                <ComboBoxItem Content="{x:Static resources:WindowStrings.CadTypeXmttxt}"/>
+                <ComboBoxItem Content="{x:Static resources:WindowStrings.CadTypeXt}"/>
             </ComboBox>
+            
+            <TextBlock Text="{x:Static resources:WindowStrings.StlResolution}" 
+                       FontSize="14" 
+                       Margin="0,24,0,0"/>
+
+            <TextBox 
+                Text="{Binding StlResolution, UpdateSourceTrigger=LostFocus}"/>
         </StackPanel>
 
         <StackPanel 

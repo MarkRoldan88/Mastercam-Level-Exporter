@@ -188,6 +188,9 @@
   <data name="GetLevelsButton" xml:space="preserve">
     <value>Get Mastercam Levels</value>
   </data>
+  <data name="StlResolution" xml:space="preserve">
+    <value>STL Resolution</value>
+  </data>
   <data name="SyncLevelsButton" xml:space="preserve">
     <value>Sync Mastercam Levels</value>
   </data>

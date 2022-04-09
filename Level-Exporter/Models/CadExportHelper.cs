@@ -37,7 +37,7 @@ namespace Level_Exporter.Models
         /// <summary>
         /// Cad Format (file extension)
         /// </summary>
-        private readonly string _cadFormat;
+        private readonly string _cadFormat = "stl";
 
         /// <summary>
         /// STL resolution
