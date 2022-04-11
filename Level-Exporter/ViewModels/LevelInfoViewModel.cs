@@ -30,7 +30,9 @@ namespace Level_Exporter.ViewModels
 
         #region Public Properties
 
-
+        /// <summary>
+        /// Gets and sets name property for level name
+        /// </summary>
         public string Name
         {
             get => _name;
@@ -155,14 +157,10 @@ namespace Level_Exporter.ViewModels
 
                 lvl.IsSelected = IsSelectAll;
             }
-
         }
 
         #endregion
 
-        #region Helpers
-
-        #endregion
     }
 
 }

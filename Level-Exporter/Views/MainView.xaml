@@ -5,6 +5,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:local="clr-namespace:Level_Exporter.Views"
     xmlns:converters="clr-namespace:Level_Exporter"
     xmlns:res="clr-namespace:Level_Exporter.Properties"
@@ -12,7 +13,6 @@
     xmlns:resx ="clr-namespace:Level_Exporter.Resources" 
     xmlns:viewmodels="clr-namespace:Level_Exporter.ViewModels" 
     d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
-    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     Title="{x:Static res:Resources.Title}"
     Width="800"
     Height="450"
@@ -68,8 +68,7 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <StackPanel
-            VerticalAlignment="Center">
+        <StackPanel VerticalAlignment="Bottom">
             <!--Button for getting Mastercam Level information -->
             <Button x:Name="GetLevelsButton" 
                     Command="{Binding Path=LevelInfoViewModel.ReadMastercamLevels}" Width="Auto">
