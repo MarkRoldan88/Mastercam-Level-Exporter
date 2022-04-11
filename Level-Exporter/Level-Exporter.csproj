@@ -48,6 +48,10 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Xaml.Behaviors, Version=1.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.Xaml.Behaviors.Wpf.1.1.39\lib\net45\Microsoft.Xaml.Behaviors.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="NETHook3_0">
       <HintPath>..\..\..\Program Files\Mastercam 2020\Mastercam\NETHook3_0.dll</HintPath>
     </Reference>
@@ -130,6 +134,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -157,6 +162,10 @@
   </PropertyGroup>
   <PropertyGroup>
     <PostBuildEvent>copy "$(TargetPath)" "C:\Program Files\Mastercam 2021\Mastercam\chooks" 
-copy "$(ProjectDir)Resources\FunctionTable\$(TargetName).ft" "C:\Program Files\Mastercam 2021\Mastercam\chooks"</PostBuildEvent>
+
+copy "$(ProjectDir)Resources\FunctionTable\$(TargetName).ft" "C:\Program Files\Mastercam 2021\Mastercam\chooks"
+
+copy "$(TargetDir)Microsoft.Xaml.Behaviors.dll" "C:\Program Files\Mastercam 2021\Mastercam\chooks"
+</PostBuildEvent>
   </PropertyGroup>
 </Project>

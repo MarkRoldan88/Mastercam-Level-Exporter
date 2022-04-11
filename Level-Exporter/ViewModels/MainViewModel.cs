@@ -26,6 +26,8 @@ using Mastercam.Support;
 
 namespace Level_Exporter.ViewModels
 {
+    using System.Text.RegularExpressions;
+
     /// <summary>
     /// The main view model.
     /// </summary>
@@ -47,6 +49,7 @@ namespace Level_Exporter.ViewModels
             this.OkCommand = new DelegateCommand(OnOkCommand, CanOkCommand);
             this.CloseCommand = new DelegateCommand<Window>(OnCloseCommand);
             this.BrowseCommand = new DelegateCommand(OnBrowseCommand);
+            this.PreviewTextInputCommand = new DelegateCommand<TextCompositionEventArgs>(OnPreviewTextInput);
 
             this.DestinationDirectory = SettingsManager.CurrentDirectory;
         }
@@ -69,6 +72,8 @@ namespace Level_Exporter.ViewModels
         /// Gets the Browse button command
         /// </summary>
         public ICommand BrowseCommand { get; }
+
+        public ICommand PreviewTextInputCommand { get; }
 
         #endregion
 
@@ -111,12 +116,6 @@ namespace Level_Exporter.ViewModels
             get => _stlResolution;
             set
             {
-                if (value < 0.002)
-                {
-                    value = 0.075;
-                    return;
-                } else if { }
-
                 _stlResolution = value;
                 OnPropertyChanged(nameof(StlResolution));
             }
@@ -217,10 +216,11 @@ namespace Level_Exporter.ViewModels
             }
         }
 
-        private double SanitizeDouble(double value)
+        private void OnPreviewTextInput(TextCompositionEventArgs e)
         {
-            if (value < 0.002) return 0.008;
-            
+            var isTextAllowed = new Regex("[^0-9.]+").IsMatch(e.Text);
+
+            if (isTextAllowed) e.Handled = true;
         }
     }
     #endregion
