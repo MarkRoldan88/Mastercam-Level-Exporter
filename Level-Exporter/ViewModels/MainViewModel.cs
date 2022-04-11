@@ -16,18 +16,16 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Windows.Controls;
 using System.Windows.Forms;
 using Level_Exporter.Models;
-using Level_Exporter.Resources;
 using Mastercam.IO.Types;
 using Mastercam.Support;
+using System.Collections.ObjectModel;
+using System.Text.RegularExpressions;
 
 
 namespace Level_Exporter.ViewModels
 {
-    using System.Text.RegularExpressions;
-
     /// <summary>
     /// The main view model.
     /// </summary>
@@ -96,7 +94,7 @@ namespace Level_Exporter.ViewModels
             get => _destinationDirectory;
             set
             {
-                var chars = value.ToCharArray();
+                var chars = value.ToCharArray(); //TODO change to method
                 var isValid = chars.Any(c => // Check string for invalid chars
                     c != '\"' || c != '<' || c != '>' || c != '|' || c != '*' || c != '?' || c > 32 || c != '+');
 
@@ -110,7 +108,9 @@ namespace Level_Exporter.ViewModels
             }
         }
 
-        //TODO Add box for STL resolution, VALIDATE INPUT
+        /// <summary>
+        /// Gets and sets STL resolution from textbox
+        /// </summary>
         public double StlResolution
         {
             get => _stlResolution;
@@ -216,6 +216,10 @@ namespace Level_Exporter.ViewModels
             }
         }
 
+        /// <summary>
+        /// Command for handling OnPreviewTextInput event, check for valid characters
+        /// </summary>
+        /// <param name="e">Text composition event args from text box</param>
         private void OnPreviewTextInput(TextCompositionEventArgs e)
         {
             var isTextAllowed = new Regex("[^0-9.]+").IsMatch(e.Text);
@@ -223,5 +227,5 @@ namespace Level_Exporter.ViewModels
             if (isTextAllowed) e.Handled = true;
         }
     }
-    #endregion
+        #endregion
 }
