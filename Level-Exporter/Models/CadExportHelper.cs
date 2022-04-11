@@ -1,13 +1,12 @@
 ﻿using System;
 using System.IO;
-using Level_Exporter.Resources;
 using Mastercam.App.Exceptions;
 using Mastercam.IO;
 
 namespace Level_Exporter.Models
 {
     /// <summary>
-    /// Class for exporting/saving CAD
+    /// Helper Class for exporting/saving CAD
     /// </summary>
     public class CadExportHelper
     {

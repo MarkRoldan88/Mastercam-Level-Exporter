@@ -1,5 +1,8 @@
 ﻿namespace Level_Exporter.Models
 {
+    /// <summary>
+    /// Cad Format class, has a file extension and description.
+    /// </summary>
     public class CadFormat
     {
         #region Constructor

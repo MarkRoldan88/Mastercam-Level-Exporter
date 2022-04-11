@@ -7,9 +7,11 @@ using Mastercam.IO;
 
 namespace Level_Exporter.ViewModels
 {
+    /// <summary>
+    /// Level info view model, for use in datagrid
+    /// </summary>
     public class LevelInfoViewModel : BaseViewModel
     {
-
         #region Construction
         public LevelInfoViewModel()
         {

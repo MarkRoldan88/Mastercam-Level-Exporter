@@ -247,6 +247,11 @@ namespace Level_Exporter.ViewModels
         #endregion
 
         #region Helper Methods
+
+        /// <summary>
+        /// Create list of cad types from enum
+        /// </summary>
+        /// <returns>List of Cad formats</returns>
         private List<CadFormat> GenerateCadChoiceList()
         {
             // Get Values from CadTypes enum
