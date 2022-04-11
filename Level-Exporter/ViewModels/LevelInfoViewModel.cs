@@ -7,9 +7,11 @@ using Mastercam.IO;
 
 namespace Level_Exporter.ViewModels
 {
+    /// <summary>
+    /// Level info view model, for use in datagrid
+    /// </summary>
     public class LevelInfoViewModel : BaseViewModel
     {
-
         #region Construction
         public LevelInfoViewModel()
         {
@@ -30,7 +32,9 @@ namespace Level_Exporter.ViewModels
 
         #region Public Properties
 
-
+        /// <summary>
+        /// Gets and sets name property for level name
+        /// </summary>
         public string Name
         {
             get => _name;
@@ -155,14 +159,10 @@ namespace Level_Exporter.ViewModels
 
                 lvl.IsSelected = IsSelectAll;
             }
-
         }
 
         #endregion
 
-        #region Helpers
-
-        #endregion
     }
 
 }

@@ -1,4 +1,4 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="MainView.xaml.cs" company="TODO: Company Name">
 //   Copyright (c) 2022 TODO: Company Name
 // </copyright>
@@ -10,8 +10,6 @@
 
 namespace Level_Exporter.Views
 {
-    using System.Windows;
-
     /// <summary>
     /// Interaction logic for MainView.xaml
     /// </summary>

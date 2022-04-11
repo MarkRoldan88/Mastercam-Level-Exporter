@@ -16,12 +16,12 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Windows.Controls;
 using System.Windows.Forms;
 using Level_Exporter.Models;
-using Level_Exporter.Resources;
 using Mastercam.IO.Types;
 using Mastercam.Support;
+using System.Collections.ObjectModel;
+using System.Text.RegularExpressions;
 
 
 namespace Level_Exporter.ViewModels
@@ -47,8 +47,11 @@ namespace Level_Exporter.ViewModels
             this.OkCommand = new DelegateCommand(OnOkCommand, CanOkCommand);
             this.CloseCommand = new DelegateCommand<Window>(OnCloseCommand);
             this.BrowseCommand = new DelegateCommand(OnBrowseCommand);
+            this.PreviewTextInputCommand = new DelegateCommand<TextCompositionEventArgs>(OnPreviewTextInput);
 
             this.DestinationDirectory = SettingsManager.CurrentDirectory;
+
+            this.CadFormatChoices = new ObservableCollection<CadFormat>(GenerateCadChoiceList());
         }
 
         #endregion
@@ -70,13 +73,21 @@ namespace Level_Exporter.ViewModels
         /// </summary>
         public ICommand BrowseCommand { get; }
 
+        public ICommand PreviewTextInputCommand { get; }
+
         #endregion
 
         #region Private Fields
 
-        private ComboBoxItem _cadFormatSelected;
+        private CadFormat _cadFormatSelected;
+
+        private ObservableCollection<CadFormat> _cadFormatChoiceChoices;
+
         private string _destinationDirectory;
+
         private int _nameIncrement;
+
+        private double _stlResolution = 0.02;
 
         #endregion
 
@@ -90,7 +101,7 @@ namespace Level_Exporter.ViewModels
             get => _destinationDirectory;
             set
             {
-                var chars = value.ToCharArray();
+                var chars = value.ToCharArray(); //TODO change to method
                 var isValid = chars.Any(c => // Check string for invalid chars
                     c != '\"' || c != '<' || c != '>' || c != '|' || c != '*' || c != '?' || c > 32 || c != '+');
 
@@ -104,18 +115,42 @@ namespace Level_Exporter.ViewModels
             }
         }
 
-        //TODO Add box for STL resolution
+        /// <summary>
+        /// Gets and sets STL resolution from textbox
+        /// </summary>
+        public double StlResolution
+        {
+            get => _stlResolution;
+            set
+            {
+                _stlResolution = value;
+                OnPropertyChanged(nameof(StlResolution));
+            }
+        }
 
         /// <summary>
-        /// Gets or Sets cad format selected
+        /// Gets and Sets cad format selected
         /// </summary>
-        public ComboBoxItem CadFormatSelected 
+        public CadFormat CadFormatSelected
         {
             get => _cadFormatSelected;
             set
             {
                 _cadFormatSelected = value;
                 OnPropertyChanged(nameof(CadFormatSelected));
+            }
+        }
+
+        /// <summary>
+        /// Gets and Sets Cad format choices for combobox
+        /// </summary>
+        public ObservableCollection<CadFormat> CadFormatChoices
+        {
+            get => _cadFormatChoiceChoices;
+            set
+            {
+                _cadFormatChoiceChoices = value;
+                OnPropertyChanged(nameof(CadFormatChoices));
             }
         }
 
@@ -143,15 +178,13 @@ namespace Level_Exporter.ViewModels
         /// <summary> Executes the ok command action. </summary>
         private void OnOkCommand()
         {
+            //TODO Check if fields are null/blank? (is valid method?)
             // User confirm
             if (DialogManager.YesNoCancel(
-                    $"Export Checked Levels as {this.CadFormatSelected} files to {this.DestinationDirectory}?",
-                    "Confirm") != DialogReturnType.Okay) return;
+                    $"Export selected levels as {this.CadFormatSelected.FileExtension} files to {this.DestinationDirectory}?",
+                    "Confirm") != DialogReturnType.Yes) return;
 
-            var cadExportHelper = string.Equals(this.CadFormatSelected.Content.ToString(), WindowStrings.CadTypeStl,
-                StringComparison.CurrentCultureIgnoreCase)
-                ? new CadExportHelper(this.DestinationDirectory, 0.75)
-                : new CadExportHelper(this.DestinationDirectory, this.CadFormatSelected.Content.ToString());
+            var cadExportHelper = new CadExportHelper(this.DestinationDirectory, this.CadFormatSelected.FileExtension, this.StlResolution);
 
             // For checking if user has input duplicate level names
             var cachedNames = new Dictionary<string, int>();
@@ -175,7 +208,7 @@ namespace Level_Exporter.ViewModels
 
             if (isSuccess)
                 DialogManager.OK(
-                    $"Level entities saved to {this.DestinationDirectory} as {this.CadFormatSelected} files",
+                    $"Level entities saved to {this.DestinationDirectory} as {this.CadFormatSelected.FileExtension} files",
                     "Success!");
         }
 
@@ -199,6 +232,37 @@ namespace Level_Exporter.ViewModels
                 this.DestinationDirectory = folderDialog.SelectedPath;
             }
         }
+
+        /// <summary>
+        /// Command for handling OnPreviewTextInput event, check for valid characters
+        /// </summary>
+        /// <param name="e">Text composition event args from text box</param>
+        private void OnPreviewTextInput(TextCompositionEventArgs e)
+        {
+            var isTextAllowed = new Regex("[^0-9.]+").IsMatch(e.Text);
+
+            if (isTextAllowed) e.Handled = true;
+        }
+
+        #endregion
+
+        #region Helper Methods
+
+        /// <summary>
+        /// Create list of cad types from enum
+        /// </summary>
+        /// <returns>List of Cad formats</returns>
+        private List<CadFormat> GenerateCadChoiceList()
+        {
+            // Get Values from CadTypes enum
+            var fileExtensions = Enum.GetValues(typeof(CadTypes)).Cast<CadTypes>();
+
+            return fileExtensions.Select(ext => new CadFormat(ext)).ToList();
+        }
+
+        #endregion
     }
-    #endregion
 }
+
+
+
