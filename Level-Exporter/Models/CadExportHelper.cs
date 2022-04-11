@@ -13,16 +13,22 @@ namespace Level_Exporter.Models
     {
         #region Constructor
 
-        public CadExportHelper(string destination, string cadFormat)
+        public CadExportHelper(string destination)
+        {
+            _destination = destination;
+        }
+
+        public CadExportHelper(string destination, string cadFormat) : this(destination)
         {
             _destination = destination;
             _cadFormat = cadFormat;
         }
 
-        public CadExportHelper(string destination, double stlResolution)
+        public CadExportHelper(string destination, string cadFormat, double stlResolution) : this(destination,
+            cadFormat)
         {
-            _destination = destination;
-            _stlResolution = stlResolution;
+            if (stlResolution != 0.0)
+                _stlResolution = stlResolution;
         }
 
         #endregion
@@ -44,6 +50,11 @@ namespace Level_Exporter.Models
         /// </summary>
         private readonly double _stlResolution = 0.75;
 
+        /// <summary>
+        /// Full path created from level name and cad format (file extension)
+        /// </summary>
+        private string _fullPath;
+
         #endregion
 
         #region Public Method
@@ -55,11 +66,20 @@ namespace Level_Exporter.Models
         /// <returns></returns>
         public bool SaveLevelCad(Level level)
         {
-            return !string.Equals(_cadFormat, WindowStrings.CadTypeStl, StringComparison.CurrentCultureIgnoreCase)
-                ? SaveAsCadFormat(level)
-                : SaveAsStl(level);
+            try
+            {
+                _fullPath = Path.Combine(_destination, $"{level.Name}{_cadFormat}");
+                return _cadFormat == CadTypes.stl.ToString() ? SaveAsStl() : SaveAsCadFormat();
+            }
+            catch (Exception e)
+            {
+                DialogManager.Exception(new MastercamException(
+                    $"Error Saving Level {level.Number} files to directory, double check path and make sure level names do not contain any symbols"));
+                Console.WriteLine(e);
+                Console.WriteLine(e.InnerException);
+                throw;
+            }
         }
-
         #endregion
 
         #region Private Methods
@@ -69,20 +89,9 @@ namespace Level_Exporter.Models
         /// </summary>
         /// <param name="level"></param>
         /// <returns></returns>
-        private bool SaveAsStl(Level level)
+        private bool SaveAsStl()
         {
-            try
-            {
-                return FileManager.WriteSTL(Path.Combine(_destination, $"{level.Name}.{_cadFormat}"), 0,
-                    _stlResolution, false, true, true, true, false);
-            }
-            catch (Exception e)
-            {
-                DialogManager.Exception(new MastercamException(
-        $"Error Saving Level {level.Number} files to directory, double check path and make sure level names do not contain any symbols"));
-                Console.WriteLine(e);
-                throw;
-            }
+            return FileManager.WriteSTL(_fullPath, 0, _stlResolution, false, true, true, true, false);
         }
 
         /// <summary>
@@ -90,19 +99,9 @@ namespace Level_Exporter.Models
         /// </summary>
         /// <param name="level"></param>
         /// <returns></returns>
-        private bool SaveAsCadFormat(Level level)
+        private bool SaveAsCadFormat()
         {
-            try
-            {
-                return FileManager.SaveSome(Path.Combine(_destination, $"{level.Name}.{_cadFormat}"), true);
-            }
-            catch (Exception e)
-            {
-                DialogManager.Exception(new MastercamException(
-                    $"Error Saving Level {level.Number} files to directory, double check path and make sure level names do not contain any symbols"));
-                Console.WriteLine(e);
-                throw;
-            }
+            return FileManager.SaveSome(_fullPath, true);
         }
     }
     #endregion
