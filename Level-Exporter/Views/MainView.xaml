@@ -166,12 +166,16 @@
 
             <!--Data grid for Level information -->
             <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="57*"/>
+                    <ColumnDefinition Width="46*"/>
+                </Grid.ColumnDefinitions>
                 <DataGrid CanUserAddRows="False" 
                           AutoGenerateColumns="False"
                           ItemsSource="{Binding Path=Levels}" 
                           HorizontalScrollBarVisibility="Visible" 
                           VerticalScrollBarVisibility="Visible"
-                          Height="Auto">
+                          Height="Auto" Grid.ColumnSpan="2">
                     <DataGrid.Columns>
                         <DataGridTemplateColumn CanUserSort="False">
                             <DataGridTemplateColumn.HeaderTemplate>
