@@ -102,36 +102,52 @@
                 Text="{x:Static resx:WindowStrings.CadTypePrompt}"
                 FontSize="14"
                 Width="300" RenderTransformOrigin="0.493,0.585" Margin="0" />
+
             <!-- Combobox for Cad format selection-->
             <ComboBox IsReadOnly="True" 
                       IsTextSearchEnabled="False"
-                      SelectedValue="{Binding CadFormatSelected, Mode=TwoWay}" ItemContainerStyle="{StaticResource ComboBoxStyle}">
-                <ComboBoxItem Content="{x:Static resources:WindowStrings.CadTypeDwg}"/>
-                <ComboBoxItem Content="{x:Static resources:WindowStrings.CadTypeDxf}"/>
-                <ComboBoxItem Content="{x:Static resources:WindowStrings.CadTypeEmcam}"/>
-                <ComboBoxItem Content="{x:Static resources:WindowStrings.CadTypeIges}"/>
-                <ComboBoxItem Content="{x:Static resources:WindowStrings.CadTypeIgs}"/>
-                <ComboBoxItem Content="{x:Static resources:WindowStrings.CadTypeMcam}"/>
-                <ComboBoxItem Content="{x:Static resources:WindowStrings.CadTypeSat}"/>
-                <ComboBoxItem Content="{x:Static resources:WindowStrings.CadTypeStep}"/>
-                <ComboBoxItem Content="{x:Static resources:WindowStrings.CadTypeStp}"/>
-                <ComboBoxItem Content="{x:Static resources:WindowStrings.CadTypeStl}"/>
-                <ComboBoxItem Content="{x:Static resources:WindowStrings.CadTypeXb}"/>
-                <ComboBoxItem Content="{x:Static resources:WindowStrings.CadTypeXmttxt}"/>
-                <ComboBoxItem Content="{x:Static resources:WindowStrings.CadTypeXt}"/>
-            </ComboBox>
+                      SelectedValue="{Binding CadFormatSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                      ItemContainerStyle="{StaticResource ComboBoxStyle}"
+                      ItemsSource="{Binding Path=CadFormatChoices}" DisplayMemberPath="Description"/>
 
             <TextBlock Text="{x:Static resources:WindowStrings.StlResolution}" 
                        FontSize="14" 
-                       Margin="0,24,0,0"/>
+                       Margin="0,24,0,0">
+                <!-- Trigger for hiding stl resolution text box when stl is not selected -->
+                <TextBlock.Style> 
+                    <Style TargetType="TextBlock">
+                    <Setter Property="Visibility" Value="Hidden"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Path=CadFormatSelected.FileExtension}" Value=".stl">
+                            <Setter Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+                </TextBlock.Style>
+            </TextBlock>
+
             <TextBox MaxLength="4"
-                     Text="{Binding StlResolution, UpdateSourceTrigger=LostFocus}">
+                     Text="{Binding StlResolution, UpdateSourceTrigger=LostFocus, Mode=TwoWay}">
+                <!-- Trigger for validating stl resolution text box input -->
                 <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="PreviewTextInput" SourceObject="{Binding ElementName=PreviewTextInputEvent}" x:Name="testfix">
-                        <i:InvokeCommandAction Command="{Binding PreviewTextInputCommand}" PassEventArgsToCommand="True" />
+                    <i:EventTrigger EventName="PreviewTextInput" SourceObject="{Binding ElementName=PreviewTextInputEvent}">
+                        <i:InvokeCommandAction 
+                            Command="{Binding PreviewTextInputCommand}" 
+                            PassEventArgsToCommand="True" 
+                            x:Name="Required"/> <!-- x:name required for this element, visual studio will complain about not finding xaml behavior dll -->
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
-                
+                <TextBox.Style>
+                    <!-- Trigger for hiding stl resolution text box when stl is not selected -->
+                    <Style TargetType="TextBox">
+                        <Setter Property="Visibility" Value="Hidden"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Path=CadFormatSelected.FileExtension}" Value=".stl">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBox.Style>
             </TextBox>
         </StackPanel>
 

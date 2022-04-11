@@ -50,6 +50,8 @@ namespace Level_Exporter.ViewModels
             this.PreviewTextInputCommand = new DelegateCommand<TextCompositionEventArgs>(OnPreviewTextInput);
 
             this.DestinationDirectory = SettingsManager.CurrentDirectory;
+
+            this.CadFormatChoices = new ObservableCollection<CadFormat>(GenerateCadChoiceList());
         }
 
         #endregion
@@ -77,10 +79,15 @@ namespace Level_Exporter.ViewModels
 
         #region Private Fields
 
-        private ComboBoxItem _cadFormatSelected;
+        private CadFormat _cadFormatSelected;
+
+        private ObservableCollection<CadFormat> _cadFormatChoiceChoices;
+
         private string _destinationDirectory;
+
         private int _nameIncrement;
-        private double _stlResolution;
+
+        private double _stlResolution = 0.02;
 
         #endregion
 
@@ -121,17 +128,29 @@ namespace Level_Exporter.ViewModels
             }
         }
 
-
         /// <summary>
-        /// Gets or Sets cad format selected
+        /// Gets and Sets cad format selected
         /// </summary>
-        public ComboBoxItem CadFormatSelected 
+        public CadFormat CadFormatSelected
         {
             get => _cadFormatSelected;
             set
             {
                 _cadFormatSelected = value;
                 OnPropertyChanged(nameof(CadFormatSelected));
+            }
+        }
+
+        /// <summary>
+        /// Gets and Sets Cad format choices for combobox
+        /// </summary>
+        public ObservableCollection<CadFormat> CadFormatChoices
+        {
+            get => _cadFormatChoiceChoices;
+            set
+            {
+                _cadFormatChoiceChoices = value;
+                OnPropertyChanged(nameof(CadFormatChoices));
             }
         }
 
@@ -159,15 +178,13 @@ namespace Level_Exporter.ViewModels
         /// <summary> Executes the ok command action. </summary>
         private void OnOkCommand()
         {
+            //TODO Check if fields are null/blank? (is valid method?)
             // User confirm
             if (DialogManager.YesNoCancel(
-                    $"Export checked levels as {this.CadFormatSelected.Content} files to {this.DestinationDirectory}?",
+                    $"Export selected levels as {this.CadFormatSelected.FileExtension} files to {this.DestinationDirectory}?",
                     "Confirm") != DialogReturnType.Yes) return;
 
-            var cadExportHelper = string.Equals(this.CadFormatSelected.Content.ToString(), WindowStrings.CadTypeStl,
-                StringComparison.CurrentCultureIgnoreCase)
-                ? new CadExportHelper(this.DestinationDirectory, this.StlResolution)
-                : new CadExportHelper(this.DestinationDirectory, this.CadFormatSelected.Content.ToString());
+            var cadExportHelper = new CadExportHelper(this.DestinationDirectory, this.CadFormatSelected.FileExtension, this.StlResolution);
 
             // For checking if user has input duplicate level names
             var cachedNames = new Dictionary<string, int>();
@@ -191,7 +208,7 @@ namespace Level_Exporter.ViewModels
 
             if (isSuccess)
                 DialogManager.OK(
-                    $"Level entities saved to {this.DestinationDirectory} as {this.CadFormatSelected.Content} files",
+                    $"Level entities saved to {this.DestinationDirectory} as {this.CadFormatSelected.FileExtension} files",
                     "Success!");
         }
 
@@ -226,6 +243,21 @@ namespace Level_Exporter.ViewModels
 
             if (isTextAllowed) e.Handled = true;
         }
-    }
+
         #endregion
+
+        #region Helper Methods
+        private List<CadFormat> GenerateCadChoiceList()
+        {
+            // Get Values from CadTypes enum
+            var fileExtensions = Enum.GetValues(typeof(CadTypes)).Cast<CadTypes>();
+
+            return fileExtensions.Select(ext => new CadFormat(ext)).ToList();
+        }
+
+        #endregion
+    }
 }
+
+
+
