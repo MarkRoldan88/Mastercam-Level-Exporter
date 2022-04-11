@@ -9,7 +9,10 @@
     xmlns:converters="clr-namespace:Level_Exporter"
     xmlns:res="clr-namespace:Level_Exporter.Properties"
     xmlns:resources="clr-namespace:Level_Exporter.Resources"
-    xmlns:resx ="clr-namespace:Level_Exporter.Resources" xmlns:viewmodels="clr-namespace:Level_Exporter.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
+    xmlns:resx ="clr-namespace:Level_Exporter.Resources" 
+    xmlns:viewmodels="clr-namespace:Level_Exporter.ViewModels" 
+    d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     Title="{x:Static res:Resources.Title}"
     Width="800"
     Height="450"
@@ -95,6 +98,7 @@
             HorizontalAlignment="Center" 
             VerticalAlignment="Bottom" 
             Width="Auto" Height="Auto">
+
             <TextBlock
                 Text="{x:Static resx:WindowStrings.CadTypePrompt}"
                 FontSize="14"
@@ -117,20 +121,26 @@
                 <ComboBoxItem Content="{x:Static resources:WindowStrings.CadTypeXmttxt}"/>
                 <ComboBoxItem Content="{x:Static resources:WindowStrings.CadTypeXt}"/>
             </ComboBox>
-            
+
             <TextBlock Text="{x:Static resources:WindowStrings.StlResolution}" 
                        FontSize="14" 
                        Margin="0,24,0,0"/>
-
-            <TextBox 
-                Text="{Binding StlResolution, UpdateSourceTrigger=LostFocus}"/>
+            <TextBox MaxLength="4"
+                     Text="{Binding StlResolution, UpdateSourceTrigger=LostFocus}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="PreviewTextInput" SourceObject="{Binding ElementName=PreviewTextInputEvent}" x:Name="testfix">
+                        <i:InvokeCommandAction Command="{Binding PreviewTextInputCommand}" PassEventArgsToCommand="True" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+                
+            </TextBox>
         </StackPanel>
 
-        <StackPanel 
-            Grid.Row="1" 
-            Grid.Column="1"
-            VerticalAlignment="Center" 
-            Width="Auto">
+        <!-- Stack panel for Browse button and destination directory Text box -->
+        <StackPanel Grid.Row="1" 
+                    Grid.Column="1"
+                    VerticalAlignment="Center" 
+                    Width="Auto">
             <TextBlock Text="{x:Static resources:WindowStrings.DestinationPrompt}"/>
             <StackPanel Orientation="Vertical" Width="Auto">
                 <!-- Text box for destination/output directory -->
@@ -139,6 +149,8 @@
                          ToolTip="{x:Static resources:WindowStrings.BrowseTextFieldToolTip}" 
                          VerticalAlignment="Center" HorizontalAlignment="Stretch" MinWidth="193" MaxWidth="250">
                 </TextBox>
+
+                <!-- Browse Button for destination directory -->
                 <Button 
                     Content="{x:Static resources:WindowStrings.BrowseButton}"
                     Command="{Binding Path=BrowseCommand}"
@@ -146,20 +158,21 @@
             </StackPanel>
         </StackPanel>
 
+        <!-- Stack panel for Level info grid -->
         <StackPanel DataContext="{Binding LevelInfoViewModel}" 
                     Grid.Row="1" 
                     Grid.Column="0"
                     HorizontalAlignment="Center" 
                     VerticalAlignment="Top" Margin="96,0,95,0" >
 
-
             <!--Data grid for Level information -->
             <Grid>
-                <DataGrid
-                    CanUserAddRows="False" 
+                <DataGrid CanUserAddRows="False" 
                           AutoGenerateColumns="False"
-                          ItemsSource="{Binding Path=Levels}" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible"
-                    Height="Auto">
+                          ItemsSource="{Binding Path=Levels}" 
+                          HorizontalScrollBarVisibility="Visible" 
+                          VerticalScrollBarVisibility="Visible"
+                          Height="Auto">
                     <DataGrid.Columns>
                         <DataGridTemplateColumn CanUserSort="False">
                             <DataGridTemplateColumn.HeaderTemplate>
@@ -200,7 +213,7 @@
             </Grid>
         </StackPanel>
 
-
+        <!-- Stack panel for ok/close buttons -->
         <StackPanel
             x:Name="ButtonPanel"
             x:Uid="ButtonStackPanel"
@@ -209,11 +222,12 @@
             Orientation="Horizontal"
             HorizontalAlignment="Right"
             VerticalAlignment="Bottom">
-            <Button
-                x:Name="OkButton"
-                x:Uid="OkButton"
-                Style="{StaticResource AppButtonStyle}"
-                Command="{Binding OkCommand}" Width="98">
+
+            <!-- Ok/Export Button -->
+            <Button x:Name="OkButton"
+                    x:Uid="OkButton"
+                    Style="{StaticResource AppButtonStyle}"
+                    Command="{Binding OkCommand}" Width="98">
                 <StackPanel HorizontalAlignment="Left">
                     <Image
                         Height="24"
@@ -222,14 +236,14 @@
                     <TextBlock FontSize="14" 
                                Text="{x:Static resources:WindowStrings.ExportButton}"/>
                 </StackPanel>
-
             </Button>
-            <Button
-                x:Name="CloseButton"
-                x:Uid="CloseButton"
-                Style="{StaticResource AppButtonStyle}"
-                Command="{Binding CloseCommand}"
-                CommandParameter="{Binding ElementName=MainWindow}">
+
+            <!--Close button -->
+            <Button x:Name="CloseButton"
+                    x:Uid="CloseButton"
+                    Style="{StaticResource AppButtonStyle}"
+                    Command="{Binding CloseCommand}"
+                    CommandParameter="{Binding ElementName=MainWindow}">
                 <Button.Content>
                     <Image
                         Height="24"
