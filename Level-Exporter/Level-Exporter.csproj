@@ -77,6 +77,7 @@
     <Compile Include="Commands\CommandManagerHelper.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="Models\CadExportHelper.cs" />
+    <Compile Include="Models\CadFormat.cs" />
     <Compile Include="Models\Level.cs" />
     <Compile Include="Models\Result.cs" />
     <Compile Include="Properties\Annotations.cs" />
