@@ -175,7 +175,9 @@ namespace Level_Exporter.ViewModels
         /// <returns> The <see cref="bool"/> True if enabled, false otherwise. </returns>
         private bool CanOkCommand() => true;
 
-        /// <summary> Executes the ok command action. </summary>
+        /// <summary>
+        /// Executes OkCommand, button for exporting/saving level entities
+        /// </summary>
         private void OnOkCommand()
         {
             //TODO Check if fields are null/blank? (is valid method?)
@@ -184,7 +186,8 @@ namespace Level_Exporter.ViewModels
                     $"Export selected levels as {this.CadFormatSelected.FileExtension} files to {this.DestinationDirectory}?",
                     "Confirm") != DialogReturnType.Yes) return;
 
-            var cadExportHelper = new CadExportHelper(this.DestinationDirectory, this.CadFormatSelected.FileExtension, this.StlResolution);
+            var cadExportHelper = 
+                new CadExportHelper(this.DestinationDirectory, this.CadFormatSelected.FileExtension, this.StlResolution);
 
             // For checking if user has input duplicate level names
             var cachedNames = new Dictionary<string, int>();
@@ -195,10 +198,13 @@ namespace Level_Exporter.ViewModels
             {
                 if (!level.IsSelected) continue;
 
+                if (level.Name == string.Empty)
+                    level.Name = $"level{level.Number}";
+
                 if (cachedNames.ContainsKey(level.Name)) // If level name has been used, append a number to avoid duplicate file names
                     level.Name += _nameIncrement++.ToString();
-
-                else cachedNames.Add(level.Name, 1); // Add level name to cached names
+                else 
+                    cachedNames.Add(level.Name, 1); // Add level name to cached names
 
                 // Mastercam select levels
                 SearchManager.SelectAllGeometryOnLevel(level.Number, true);
