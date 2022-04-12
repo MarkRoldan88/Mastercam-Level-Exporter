@@ -58,9 +58,9 @@
         x:Name="MainGrid"
         x:Uid="MainGrid">
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="35*"/>
+            <RowDefinition Height="307*"/>
+            <RowDefinition Height="79*"/>
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
@@ -68,10 +68,15 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <StackPanel VerticalAlignment="Bottom">
+        <StackPanel Grid.Column="0" 
+                    Grid.Row="0" 
+                    VerticalAlignment="Bottom"
+                    HorizontalAlignment="Center" 
+                    Height="Auto" 
+                    Width="Auto">
             <!--Button for getting Mastercam Level information -->
-            <Button x:Name="GetLevelsButton" 
-                    Command="{Binding Path=LevelInfoViewModel.ReadMastercamLevels}" Width="Auto">
+            <Button x:Name="GetLevelsButton" Margin="95,0"
+                    Command="{Binding Path=LevelInfoViewModel.ReadMastercamLevels}" >
                 <Button.Style>
                     <Style TargetType="{x:Type Button}" 
                            BasedOn="{StaticResource ReadLevelsText}">
@@ -90,146 +95,157 @@
             </Button>
         </StackPanel>
 
-        <StackPanel
+        <Grid Grid.Row="1" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Stack panel for Combobox and stl resolution input text -->
+            <StackPanel
             x:Uid="TextBlockStackPanel"
             Grid.Row="0" 
-            Grid.Column="1"
             HorizontalAlignment="Center" 
-            VerticalAlignment="Bottom" 
+            VerticalAlignment="Center" 
             Width="Auto" Height="Auto">
 
-            <TextBlock
-                Text="{x:Static resx:WindowStrings.CadTypePrompt}"
+                <!-- Text block prompting cad format selection -->
+                <TextBlock
                 FontSize="14"
-                Width="300" RenderTransformOrigin="0.493,0.585" Margin="0" />
+                Width="Auto" 
+                Text="{x:Static resx:WindowStrings.CadTypePrompt}"
+                MinWidth="250"/>
 
-            <!-- Combobox for Cad format selection-->
-            <ComboBox IsReadOnly="True" 
+                <!-- Combobox for Cad format selection-->
+                <ComboBox IsReadOnly="True" 
                       IsTextSearchEnabled="False"
                       SelectedValue="{Binding CadFormatSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                       ItemContainerStyle="{StaticResource ComboBoxStyle}"
                       ItemsSource="{Binding Path=CadFormatChoices}" DisplayMemberPath="Description"/>
-
-            <TextBlock Text="{x:Static resources:WindowStrings.StlResolution}" 
+                
+                <!-- Text Block above STL resolution text box-->
+                <TextBlock Text="{x:Static resources:WindowStrings.StlResolution}" 
                        FontSize="14" 
-                       Margin="0,24,0,0">
+                       Margin="0,24,0,5">
                 <!-- Trigger for hiding stl resolution text box when stl is not selected -->
-                <TextBlock.Style> 
-                    <Style TargetType="TextBlock">
-                    <Setter Property="Visibility" Value="Hidden"/>
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding Path=CadFormatSelected.FileExtension}" Value=".stl">
-                            <Setter Property="Visibility" Value="Visible"/>
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-                </TextBlock.Style>
-            </TextBlock>
+                    <TextBlock.Style>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Visibility" Value="Hidden"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Path=CadFormatSelected.FileExtension}" Value=".stl">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
 
-            <TextBox MaxLength="4"
-                     Text="{Binding StlResolution, UpdateSourceTrigger=LostFocus, Mode=TwoWay}">
-                <!-- Trigger for validating stl resolution text box input -->
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="PreviewTextInput" SourceObject="{Binding ElementName=PreviewTextInputEvent}">
-                        <i:InvokeCommandAction 
+                <!-- Stl Resolution input text box -->
+                <TextBox MaxLength="4" 
+                         FontSize="12" 
+                         MinWidth="45"
+                         Width="Auto"
+                         Text="{Binding StlResolution, UpdateSourceTrigger=LostFocus, Mode=TwoWay}" >
+                    <!-- Trigger for validating stl resolution text box input -->
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="PreviewTextInput" SourceObject="{Binding ElementName=PreviewTextInputEvent}">
+                            <i:InvokeCommandAction 
                             Command="{Binding PreviewTextInputCommand}" 
                             PassEventArgsToCommand="True" 
-                            x:Name="Required"/> <!-- x:name required for this element, visual studio will complain about not finding xaml behavior dll -->
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-                <TextBox.Style>
-                    <!-- Trigger for hiding stl resolution text box when stl is not selected -->
-                    <Style TargetType="TextBox">
-                        <Setter Property="Visibility" Value="Hidden"/>
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding Path=CadFormatSelected.FileExtension}" Value=".stl">
-                                <Setter Property="Visibility" Value="Visible"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </TextBox.Style>
-            </TextBox>
-        </StackPanel>
+                            x:Name="Required"/>
+                            <!-- x:name required for this element, visual studio will complain about not finding xaml behavior dll -->
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                    <TextBox.Style>
+                        <!-- Trigger for hiding stl resolution text box when stl is not selected -->
+                        <Style TargetType="TextBox">
+                            <Setter Property="Visibility" Value="Hidden"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Path=CadFormatSelected.FileExtension}" Value=".stl">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBox.Style>
+                </TextBox>
+            </StackPanel>
 
-        <!-- Stack panel for Browse button and destination directory Text box -->
-        <StackPanel Grid.Row="1" 
-                    Grid.Column="1"
-                    VerticalAlignment="Center" 
-                    Width="Auto">
-            <TextBlock Text="{x:Static resources:WindowStrings.DestinationPrompt}"/>
-            <StackPanel Orientation="Vertical" Width="Auto">
-                <!-- Text box for destination/output directory -->
-                <TextBox Text="{Binding Path=DestinationDirectory, UpdateSourceTrigger=LostFocus}" 
+            <!-- Stack panel for Browse button and destination directory Text box -->
+            <StackPanel Grid.Row="1" 
+                        VerticalAlignment="Center" 
+                        Width="Auto" Height="Auto">
+                <TextBlock Text="{x:Static resources:WindowStrings.DestinationPrompt}"
+                           ToolTip="{x:Static resources:WindowStrings.BrowseTextFieldToolTip}" />
+                <StackPanel Orientation="Vertical" Width="Auto">
+                    <!-- Text box for destination/output directory -->
+                    <TextBox Text="{Binding Path=DestinationDirectory, UpdateSourceTrigger=LostFocus}" 
                          IsUndoEnabled="True"
                          ToolTip="{x:Static resources:WindowStrings.BrowseTextFieldToolTip}" 
-                         VerticalAlignment="Center" HorizontalAlignment="Stretch" MinWidth="193" MaxWidth="250">
-                </TextBox>
+                         VerticalAlignment="Center" 
+                         HorizontalAlignment="Stretch" 
+                         MinWidth="193" Width="Auto" MaxWidth="250"/>
 
-                <!-- Browse Button for destination directory -->
-                <Button 
+                    <!-- Browse Button for destination directory -->
+                    <Button 
                     Content="{x:Static resources:WindowStrings.BrowseButton}"
                     Command="{Binding Path=BrowseCommand}"
                     Width="125"/>
+                </StackPanel>
             </StackPanel>
-        </StackPanel>
-
+        </Grid>
         <!-- Stack panel for Level info grid -->
         <StackPanel DataContext="{Binding LevelInfoViewModel}" 
                     Grid.Row="1" 
                     Grid.Column="0"
                     HorizontalAlignment="Center" 
-                    VerticalAlignment="Top" Margin="96,0,95,0" >
+                    VerticalAlignment="Top" 
+                    Height="Auto" 
+                    Width="Auto" >
 
             <!--Data grid for Level information -->
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="57*"/>
-                    <ColumnDefinition Width="46*"/>
-                </Grid.ColumnDefinitions>
-                <DataGrid CanUserAddRows="False" 
+
+            <DataGrid CanUserAddRows="False"  
                           AutoGenerateColumns="False"
                           ItemsSource="{Binding Path=Levels}" 
-                          HorizontalScrollBarVisibility="Visible" 
-                          VerticalScrollBarVisibility="Visible"
-                          Height="Auto" Grid.ColumnSpan="2">
-                    <DataGrid.Columns>
-                        <DataGridTemplateColumn CanUserSort="False">
-                            <DataGridTemplateColumn.HeaderTemplate>
-                                <DataTemplate>
-                                    <!--Check box for selecting all levels -->
-                                    <CheckBox Content="Select"
-                                                  IsChecked="{Binding DataContext.IsSelectAll, 
+                          HorizontalScrollBarVisibility="Auto" 
+                          VerticalScrollBarVisibility="Auto"
+                          Height="Auto" Width="Auto">
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn CanUserSort="False" Width="Auto" CanUserResize="False">
+                        <DataGridTemplateColumn.HeaderTemplate>
+                            <DataTemplate>
+                                <!--Header Check box for selecting all levels -->
+                                <CheckBox
+                                        IsChecked="{Binding DataContext.IsSelectAll, 
                                                                 RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}},
                                                                 UpdateSourceTrigger=PropertyChanged}"
-                                                  Command="{Binding DataContext.SelectAll, 
+                                        Command="{Binding DataContext.SelectAll, 
                                                             RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}"/>
-                                    <!-- Since Datagrid column *header* is not part of UI logic, must use relative source to bump up and get properties datagrid -->
-                                </DataTemplate>
-                            </DataGridTemplateColumn.HeaderTemplate>
+                                <!-- Since Datagrid column *header* is not part of UI logic, must use relative source to bump up and get properties datagrid -->
+                            </DataTemplate>
+                        </DataGridTemplateColumn.HeaderTemplate>
 
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <!-- Checkbox for selecting level for export -->
-                                    <CheckBox IsChecked="{
-                                        Binding Path=IsSelected, 
-                                        UpdateSourceTrigger=PropertyChanged}"/>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <!-- Checkbox for selecting level for export -->
+                                <CheckBox IsChecked="{Binding Path=IsSelected, UpdateSourceTrigger=PropertyChanged}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
 
-                        <DataGridTextColumn Header="#"
+                    <DataGridTextColumn Header="#"
                                             IsReadOnly="True"
-                                            Binding="{Binding Number}"/>
-                        <DataGridTextColumn Header="Name" 
+                                            Binding="{Binding Number}" MinWidth="50"/>
+                    <DataGridTextColumn Header="Name" 
                                             Binding="{Binding Name}"
-                                            CanUserSort="False"/>
-                        <DataGridTextColumn Header="Entity Count"
+                                            CanUserSort="False" CanUserResize="True" Width="*"/>
+                    <DataGridTextColumn Header="Entity Count"
                                             IsReadOnly="True"
                                             Binding="{Binding EntityCount}" 
-                                            CanUserSort="False"/>
-                    </DataGrid.Columns>
-                </DataGrid>
-            </Grid>
+                                            CanUserSort="False" Width="Auto" CanUserResize="True"/>
+                </DataGrid.Columns>
+            </DataGrid>
+
         </StackPanel>
 
         <!-- Stack panel for ok/close buttons -->
@@ -240,7 +256,7 @@
             Grid.Column="1"
             Orientation="Horizontal"
             HorizontalAlignment="Right"
-            VerticalAlignment="Bottom">
+            VerticalAlignment="Bottom" Height="70" Width="203">
 
             <!-- Ok/Export Button -->
             <Button x:Name="OkButton"
