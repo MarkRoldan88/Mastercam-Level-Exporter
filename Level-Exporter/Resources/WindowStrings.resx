@@ -124,14 +124,17 @@
     <value>If this text field is blank, a save file dialog will open for every level when exporting</value>
   </data>
   <data name="CadTypePrompt" xml:space="preserve">
-    <value>Select a CAD Format</value>
+    <value>Select a CAD Format (see tooltip)</value>
     <comment>Prompt above Combobox</comment>
+  </data>
+  <data name="CadTypePromptToolTip" xml:space="preserve">
+    <value>If blank, levels will be exported as STL files</value>
   </data>
   <data name="DestinationPrompt" xml:space="preserve">
     <value>Destination Directory (see tooltip)</value>
   </data>
   <data name="ExportButton" xml:space="preserve">
-    <value>Export Level CAD</value>
+    <value>Export Levels</value>
   </data>
   <data name="GetLevelsButton" xml:space="preserve">
     <value>Get Mastercam Levels</value>
