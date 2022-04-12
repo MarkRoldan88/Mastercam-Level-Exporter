@@ -70,7 +70,7 @@ namespace Level_Exporter.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to If this text field is blank, a save file dialog will open for every level to export..
+        ///   Looks up a localized string similar to If this text field is blank, a save file dialog will open for every level when exporting.
         /// </summary>
         public static string BrowseTextFieldToolTip {
             get {
@@ -88,7 +88,7 @@ namespace Level_Exporter.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Destination Directory (leave blank to open file dialog on export).
+        ///   Looks up a localized string similar to Destination Directory (see tooltip).
         /// </summary>
         public static string DestinationPrompt {
             get {
@@ -97,7 +97,7 @@ namespace Level_Exporter.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Export CAD.
+        ///   Looks up a localized string similar to Export Level CAD.
         /// </summary>
         public static string ExportButton {
             get {
