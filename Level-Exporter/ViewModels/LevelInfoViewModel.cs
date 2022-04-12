@@ -32,6 +32,7 @@ namespace Level_Exporter.ViewModels
 
         #region Public Properties
 
+        //TODO Only allow numbers and letters in level datagrid cell
         /// <summary>
         /// Gets and sets name property for level name
         /// </summary>

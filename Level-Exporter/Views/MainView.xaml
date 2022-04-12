@@ -111,21 +111,23 @@
 
                 <!-- Text block prompting cad format selection -->
                 <TextBlock
-                FontSize="14"
+                FontSize="12"
                 Width="Auto" 
                 Text="{x:Static resx:WindowStrings.CadTypePrompt}"
+                ToolTip="{x:Static resx:WindowStrings.CadTypePromptToolTip}"
                 MinWidth="250"/>
 
                 <!-- Combobox for Cad format selection-->
                 <ComboBox IsReadOnly="True" 
-                      IsTextSearchEnabled="False"
-                      SelectedValue="{Binding CadFormatSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                      ItemContainerStyle="{StaticResource ComboBoxStyle}"
-                      ItemsSource="{Binding Path=CadFormatChoices}" DisplayMemberPath="Description"/>
+                          IsTextSearchEnabled="False"
+                          ToolTip="{x:Static resx:WindowStrings.CadTypePromptToolTip}"
+                          SelectedValue="{Binding CadFormatSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                          ItemContainerStyle="{StaticResource ComboBoxStyle}"
+                          ItemsSource="{Binding Path=CadFormatChoices}" DisplayMemberPath="Description"/>
                 
                 <!-- Text Block above STL resolution text box-->
                 <TextBlock Text="{x:Static resources:WindowStrings.StlResolution}" 
-                       FontSize="14" 
+                       FontSize="12" 
                        Margin="0,24,0,5">
                 <!-- Trigger for hiding stl resolution text box when stl is not selected -->
                     <TextBlock.Style>
@@ -182,8 +184,8 @@
                          IsUndoEnabled="True"
                          ToolTip="{x:Static resources:WindowStrings.BrowseTextFieldToolTip}" 
                          VerticalAlignment="Center" 
-                         HorizontalAlignment="Stretch" 
-                         MinWidth="193" Width="Auto" MaxWidth="250"/>
+                         HorizontalAlignment="Left" 
+                         Width="375" MaxWidth="375"/>
 
                     <!-- Browse Button for destination directory -->
                     <Button 
@@ -262,7 +264,7 @@
             <Button x:Name="OkButton"
                     x:Uid="OkButton"
                     Style="{StaticResource AppButtonStyle}"
-                    Command="{Binding OkCommand}" Width="98">
+                    Command="{Binding OkCommand}" Width="102">
                 <StackPanel HorizontalAlignment="Left">
                     <Image
                         Height="24"

@@ -22,7 +22,7 @@ using Mastercam.IO.Types;
 using Mastercam.Support;
 using System.Collections.ObjectModel;
 using System.Text.RegularExpressions;
-
+using System.Globalization;
 
 namespace Level_Exporter.ViewModels
 {
@@ -177,49 +177,28 @@ namespace Level_Exporter.ViewModels
         /// The can ok command. Add logic as required.
         /// </summary>
         /// <returns> The <see cref="bool"/> True if enabled, false otherwise. </returns>
-        private bool CanOkCommand() => true;
+        private bool CanOkCommand()
+        {
+            return LevelsManager.GetLevelNumbersWithGeometry().Length != 0;
+        }
 
         /// <summary>
         /// Executes OkCommand, button for exporting/saving level entities
         /// </summary>
         private void OnOkCommand()
         {
-            //TODO Check if fields are null/blank? (is valid method?)
             // User confirm
             if (DialogManager.YesNoCancel(
                     $"Export selected levels as {this.CadFormatSelected.FileExtension} files to {this.DestinationDirectory}?",
-                    "Confirm") != DialogReturnType.Yes) return;
+                    "Confirm") != DialogReturnType.Yes || !IsValid()) return;
 
-            var cadExportHelper = 
-                new CadExportHelper(this.DestinationDirectory, this.CadFormatSelected.FileExtension, this.StlResolution);
-
-            // For checking if user has input duplicate level names
-            var cachedNames = new Dictionary<string, int>();
-
-            var isSuccess = false;
-
-            foreach (var level in this.LevelInfoViewModel.Levels)
+            if (ExportLevels())
             {
-                if (!level.IsSelected) continue;
-
-                if (level.Name == string.Empty)
-                    level.Name = $"level{level.Number}";
-
-                if (cachedNames.ContainsKey(level.Name)) // If level name has been used, append a number to avoid duplicate file names
-                    level.Name += _nameIncrement++.ToString();
-                else 
-                    cachedNames.Add(level.Name, 1); // Add level name to cached names
-
-                // Mastercam select levels
-                SearchManager.SelectAllGeometryOnLevel(level.Number, true);
-
-                isSuccess = cadExportHelper.SaveLevelCad(level);
-            }
-
-            if (isSuccess)
                 DialogManager.OK(
                     $"Level entities saved to {this.DestinationDirectory} as {this.CadFormatSelected.FileExtension} files",
                     "Success!");
+            }
+            
         }
 
         /// <summary> Executes the close command action. </summary>
@@ -268,6 +247,63 @@ namespace Level_Exporter.ViewModels
             var fileExtensions = Enum.GetValues(typeof(CadTypes)).Cast<CadTypes>();
 
             return fileExtensions.Select(ext => new CadFormat(ext)).ToList();
+        }
+
+        /// <summary>
+        /// Checks certain items/properties to see if valid
+        /// </summary>
+        /// <returns></returns>
+        private bool IsValid()
+        {
+            if (!this.LevelInfoViewModel.Levels.Any(lvl => lvl.IsSelected))
+            {
+                DialogManager.OK("Please Select level(s) to export", "No Level(s) selected");
+                return false;
+            }
+
+            if (this.StlResolution.ToString(CultureInfo.CurrentCulture).ToCharArray().Count(c => c == '.') > 1 ||
+                this.StlResolution > 2.0 || this.StlResolution < 0.0)
+            {
+                DialogManager.OK("STL Resolution must be a valid number between 0.02 and 2.0", "Check STL resolution");
+                return false;
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Exports level CAD
+        /// </summary>
+        /// <returns></returns>
+        private bool ExportLevels()
+        {
+            var cadExportHelper =
+                new CadExportHelper(this.DestinationDirectory, this.CadFormatSelected.FileExtension, this.StlResolution);
+
+            // For checking if user has input duplicate level names
+            var cachedNames = new Dictionary<string, int>();
+
+            var isSuccess = false;
+
+            foreach (var level in this.LevelInfoViewModel.Levels)
+            {
+                if (!level.IsSelected || level.EntityCount == 0) continue;
+
+                if (cachedNames.ContainsKey(level.Name)) // If level name has been used, append a number to avoid duplicate file names
+                    level.Name += $"{_nameIncrement++}";
+                else
+                    cachedNames.Add(level.Name, 1); // Add level name to cached names
+
+                if (level.Name == string.Empty)
+                    level.Name = $"level{level.Number}"; // If level name is empty set it to default value, level + level number. Example level1
+
+                // Mastercam select levels
+                SearchManager.SelectAllGeometryOnLevel(level.Number, true);
+
+                isSuccess = cadExportHelper.SaveLevelCad(level);
+            }
+
+            return isSuccess;
         }
 
         #endregion

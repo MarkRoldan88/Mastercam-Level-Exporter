@@ -79,11 +79,20 @@ namespace Level_Exporter.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select a CAD Format.
+        ///   Looks up a localized string similar to Select a CAD Format (see tooltip).
         /// </summary>
         public static string CadTypePrompt {
             get {
                 return ResourceManager.GetString("CadTypePrompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to If blank, levels will be exported as STL files.
+        /// </summary>
+        public static string CadTypePromptToolTip {
+            get {
+                return ResourceManager.GetString("CadTypePromptToolTip", resourceCulture);
             }
         }
         
@@ -97,7 +106,7 @@ namespace Level_Exporter.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Export Level CAD.
+        ///   Looks up a localized string similar to Export Levels.
         /// </summary>
         public static string ExportButton {
             get {
