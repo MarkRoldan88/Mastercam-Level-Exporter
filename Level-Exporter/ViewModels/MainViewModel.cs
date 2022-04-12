@@ -171,7 +171,7 @@ namespace Level_Exporter.ViewModels
 
         #endregion
 
-        #region Private Methods
+        #region Private Methods/Commands/Event Handling
 
         /// <summary>
         /// The can ok command. Add logic as required.

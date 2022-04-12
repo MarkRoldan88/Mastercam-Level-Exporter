@@ -62,7 +62,7 @@ namespace Level_Exporter.Models
         /// Saves Cad entities within level, based on CAD format
         /// </summary>
         /// <param name="level"></param>
-        /// <returns></returns>
+        /// <returns>Bool indicating successful operation</returns>
         public bool SaveLevelCad(Level level)
         {
             try
@@ -90,16 +90,14 @@ namespace Level_Exporter.Models
         /// <summary>
         /// Helper method for saving level CAD as STL
         /// </summary>
-        /// <param name="level"></param>
-        /// <returns></returns>
+        /// <returns>Bool indicating successful operation</returns>
         private bool SaveAsStl() => 
             FileManager.WriteSTL(_fullPath, 0, _stlResolution, false, true, true, true, false);
 
         /// <summary>
         /// Helper method for saving level CAD as every format, except STL
         /// </summary>
-        /// <param name="level"></param>
-        /// <returns></returns>
+        /// <returns>Bool indicating successful operation</returns>
         private bool SaveAsCadFormat() => FileManager.SaveSome(_fullPath, true);
     }
     #endregion
