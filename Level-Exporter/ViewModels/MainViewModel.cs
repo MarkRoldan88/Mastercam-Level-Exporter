@@ -73,6 +73,9 @@ namespace Level_Exporter.ViewModels
         /// </summary>
         public ICommand BrowseCommand { get; }
 
+        /// <summary>
+        /// Gets the Preview Text Input command
+        /// </summary>
         public ICommand PreviewTextInputCommand { get; }
 
         #endregion
@@ -170,8 +173,9 @@ namespace Level_Exporter.ViewModels
 
         #region Private Methods
 
-        /// <summary> The can ok command. Add logic as required. </summary>
-        ///
+        /// <summary>
+        /// The can ok command. Add logic as required.
+        /// </summary>
         /// <returns> The <see cref="bool"/> True if enabled, false otherwise. </returns>
         private bool CanOkCommand() => true;
 
