@@ -104,16 +104,12 @@ namespace Level_Exporter.ViewModels
             get => _destinationDirectory;
             set
             {
-                var chars = value.ToCharArray(); //TODO change to method
-                var isValid = chars.Any(c => // Check string for invalid chars
-                    c != '\"' || c != '<' || c != '>' || c != '|' || c != '*' || c != '?' || c > 32 || c != '+');
-
-                if (chars.Length == 0 || !isValid)
+                if (!IsDestinationValid(value))
                 {
-                    value = string.Empty;
+                    value = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
                 }
 
-                _destinationDirectory = Path.GetFullPath(value);
+                _destinationDirectory = value;
                 OnPropertyChanged(nameof(DestinationDirectory));
             }
         }
@@ -190,7 +186,7 @@ namespace Level_Exporter.ViewModels
             // User confirm
             if (DialogManager.YesNoCancel(
                     $"Export selected levels as {this.CadFormatSelected.FileExtension} files to {this.DestinationDirectory}?",
-                    "Confirm") != DialogReturnType.Yes || !IsValid()) return;
+                    "Confirm") != DialogReturnType.Yes || !IsExportReady()) return;
 
             if (ExportLevels())
             {
@@ -238,22 +234,10 @@ namespace Level_Exporter.ViewModels
         #region Helper Methods
 
         /// <summary>
-        /// Create list of cad types from enum
-        /// </summary>
-        /// <returns>List of Cad formats</returns>
-        private List<CadFormat> GenerateCadChoiceList()
-        {
-            // Get Values from CadTypes enum
-            var fileExtensions = Enum.GetValues(typeof(CadTypes)).Cast<CadTypes>();
-
-            return fileExtensions.Select(ext => new CadFormat(ext)).ToList();
-        }
-
-        /// <summary>
         /// Checks certain items/properties to see if valid
         /// </summary>
         /// <returns></returns>
-        private bool IsValid()
+        private bool IsExportReady()
         {
             if (!this.LevelInfoViewModel.Levels.Any(lvl => lvl.IsSelected))
             {
@@ -301,9 +285,47 @@ namespace Level_Exporter.ViewModels
                 SearchManager.SelectAllGeometryOnLevel(level.Number, true);
 
                 isSuccess = cadExportHelper.SaveLevelCad(level);
+
+                if (!isSuccess)
+                    DialogManager.OK(
+                        $"Problem saving {level.Name}.{CadFormatSelected.FileExtension} to {this.DestinationDirectory}",
+                        "Error");
             }
 
             return isSuccess;
+        }
+
+        /// <summary>
+        /// Create list of cad types from enum
+        /// </summary>
+        /// <returns>List of Cad formats</returns>
+        private static List<CadFormat> GenerateCadChoiceList()
+        {
+            // Get Values from CadTypes enum
+            var fileExtensions = Enum.GetValues(typeof(CadTypes)).Cast<CadTypes>();
+
+            return fileExtensions.Select(ext => new CadFormat(ext)).ToList();
+        }
+
+        /// <summary>
+        /// Checks if destination directory contains any invalid chars
+        /// </summary>
+        /// <param name="destination">Destination directory</param>
+        /// <returns></returns>
+        private static bool IsDestinationValid(string destination)
+        {
+            if (string.IsNullOrEmpty(destination) || string.IsNullOrWhiteSpace(destination)) 
+                return true;
+
+            if (destination.Count(c => c.Equals(':')) > 1 || destination.Length < 4 || Path.HasExtension(destination) ||
+                Path.IsPathRooted(destination))  
+                return false;
+
+            // Check string for invalid chars
+            if (destination.ToCharArray().Any(c => c == '\"' || c == '<' || c == '>' || c == '|' || c == '*' || c == '?' || c > 32 || c == '+'))
+                return false;
+
+            return true;
         }
 
         #endregion

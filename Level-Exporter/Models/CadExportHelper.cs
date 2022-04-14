@@ -67,8 +67,8 @@ namespace Level_Exporter.Models
         {
             try
             {
-                if (_destination == string.Empty || _destination is null)
-                    return FileManager.SaveSome(SettingsManager.CurrentDirectory, true);
+                if (string.IsNullOrEmpty(_destination) || string.IsNullOrWhiteSpace(_destination))
+                    return FileManager.SaveSome(string.Empty, true);
 
                 _fullPath = Path.Combine(_destination, $"{level.Name}{_cadFormat}");
 
