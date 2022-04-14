@@ -190,7 +190,7 @@ namespace Level_Exporter.ViewModels
             // User confirm
             if (DialogManager.YesNoCancel(
                     $"Export selected levels as {this.CadFormatSelected.FileExtension} files to {this.DestinationDirectory}?",
-                    "Confirm") != DialogReturnType.Yes || !IsValid()) return;
+                    "Confirm") != DialogReturnType.Yes || !IsExportReady()) return;
 
             if (ExportLevels())
             {
@@ -238,22 +238,10 @@ namespace Level_Exporter.ViewModels
         #region Helper Methods
 
         /// <summary>
-        /// Create list of cad types from enum
-        /// </summary>
-        /// <returns>List of Cad formats</returns>
-        private List<CadFormat> GenerateCadChoiceList()
-        {
-            // Get Values from CadTypes enum
-            var fileExtensions = Enum.GetValues(typeof(CadTypes)).Cast<CadTypes>();
-
-            return fileExtensions.Select(ext => new CadFormat(ext)).ToList();
-        }
-
-        /// <summary>
         /// Checks certain items/properties to see if valid
         /// </summary>
         /// <returns></returns>
-        private bool IsValid()
+        private bool IsExportReady()
         {
             if (!this.LevelInfoViewModel.Levels.Any(lvl => lvl.IsSelected))
             {
@@ -301,9 +289,26 @@ namespace Level_Exporter.ViewModels
                 SearchManager.SelectAllGeometryOnLevel(level.Number, true);
 
                 isSuccess = cadExportHelper.SaveLevelCad(level);
+
+                if (!isSuccess)
+                    DialogManager.OK(
+                        $"Problem saving {level.Name}.{CadFormatSelected.FileExtension} to {this.DestinationDirectory}",
+                        "Error");
             }
 
             return isSuccess;
+        }
+
+        /// <summary>
+        /// Create list of cad types from enum
+        /// </summary>
+        /// <returns>List of Cad formats</returns>
+        private static List<CadFormat> GenerateCadChoiceList()
+        {
+            // Get Values from CadTypes enum
+            var fileExtensions = Enum.GetValues(typeof(CadTypes)).Cast<CadTypes>();
+
+            return fileExtensions.Select(ext => new CadFormat(ext)).ToList();
         }
 
         #endregion
