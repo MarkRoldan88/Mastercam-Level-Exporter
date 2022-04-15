@@ -52,3 +52,5 @@ bld/
 *.nupkg
 # NuGet Symbol Packages
 *.snupkg
+
+Packages/
