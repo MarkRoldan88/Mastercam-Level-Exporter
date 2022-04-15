@@ -167,7 +167,7 @@ namespace Level_Exporter.ViewModels
 
         #endregion
 
-        #region Private Methods/Commands/Event Handling
+        #region Private Methods/Command Methods/Event Handling
 
         /// <summary>
         /// The can ok command. Add logic as required.
@@ -234,7 +234,7 @@ namespace Level_Exporter.ViewModels
         #region Helper Methods
 
         /// <summary>
-        /// Checks certain items/properties to see if valid
+        /// Checks certain items/properties to see if able to Save/export level CAD
         /// </summary>
         /// <returns></returns>
         private bool IsExportReady()
@@ -318,11 +318,11 @@ namespace Level_Exporter.ViewModels
                 return true;
 
             if (destination.Count(c => c.Equals(':')) > 1 || destination.Length < 4 || Path.HasExtension(destination) ||
-                Path.IsPathRooted(destination))  
+                !Path.IsPathRooted(destination))
                 return false;
 
             // Check string for invalid chars
-            if (destination.ToCharArray().Any(c => c == '\"' || c == '<' || c == '>' || c == '|' || c == '*' || c == '?' || c > 32 || c == '+'))
+            if (destination.ToCharArray().Any(c => c == '<' || c == '>' || c == '|' || c == '*' || c == '?' || c < 32 || c == '+'))
                 return false;
 
             return true;

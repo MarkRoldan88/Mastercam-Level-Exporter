@@ -19,6 +19,8 @@
 
         #endregion
 
+        #region Public Properties
+
         /// <summary>
         /// Gets CAD Format Description
         /// </summary>
@@ -33,7 +35,10 @@
             private set => _fileExtension = $".{value}";
         }
 
+        #endregion
+
         #region Helper Method
+
         /// <summary>
         /// Generates CAD format description, based on cad type
         /// </summary>
