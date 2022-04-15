@@ -106,6 +106,7 @@
     <Compile Include="Services\SingletonBehaviour.cs" />
     <Compile Include="Converters\StringToImageSourceConverter.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
+    <Compile Include="ViewModels\CadFormatsViewModel.cs" />
     <Compile Include="ViewModels\LevelInfoViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="Views\MainView.xaml.cs">
