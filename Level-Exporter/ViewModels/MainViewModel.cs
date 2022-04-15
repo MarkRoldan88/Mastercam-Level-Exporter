@@ -318,11 +318,11 @@ namespace Level_Exporter.ViewModels
                 return true;
 
             if (destination.Count(c => c.Equals(':')) > 1 || destination.Length < 4 || Path.HasExtension(destination) ||
-                Path.IsPathRooted(destination))  
+                !Path.IsPathRooted(destination))
                 return false;
 
             // Check string for invalid chars
-            if (destination.ToCharArray().Any(c => c == '\"' || c == '<' || c == '>' || c == '|' || c == '*' || c == '?' || c > 32 || c == '+'))
+            if (destination.ToCharArray().Any(c => c == '<' || c == '>' || c == '|' || c == '*' || c == '?' || c < 32 || c == '+'))
                 return false;
 
             return true;
