@@ -1,4 +1,8 @@
-﻿namespace Level_Exporter.Models
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace Level_Exporter.Models
 {
     /// <summary>
     /// Cad Format class, has a file extension and description.
@@ -85,6 +89,18 @@
             }
         }
         #endregion
+
+        /// <summary>
+        /// Create list of cad types from enum
+        /// </summary>
+        /// <returns>List of Cad formats</returns>
+        public static List<CadFormat> GenerateCadChoiceList()
+        {
+            // Get Values from CadTypes enum
+            var fileExtensions = Enum.GetValues(typeof(CadTypes)).Cast<CadTypes>();
+
+            return fileExtensions.Select(ext => new CadFormat(ext)).ToList();
+        }
     }
 
     #region CAD Type Enum

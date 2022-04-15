@@ -4,6 +4,8 @@ using System.Windows.Input;
 using Level_Exporter.Commands;
 using Level_Exporter.Models;
 using Mastercam.IO;
+using System;
+using System.Collections.Generic;
 
 namespace Level_Exporter.ViewModels
 {
@@ -17,17 +19,19 @@ namespace Level_Exporter.ViewModels
         {
             ReadMastercamLevels = new DelegateCommand(OnReadMastercamLevels);
             SelectAll = new DelegateCommand(OnSelectAll);
-            Levels = new ObservableCollection<Level>();
+            _levels = new ObservableCollection<Level>();
         }
         #endregion
         
         #region Private fields
 
-        private ObservableCollection<Level> _levels;
+        private readonly ObservableCollection<Level> _levels;
         private bool _isSelectAll;
         private bool _isSyncButton;
         private bool _isSelected;
         private string _name;
+
+        private delegate Dictionary<int,string> LevelInfoHandler();
         #endregion
 
         #region Public Properties
@@ -77,15 +81,7 @@ namespace Level_Exporter.ViewModels
         /// <summary>
         ///  Gets and sets List of levels for view
         /// </summary>
-        public ObservableCollection<Level> Levels
-        {
-            get => _levels;
-            set
-            {
-                _levels = value;
-                OnPropertyChanged(nameof(Levels)); // For MvvM Event
-            }
-        }
+        public IEnumerable<Level> Levels => _levels;
 
         /// <summary>
         ///  Gets and Sets bool for button state
@@ -129,16 +125,15 @@ namespace Level_Exporter.ViewModels
             if (LevelsManager.GetLevelNumbersWithGeometry().Length == 0) return;
 
             // Get Level Info- Key: level num , Value: level name
-            var levelInfo = LevelsManager.GetLevelNumbersWithGeometry()
-                .ToDictionary(n => n, LevelsManager.GetLevelName);
-
+            LevelInfoHandler levelInfo = LevelInfo;
+            
             IsSyncButton = true;
 
-            Levels.Clear(); // Clear instead of comparing and doing a 'proper sync'
+            _levels.Clear(); // Clear instead of comparing and doing a 'proper sync'
 
-            foreach (var level in levelInfo)
+            foreach (var level in levelInfo())
             {
-                Levels.Add(new Level
+                _levels.Add(new Level
                 {
                     Name = level.Value,
                     Number = level.Key,
@@ -152,9 +147,9 @@ namespace Level_Exporter.ViewModels
         /// </summary>
         private void OnSelectAll()
         {
-            if (Levels.Count == 0) return;
+            if (_levels.Count == 0) return;
 
-            foreach (var lvl in Levels)
+            foreach (var lvl in _levels)
             {
                 if (lvl.IsSelected == IsSelectAll) continue;
 
@@ -162,8 +157,13 @@ namespace Level_Exporter.ViewModels
             }
         }
 
+        /// <summary>
+        /// Get level numbers that contain geometry and convert to dictionary
+        /// </summary>
+        /// <returns></returns>
+        private static Dictionary<int, string> LevelInfo() => LevelsManager.GetLevelNumbersWithGeometry()
+            .ToDictionary(n => n, LevelsManager.GetLevelName);
         #endregion
-
     }
 
 }

@@ -36,22 +36,26 @@ namespace Level_Exporter.ViewModels
         /// Gets LevelInfoViewModel
         /// </summary>
         public LevelInfoViewModel LevelInfoViewModel { get; }
+        /// <summary>
+        /// Gets CadFormatsViewModel
+        /// </summary>
+        public CadFormatsViewModel CadFormatsViewModel { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MainViewModel"/> class.
         /// </summary>
         public MainViewModel()
-        {
+        { //TODO decouple view models
+            this.CadFormatsViewModel = new CadFormatsViewModel();
             this.LevelInfoViewModel = new LevelInfoViewModel();
+            this._levels = LevelInfoViewModel.Levels;
 
             this.OkCommand = new DelegateCommand(OnOkCommand, CanOkCommand);
             this.CloseCommand = new DelegateCommand<Window>(OnCloseCommand);
             this.BrowseCommand = new DelegateCommand(OnBrowseCommand);
             this.PreviewTextInputCommand = new DelegateCommand<TextCompositionEventArgs>(OnPreviewTextInput);
 
-            this.DestinationDirectory = SettingsManager.CurrentDirectory;
-
-            this.CadFormatChoices = new ObservableCollection<CadFormat>(GenerateCadChoiceList());
+            this.DestinationDirectory = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
         }
 
         #endregion
@@ -83,9 +87,13 @@ namespace Level_Exporter.ViewModels
         #region Private Fields
 
         private CadFormat _cadFormatSelected;
-        private ObservableCollection<CadFormat> _cadFormatChoiceChoices;
         private string _destinationDirectory;
         private double _stlResolution = 0.02;
+
+        /// <summary>
+        /// IEnumerable of levels from levelinfo view model
+        /// </summary>
+        private readonly IEnumerable<Level> _levels;
 
         #endregion
 
@@ -132,19 +140,6 @@ namespace Level_Exporter.ViewModels
             {
                 _cadFormatSelected = value;
                 OnPropertyChanged(nameof(CadFormatSelected));
-            }
-        }
-
-        /// <summary>
-        /// Gets and Sets Cad format choices for combobox
-        /// </summary>
-        public ObservableCollection<CadFormat> CadFormatChoices
-        {
-            get => _cadFormatChoiceChoices;
-            set
-            {
-                _cadFormatChoiceChoices = value;
-                OnPropertyChanged(nameof(CadFormatChoices));
             }
         }
 
@@ -234,7 +229,7 @@ namespace Level_Exporter.ViewModels
         /// <returns></returns>
         private bool IsExportReady()
         {
-            if (!this.LevelInfoViewModel.Levels.Any(lvl => lvl.IsSelected))
+            if (!this._levels.Any(lvl => lvl.IsSelected))
             {
                 DialogManager.OK("Please Select level(s) to export", "No Level(s) selected");
                 return false;
@@ -264,7 +259,7 @@ namespace Level_Exporter.ViewModels
 
             var isSuccess = false;
 
-            foreach (var level in this.LevelInfoViewModel.Levels)
+            foreach (var level in this._levels)
             {
                 if (!level.IsSelected || level.EntityCount == 0) continue;
 
@@ -288,18 +283,6 @@ namespace Level_Exporter.ViewModels
             }
 
             return isSuccess;
-        }
-
-        /// <summary>
-        /// Create list of cad types from enum
-        /// </summary>
-        /// <returns>List of Cad formats</returns>
-        private static List<CadFormat> GenerateCadChoiceList()
-        {
-            // Get Values from CadTypes enum
-            var fileExtensions = Enum.GetValues(typeof(CadTypes)).Cast<CadTypes>();
-
-            return fileExtensions.Select(ext => new CadFormat(ext)).ToList();
         }
 
         /// <summary>

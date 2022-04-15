@@ -123,7 +123,7 @@
                           ToolTip="{x:Static resx:WindowStrings.CadTypePromptToolTip}"
                           SelectedValue="{Binding CadFormatSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                           ItemContainerStyle="{StaticResource ComboBoxStyle}"
-                          ItemsSource="{Binding Path=CadFormatChoices}" DisplayMemberPath="Description"/>
+                          ItemsSource="{Binding Path=CadFormatsViewModel.CadFormats}" DisplayMemberPath="Description"/>
                 
                 <!-- Text Block above STL resolution text box-->
                 <TextBlock Text="{x:Static resources:WindowStrings.StlResolution}" 
