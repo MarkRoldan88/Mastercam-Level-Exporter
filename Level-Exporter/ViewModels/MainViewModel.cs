@@ -83,13 +83,8 @@ namespace Level_Exporter.ViewModels
         #region Private Fields
 
         private CadFormat _cadFormatSelected;
-
         private ObservableCollection<CadFormat> _cadFormatChoiceChoices;
-
         private string _destinationDirectory;
-
-        private int _nameIncrement;
-
         private double _stlResolution = 0.02;
 
         #endregion
@@ -274,7 +269,7 @@ namespace Level_Exporter.ViewModels
                 if (!level.IsSelected || level.EntityCount == 0) continue;
 
                 if (cachedNames.ContainsKey(level.Name)) // If level name has been used, append a number to avoid duplicate file names
-                    level.Name += $"{_nameIncrement++}";
+                    level.Name += level.Number;
                 else
                     cachedNames.Add(level.Name, 1); // Add level name to cached names
 

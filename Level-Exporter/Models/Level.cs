@@ -2,6 +2,7 @@ using System.Linq;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Level_Exporter.Annotations;
+using System.Text.RegularExpressions;
 
 namespace Level_Exporter.Models
 {
@@ -35,14 +36,11 @@ namespace Level_Exporter.Models
             get => _name;
             set
             {
-                var chars = value.ToCharArray();
-                var isValid = chars.Any(c => // Check string for invalid path characters
-                    c != '\"' || c != '<' || c != '>' || c != '|' || c != '*' || c != '?' || c > 32 || c != '+' ||
-                    c != '/');
-
-                if (chars.Length == 0 || !isValid)
+                if (!IsLevelNameValid(value))
                 {
-                    value = string.Empty;
+                    _name = "Level";
+                    OnPropertyChanged(nameof(Name));
+                    return;
                 }
 
                 _name = value;
@@ -73,7 +71,20 @@ namespace Level_Exporter.Models
                 OnPropertyChanged(nameof(IsSelected));
             }
         }
-
         #endregion
+
+        /// <summary>
+        /// Check if string contains unconventional characters (e.g. $%#)
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
+        private static bool IsLevelNameValid(string s)
+        {
+            if (new Regex(@"[^0-9a-z.\w\s()]+").IsMatch(s)) return false;
+
+            return s.ToCharArray().Any(c => // Check string for invalid path characters
+                c > 32 || c != '\"' || c != '<' || c != '>' || c != '|' || c != '*' || c != '?' || c != '+' ||
+                c != '/');
+        }
     }
 }
