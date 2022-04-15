@@ -31,7 +31,6 @@ namespace Level_Exporter.ViewModels
         private bool _isSelected;
         private string _name;
 
-        private Action<Level> checkAllAction;
         private delegate Dictionary<int,string> LevelInfoHandler();
         #endregion
 
