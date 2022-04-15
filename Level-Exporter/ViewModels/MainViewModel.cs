@@ -167,7 +167,7 @@ namespace Level_Exporter.ViewModels
 
         #endregion
 
-        #region Private Methods/Commands/Event Handling
+        #region Private Methods/Command Methods/Event Handling
 
         /// <summary>
         /// The can ok command. Add logic as required.
@@ -234,7 +234,7 @@ namespace Level_Exporter.ViewModels
         #region Helper Methods
 
         /// <summary>
-        /// Checks certain items/properties to see if valid
+        /// Checks certain items/properties to see if able to Save/export level CAD
         /// </summary>
         /// <returns></returns>
         private bool IsExportReady()
