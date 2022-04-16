@@ -13,9 +13,11 @@ bld/
 [Oo]bj/
 [Ll]og/
 [Ll]ogs/
+[Pp]ackages/
 
 # Visual Studio 2015/2017 cache/options directory
 .vs/
+
 
 
 # Files built by Visual Studio
@@ -53,4 +55,3 @@ bld/
 # NuGet Symbol Packages
 *.snupkg
 
-Packages/
