@@ -36,7 +36,7 @@ namespace Level_Exporter.Models
             get => _name;
             set
             {
-                if (!IsLevelNameValid(value))
+                if (!IsNameValid(value))
                 {
                     _name = "Level";
                     OnPropertyChanged(nameof(Name));
@@ -78,7 +78,7 @@ namespace Level_Exporter.Models
         /// </summary>
         /// <param name="s"></param>
         /// <returns></returns>
-        private static bool IsLevelNameValid(string s)
+        private static bool IsNameValid(string s)
         {
             if (new Regex(@"[^0-9a-z.\w\s()]+").IsMatch(s)) return false;
 
