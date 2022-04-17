@@ -12,7 +12,7 @@ namespace Level_Exporter.Models
         #region Constructor
         public CadFormat(CadTypes cadType)
         {
-            FileExtension = cadType.ToString();
+            FileExtension = cadType.ToString().ToLower();
             Description = $"{GenerateDescription(cadType)} (*{FileExtension})";
         }
         #endregion
@@ -52,37 +52,37 @@ namespace Level_Exporter.Models
         {
             switch (type)
             {
-                case CadTypes.dwg:
+                case CadTypes.Dwg:
                     return "AutoCAD Drawing File";
 
-                case CadTypes.dxf:
+                case CadTypes.Dxf:
                     return "AutoCAD DXF File";
 
-                case CadTypes.emcam:
+                case CadTypes.Emcam:
                     return "Mastercam Educ File";
 
-                case CadTypes.igs:
-                case CadTypes.iges:
+                case CadTypes.Igs:
+                case CadTypes.Iges:
                     return "Surface, IGES File";
 
-                case CadTypes.mcam:
+                case CadTypes.Mcam:
                     return "Mastercam File";
 
-                case CadTypes.sat:
+                case CadTypes.Sat:
                     return "ACIS Kernel SAT File";
 
-                case CadTypes.stp:
-                case CadTypes.step:
+                case CadTypes.Stp:
+                case CadTypes.Step:
                     return "STEP File";
 
-                case CadTypes.stl:
+                case CadTypes.Stl:
                     return "StereoLithography File";
 
-                case CadTypes.x_b:
+                case CadTypes.Xb:
                     return "Parasolid Binary File";
 
-                case CadTypes.x_t:
-                case CadTypes.xmt_txt:
+                case CadTypes.Xt:
+                case CadTypes.XmtTxt:
                     return "Parasolid Text File";
 
                 default: return string.Empty;
@@ -107,21 +107,11 @@ namespace Level_Exporter.Models
     /// <summary>
     /// Enum for CAD types or file extension
     /// </summary>
-    public enum CadTypes // ReSharper disable InconsistentNaming
+    public enum CadTypes
     {
-        dwg,
-        dxf,
-        emcam,
-        iges,
-        igs,
-        mcam,
-        sat,
-        step,
-        stl,
-        stp,
-        x_b,
-        xmt_txt,
-        x_t
+        Dwg, Dxf, Emcam, Iges, Igs,
+        Mcam, Sat, Step, Stl, Stp,
+        Xb, XmtTxt, Xt
     }
     #endregion
     

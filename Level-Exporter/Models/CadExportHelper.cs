@@ -72,7 +72,7 @@ namespace Level_Exporter.Models
 
                 _fullPath = Path.Combine(_destination, $"{level.Name}{_cadFormat}");
 
-                return _cadFormat == CadTypes.stl.ToString() ? SaveAsStl() : SaveAsCadFormat();
+                return _cadFormat == CadTypes.Stl.ToString() ? SaveAsStl() : SaveAsCadFormat();
             }
             catch (Exception e)
             {
