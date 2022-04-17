@@ -37,7 +37,7 @@
                 "12 (*.stl)",
                 "12 (*.stl)sss",
                 "12 (.stl)",
-                "sss (*.stl)",
+                "ss (sss*sss.stl)",
             };
 
             string actualDescription = new CadFormat(CadTypes.Emcam).Description;
