@@ -1,38 +1,24 @@
-﻿using System;
-using NUnit.Framework;
-using Moq;
+﻿using NUnit.Framework;
 using Level_Exporter.Models;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Level_Exporter.Tests.Models
 {
-    using System.Linq;
-    using NUnit.Framework.Internal;
-
     [TestFixture]
     public class LevelTests
     {
-        private List<string> invalidNames = new List<string>
+        private readonly List<string> invalidNames = new List<string>
         {
-           "eLee@","$$$!L",
-            "e##LL",
-            "l%%ev",
-            "!$LL*",
-            "Lv:",@"\", "\""
+           "eLee@","$$$!L", "e##LL", 
+           "l%%ev", "!$LL*", "Lv:",@"\", "\""
         };
 
-        private List<string> validNames = new List<string>
+        private readonly List<string> validNames = new List<string>
         {
-            "3l3La",
-            "dj9Lj",
-            "sm56e",
-            "mlkdj",
-            "sv4ll",
-            "sf020",
-            "9vj3d",
-            "dedd5",
-            "0je3s",
-            "fvjd6"
+            "3l3La", "dj9Lj", "sm56e", 
+            "mlkdj", "sv4ll", "sf020", 
+            "9vj3d", "dedd5", "0je3s", "fvjd6"
         };
 
         [Test]
