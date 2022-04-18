@@ -60,7 +60,7 @@
             
             Assert.That(actualList,
                 Has.All.Matches<CadFormat>(cadFormat =>
-                    cadFormat.FileExtension.Equals(string.Empty) && cadFormat.Description.Equals(string.Empty)),
+                    !cadFormat.FileExtension.Equals(string.Empty) && !cadFormat.Description.Equals(string.Empty)),
                 "Created List must contain CadFormat objects with non empty properties");
         }
     }

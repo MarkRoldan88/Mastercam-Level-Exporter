@@ -8,18 +8,22 @@ namespace Level_Exporter.Tests.Models
     [TestFixture]
     public class LevelTests
     {
+        #region TestCaseSource
+
         private readonly List<string> invalidNames = new List<string>
         {
-           "eLee@","$$$!L", "e##LL", 
-           "l%%ev", "!$LL*", "Lv:",@"\", "\""
+            "eLee@","$$$!L", "e##LL",
+            "l%%ev", "!$LL*", "Lv:",@"\", "\""
         };
 
         private readonly List<string> validNames = new List<string>
         {
-            "3l3La", "dj9Lj", "sm56e", 
-            "mlkdj", "sv4ll", "sf020", 
+            "3l3La", "dj9Lj", "sm56e",
+            "mlkdj", "sv4ll", "sf020",
             "9vj3d", "dedd5", "0je3s", "fvjd6"
         };
+
+        #endregion
 
         [Test]
         public void Name_IfValueIsEmptyString_SetsNameAsLevel()
@@ -29,7 +33,8 @@ namespace Level_Exporter.Tests.Models
 
             Level level = new Level { Name = name };
 
-            Assert.AreEqual(expectedName, level.Name);
+            Assert.AreEqual(expectedName, level.Name,
+                "If value provided to name property is an empty string, name setter should set name as 'Level'");
         }
 
         [Test]
@@ -38,7 +43,7 @@ namespace Level_Exporter.Tests.Models
         {
             List<Level> names = invalidNames.Select(name => new Level { Name = name }).ToList();
 
-            Assert.That(names, Has.Exactly(names.Count).Matches<Level>(c => c.Name.Equals("Level")),
+            Assert.That(names, Has.All.Matches<Level>(c => c.Name.Equals("Level")),
                 $"Should contain {names.Count} names of Level");
         }
 
@@ -49,7 +54,8 @@ namespace Level_Exporter.Tests.Models
            var levelObjects = invalidNames.Select(name => new Level { Name = name }).ToList();
            var names = levelObjects.Select(x => x.Name).ToList();
            
-            CollectionAssert.AreEqual(validNames, names);
+            CollectionAssert.AreEqual(validNames, names,
+                "Name property setters should set name as value provided if it is a valid value");
         }
     }
 }
