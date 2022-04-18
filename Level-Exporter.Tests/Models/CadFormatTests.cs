@@ -20,10 +20,13 @@
 
         [Test]
         public void FileExtension_ShouldNotContain_UppercaseLetters()
-        {
+        {   //Arrange
             var invalidFormat = new Regex(@"([A-Z])");
+
+            //Act
             string fileExtension = new CadFormat(CadTypes.Dwg).FileExtension;
 
+            //Assert
             Assert.IsFalse(invalidFormat.IsMatch(fileExtension), "File Extension property must only be lower case letters");
         }
 

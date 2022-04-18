@@ -4,7 +4,6 @@ using System.Windows.Input;
 using Level_Exporter.Commands;
 using Level_Exporter.Models;
 using Mastercam.IO;
-using System;
 using System.Collections.Generic;
 
 namespace Level_Exporter.ViewModels
@@ -22,14 +21,15 @@ namespace Level_Exporter.ViewModels
             _levels = new ObservableCollection<Level>();
         }
         #endregion
-        
+
         #region Private fields
 
-        private readonly ObservableCollection<Level> _levels;
         private bool _isSelectAll;
         private bool _isSyncButton;
         private bool _isSelected;
         private string _name;
+
+        private readonly ObservableCollection<Level> _levels;
 
         private delegate Dictionary<int,string> LevelInfoHandler();
         #endregion
