@@ -229,9 +229,10 @@ namespace Level_Exporter.ViewModels
         /// <returns></returns>
         private bool IsExportReady()
         {
-            if (!this._levels.Any(lvl => lvl.IsSelected))
+            if (_cadFormatSelected is null || !this._levels.Any(lvl => lvl.IsSelected))
             {
-                DialogManager.OK("Please Select level(s) to export", "No Level(s) selected");
+                DialogManager.OK("Please Select Cad Format and level(s) to export",
+                    "No Level(s) selected or Cad Format is not selected");
                 return false;
             }
 
