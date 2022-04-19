@@ -10,13 +10,13 @@ namespace Level_Exporter.Tests.Models
     {
         #region TestCaseSource
 
-        private static readonly List<string> invalidNames = new List<string>
+        private static readonly List<string> InvalidNames = new List<string>
         {
             "eLee@","$$$!L", "e##LL",
             "l%%ev", "!$LL*", "Lv:",@"\", "\""
         };
 
-        private static readonly List<string> validNames = new List<string>
+        private static readonly List<string> ValidNames = new List<string>
         {
             "3l3La", "dj9Lj", "sm56e",
             "mlkdj", "sv4ll", "sf020",
@@ -38,7 +38,7 @@ namespace Level_Exporter.Tests.Models
         }
 
         [Test]
-        [TestCaseSource(nameof(invalidNames))]
+        [TestCaseSource(nameof(InvalidNames))]
         public void Name__IfValueContainsSymbols_SetsNameAsLevel(string invalidName)
         {
             var level = new Level { Name = invalidName };
@@ -48,7 +48,7 @@ namespace Level_Exporter.Tests.Models
         }
 
         [Test]
-        [TestCaseSource(nameof(validNames))]
+        [TestCaseSource(nameof(ValidNames))]
         public void Name_IfValidValue_SetsNameAsValue(string validName)
         {
             var level = new Level { Name = validName };
