@@ -1,4 +1,4 @@
-﻿using NUnit.Framework;
+using NUnit.Framework;
 using Level_Exporter.Models;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,13 +10,13 @@ namespace Level_Exporter.Tests.Models
     {
         #region TestCaseSource
 
-        private readonly List<string> invalidNames = new List<string>
+        private static readonly List<string> invalidNames = new List<string>
         {
             "eLee@","$$$!L", "e##LL",
             "l%%ev", "!$LL*", "Lv:",@"\", "\""
         };
 
-        private readonly List<string> validNames = new List<string>
+        private static readonly List<string> validNames = new List<string>
         {
             "3l3La", "dj9Lj", "sm56e",
             "mlkdj", "sv4ll", "sf020",
@@ -39,23 +39,21 @@ namespace Level_Exporter.Tests.Models
 
         [Test]
         [TestCaseSource(nameof(invalidNames))]
-        public void Name__IfValueContainsSymbols_SetsNameAsLevel()
+        public void Name__IfValueContainsSymbols_SetsNameAsLevel(string invalidName)
         {
-            List<Level> names = invalidNames.Select(name => new Level { Name = name }).ToList();
+            var level = new Level { Name = invalidName };
+            const string expectedName = "Level";
 
-            Assert.That(names, Has.All.Matches<Level>(c => c.Name.Equals("Level")),
-                $"Should contain {names.Count} names of Level");
+            Assert.AreEqual(expectedName, level.Name);
         }
 
         [Test]
         [TestCaseSource(nameof(validNames))]
-        public void Name_IfValidValue_SetsNameAsValue()
+        public void Name_IfValidValue_SetsNameAsValue(string validName)
         {
-           var levelObjects = invalidNames.Select(name => new Level { Name = name }).ToList();
-           var names = levelObjects.Select(x => x.Name).ToList();
-           
-            CollectionAssert.AreEqual(validNames, names,
-                "Name property setters should set name as value provided if it is a valid value");
+            var level = new Level { Name = validName };
+
+            Assert.AreEqual(validName, level.Name, "Name property setters should set name as value provided if it is a valid value");
         }
     }
 }
