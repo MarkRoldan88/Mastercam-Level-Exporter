@@ -61,7 +61,8 @@ namespace Level_Exporter.Models
         /// <summary>
         /// Gets and Sets isSelected
         /// </summary>
-        public bool IsSelected { 
+        public bool IsSelected
+        {
             get => _isSelected;
             set
             {
