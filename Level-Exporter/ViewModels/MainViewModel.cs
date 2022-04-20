@@ -228,15 +228,15 @@ namespace Level_Exporter.ViewModels
         /// <returns></returns>
         private bool IsExportReady()
         {
-            if (_cadFormatSelected is null || !this._levels.Any(lvl => lvl.IsSelected))
+            if (_cadFormatSelected is null || !this.Levels.Any(lvl => lvl.IsSelected))
             {
                 DialogManager.OK("Please Select Cad Format and level(s) to export",
                     "No Level(s) selected or Cad Format is not selected");
                 return false;
             }
-
-            if (this.StlResolution.ToString(CultureInfo.CurrentCulture).ToCharArray().Count(c => c == '.') > 1 ||
-                this.StlResolution > 2.0 || this.StlResolution < 0.0)
+            // If format is stl and stl resolution is invalid
+            if (this.CadFormatSelected.FileExtension.Equals($".{CadTypes.Stl}") && (this.StlResolution.ToString(CultureInfo.CurrentCulture).ToCharArray().Count(c => c == '.') > 1 ||
+                this.StlResolution > 2.0 || this.StlResolution <= 0.0))
             {
                 DialogManager.OK("STL Resolution must be a valid number between 0.02 and 2.0", "Check STL resolution");
                 return false;
@@ -258,16 +258,15 @@ namespace Level_Exporter.ViewModels
             var cachedNames = new Dictionary<string, int>();
 
             var isSuccess = false;
+            var nameCounter = 0;
 
-            foreach (var level in this._levels)
+            foreach (var level in this.Levels.Where(it => it.IsSelected))
             {
-                if (!level.IsSelected || level.EntityCount == 0) continue;
-
-                if (level.Name.Equals(string.Empty))
-                    level.Name = $"level{level.Number}"; // If level name is empty set it to default value, level + level number. Example level1
-
                 if (cachedNames.ContainsKey(level.Name)) // If level name has been used, append a number to avoid duplicate file names
-                    level.Name += level.Number;
+                {
+                    level.Name += nameCounter++;
+                    cachedNames.Add(level.Name, 1);
+                }
                 else
                     cachedNames.Add(level.Name, 1); // Add level name to cached names
 
