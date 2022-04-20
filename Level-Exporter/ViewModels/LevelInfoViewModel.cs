@@ -120,7 +120,7 @@ namespace Level_Exporter.ViewModels
         private void OnReadMastercamLevels()
         {
             // Refresh Level manager in Mastercam to get rid of empty levels, named levels are not removed
-            LevelsManager.RefreshLevelsManager();
+            LevelsManager.RefreshLevelsManager(); //TODO Move to CanReadMastercamLevels command
 
             if (LevelsManager.GetLevelNumbersWithGeometry().Length == 0) return; //TODO Move to CanReadMastercamLevels command
 
@@ -132,7 +132,7 @@ namespace Level_Exporter.ViewModels
             //TODO Move to CanReadMastercamLevels command
             _levels.Clear(); // Clear instead of comparing and doing a 'proper sync' 
 
-            foreach (KeyValuePair<int,string> level in levelInfo())
+            foreach (KeyValuePair<int, string> level in levelInfo())
             {
                 _levels.Add(new Level
                 {
