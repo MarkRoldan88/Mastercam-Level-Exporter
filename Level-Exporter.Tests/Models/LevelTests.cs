@@ -27,10 +27,9 @@ namespace Level_Exporter.Tests.Models
         [Test]
         public void Name_IfValueIsEmptyString_SetsNameAsLevel()
         {
-            string name = "";
             string expectedName = "Level";
 
-            Level level = new Level { Name = name };
+            Level level = new Level { Name = "" };
 
             Assert.AreEqual(expectedName, level.Name,
                 "If value provided to name property is an empty string, name setter should set name as 'Level'");
@@ -53,6 +52,17 @@ namespace Level_Exporter.Tests.Models
             var level = new Level { Name = validName };
 
             Assert.AreEqual(validName, level.Name, "Name property setters should set name as value provided if it is a valid value");
+        }
+
+        [Test]
+        public void Name_IfValueIsOnlyWhitespace_SetsNameAsLevel()
+        {
+            string expectedName = "Level";
+
+            Level level = new Level { Name = "   " };
+
+            Assert.AreEqual(expectedName, level.Name,
+                "If value provided to name property is a string only containing white space, name setter should set name as 'Level'");
         }
     }
 }

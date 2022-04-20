@@ -80,7 +80,7 @@ namespace Level_Exporter.Models
         /// <returns></returns>
         private static bool IsNameValid(string s)
         {
-            if (new Regex(@"[^0-9a-z.\w\s()]+").IsMatch(s)) return false;
+            if (new Regex(@"[^0-9a-z.\w\s()]+").IsMatch(s) || s.Replace(" ", string.Empty).Length == 0) return false;
 
             return s.ToCharArray().Any(c => // Check string for invalid path characters
                 c > 32 || c != '\"' || c != '<' || c != '>' || c != '|' || c != '*' || c != '?' || c != '+' ||

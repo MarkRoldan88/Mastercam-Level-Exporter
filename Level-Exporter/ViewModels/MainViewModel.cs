@@ -20,7 +20,6 @@ using System.Windows.Forms;
 using Level_Exporter.Models;
 using Mastercam.IO.Types;
 using Mastercam.Support;
-using System.Collections.ObjectModel;
 using System.Text.RegularExpressions;
 using System.Globalization;
 
@@ -264,13 +263,13 @@ namespace Level_Exporter.ViewModels
             {
                 if (!level.IsSelected || level.EntityCount == 0) continue;
 
+                if (level.Name.Equals(string.Empty))
+                    level.Name = $"level{level.Number}"; // If level name is empty set it to default value, level + level number. Example level1
+
                 if (cachedNames.ContainsKey(level.Name)) // If level name has been used, append a number to avoid duplicate file names
                     level.Name += level.Number;
                 else
                     cachedNames.Add(level.Name, 1); // Add level name to cached names
-
-                if (level.Name == string.Empty)
-                    level.Name = $"level{level.Number}"; // If level name is empty set it to default value, level + level number. Example level1
 
                 // Mastercam select levels
                 SearchManager.SelectAllGeometryOnLevel(level.Number, true);
