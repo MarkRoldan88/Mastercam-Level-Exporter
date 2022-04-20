@@ -1,4 +1,4 @@
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
 using Level_Exporter.Commands;
 using Level_Exporter.Models;
@@ -14,9 +14,21 @@ namespace Level_Exporter.ViewModels
         #region Construction
         public LevelInfoViewModel()
         {
-            ReadMastercamLevels = new DelegateCommand(OnReadMastercamLevels);
-            SelectAll = new DelegateCommand(OnSelectAll);
-            _levels = new ObservableCollection<Level>();
+            ReadMastercamLevels = new DelegateCommand(OnReadMastercamLevels, CanReadMastercamLevels);
+            SelectAll = new DelegateCommand(OnSelectAll, CanSelectAll);
+
+            LevelInfoHelper = new LevelInfoHelper();
+            _levels = LevelInfoHelper.Levels;
+        }
+
+        //Constructor for testing purposes
+        public LevelInfoViewModel(ILevelInfo iLevelInfo)
+        {
+            ReadMastercamLevels = new DelegateCommand(OnReadMastercamLevels, CanReadMastercamLevels);
+            SelectAll = new DelegateCommand(OnSelectAll, CanSelectAll);
+
+            LevelInfoHelper = iLevelInfo;
+            _levels = LevelInfoHelper.Levels;
         }
         #endregion
 
@@ -29,6 +41,7 @@ namespace Level_Exporter.ViewModels
 
         private readonly ObservableCollection<Level> _levels;
 
+        private delegate int EntityHandler(int n);
         private delegate Dictionary<int, string> LevelInfoHandler();
         #endregion
 
@@ -36,6 +49,10 @@ namespace Level_Exporter.ViewModels
 
         public ILevelInfo LevelInfoHelper { get; set; }
 
+        /// <summary>
+        ///  Gets and sets List of levels for view
+        /// </summary>
+        public IEnumerable<Level> Levels => _levels;
 
         //TODO Only allow numbers and letters in level datagrid cell
         /// <summary>
@@ -80,11 +97,6 @@ namespace Level_Exporter.ViewModels
         }
 
         /// <summary>
-        ///  Gets and sets List of levels for view
-        /// </summary>
-        public IEnumerable<Level> Levels => _levels;
-
-        /// <summary>
         ///  Gets and Sets bool for button state
         /// </summary>
         public bool IsSyncButton
@@ -116,30 +128,40 @@ namespace Level_Exporter.ViewModels
         #region Private Methods
 
         /// <summary>
+        /// Can Read Mastercam levels command, checks to do before execution.
+        /// </summary>
+        /// <returns></returns>
+        private bool CanReadMastercamLevels()
+        {
+            // Refresh Level manager in Mastercam to get rid of empty levels, named levels are not removed
+            LevelInfoHelper.RefreshLevelsManager();
+
+            if (LevelInfoHelper.GetLevelsWithGeometry().Count == 0)
+                return false;
+
+            return true;
+        }
+
+        /// <summary>
         /// Command for button to read Mc Levels
         /// </summary>
         private void OnReadMastercamLevels()
         {
-            // Refresh Level manager in Mastercam to get rid of empty levels, named levels are not removed
-            LevelsManager.RefreshLevelsManager(); //TODO Move to CanReadMastercamLevels command
-
-            if (LevelsManager.GetLevelNumbersWithGeometry().Length == 0) return; //TODO Move to CanReadMastercamLevels command
-
             // Get Level Info- Key: level num , Value: level name
-            LevelInfoHandler levelInfo = LevelInfo;
+            LevelInfoHandler levels = LevelInfoHelper.GetLevelsWithGeometry;
+            EntityHandler entities = LevelInfoHelper.GetLevelEntityCount;
             
             IsSyncButton = true;
 
-            //TODO Move to CanReadMastercamLevels command
-            _levels.Clear(); // Clear instead of comparing and doing a 'proper sync' 
+            _levels.Clear(); // Clear instead of comparing and doing a 'proper sync'/compare
 
-            foreach (KeyValuePair<int, string> level in levelInfo())
+            foreach (KeyValuePair<int, string> lvl in levels())
             {
                 _levels.Add(new Level
                 {
-                    Name = level.Value,
-                    Number = level.Key,
-                    EntityCount = LevelsManager.GetLevelEntityCount(level.Key, false),
+                    Name = lvl.Value,
+                    Number = lvl.Key,
+                    EntityCount = entities(lvl.Key)
                 });
             }
         }
@@ -162,15 +184,7 @@ namespace Level_Exporter.ViewModels
                 lvl.IsSelected = IsSelectAll;
             }
         }
-
-        /// <summary>
-        /// Get level numbers that contain geometry and convert to dictionary
-        /// </summary>
-        /// <returns></returns>
-        private static Dictionary<int, string> LevelInfo() => LevelsManager.GetLevelNumbersWithGeometry()
-            .ToDictionary(n => n, LevelsManager.GetLevelName);
         #endregion
     }
-
 }
 
