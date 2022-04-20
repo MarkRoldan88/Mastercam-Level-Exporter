@@ -1,9 +1,7 @@
-﻿using System.Linq;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using Level_Exporter.Commands;
 using Level_Exporter.Models;
-using Mastercam.IO;
 using System.Collections.Generic;
 
 namespace Level_Exporter.ViewModels
@@ -35,6 +33,9 @@ namespace Level_Exporter.ViewModels
         #endregion
 
         #region Public Properties
+
+        public ILevelInfo LevelInfoHelper { get; set; }
+
 
         //TODO Only allow numbers and letters in level datagrid cell
         /// <summary>
@@ -144,12 +145,16 @@ namespace Level_Exporter.ViewModels
         }
 
         /// <summary>
+        /// Can Select All command bool, checks done before execution.
+        /// </summary>
+        /// <returns>bool indicating if corresponding command can execute</returns>
+        private bool CanSelectAll() => _levels.Count != 0;
+
+        /// <summary>
         /// Command for Checkbox in header, sets IsSelected property of each level in levels collection
         /// </summary>
         private void OnSelectAll()
         {
-            if (_levels.Count == 0) return;
-
             foreach (var lvl in _levels)
             {
                 if (lvl.IsSelected == IsSelectAll) continue;

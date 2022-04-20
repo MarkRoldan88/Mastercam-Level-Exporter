@@ -160,7 +160,7 @@ namespace Level_Exporter.ViewModels
         #region Private Methods/Command Methods/Event Handling
 
         /// <summary>
-        /// The can ok command. Add logic as required.
+        /// The can ok command.
         /// </summary>
         /// <returns> The <see cref="bool"/> True if enabled, false otherwise. </returns>
         private bool CanOkCommand()
