@@ -122,16 +122,17 @@ namespace Level_Exporter.ViewModels
             // Refresh Level manager in Mastercam to get rid of empty levels, named levels are not removed
             LevelsManager.RefreshLevelsManager();
 
-            if (LevelsManager.GetLevelNumbersWithGeometry().Length == 0) return;
+            if (LevelsManager.GetLevelNumbersWithGeometry().Length == 0) return; //TODO Move to CanReadMastercamLevels command
 
             // Get Level Info- Key: level num , Value: level name
             LevelInfoHandler levelInfo = LevelInfo;
             
             IsSyncButton = true;
 
-            _levels.Clear(); // Clear instead of comparing and doing a 'proper sync'
+            //TODO Move to CanReadMastercamLevels command
+            _levels.Clear(); // Clear instead of comparing and doing a 'proper sync' 
 
-            foreach (var level in levelInfo())
+            foreach (KeyValuePair<int,string> level in levelInfo())
             {
                 _levels.Add(new Level
                 {
