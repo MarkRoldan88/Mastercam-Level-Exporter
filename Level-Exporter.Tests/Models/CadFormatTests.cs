@@ -60,7 +60,7 @@
         public void GenerateCadChoiceList_ShouldReturnCadFormatObjects_WithValidProperties()
         {
             var actualList = CadFormat.GenerateCadChoiceList();
-            
+
             Assert.That(actualList,
                 Has.All.Matches<CadFormat>(cadFormat =>
                     !cadFormat.FileExtension.Equals(string.Empty) && !cadFormat.Description.Equals(string.Empty)),
