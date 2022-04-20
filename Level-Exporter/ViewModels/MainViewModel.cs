@@ -44,10 +44,10 @@ namespace Level_Exporter.ViewModels
         /// Initializes a new instance of the <see cref="MainViewModel"/> class.
         /// </summary>
         public MainViewModel()
-        { //TODO decouple view models
+        { 
             this.CadFormatsViewModel = new CadFormatsViewModel();
             this.LevelInfoViewModel = new LevelInfoViewModel();
-            this._levels = LevelInfoViewModel.Levels;
+            this.Levels = LevelInfoViewModel.Levels;
 
             this.OkCommand = new DelegateCommand(OnOkCommand, CanOkCommand);
             this.CloseCommand = new DelegateCommand<Window>(OnCloseCommand);
@@ -92,7 +92,7 @@ namespace Level_Exporter.ViewModels
         /// <summary>
         /// IEnumerable of levels from levelinfo view model
         /// </summary>
-        private readonly IEnumerable<Level> _levels;
+        public readonly IEnumerable<Level> Levels;
 
         #endregion
 
@@ -278,7 +278,7 @@ namespace Level_Exporter.ViewModels
 
                 if (!isSuccess)
                     DialogManager.OK(
-                        $"Problem saving {level.Name}.{CadFormatSelected.FileExtension} to {this.DestinationDirectory}",
+                        $"There was an error when saving {level.Name}{CadFormatSelected.FileExtension} to {this.DestinationDirectory}",
                         "Error");
             }
 
@@ -292,7 +292,7 @@ namespace Level_Exporter.ViewModels
         /// <returns></returns>
         private static bool IsDestinationValid(string destination)
         {
-            if (string.IsNullOrEmpty(destination) || string.IsNullOrWhiteSpace(destination)) 
+            if (string.IsNullOrEmpty(destination) || string.IsNullOrWhiteSpace(destination))
                 return true;
 
             if (destination.Count(c => c.Equals(':')) > 1 || destination.Length < 4 || Path.HasExtension(destination) ||
