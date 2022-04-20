@@ -160,7 +160,7 @@ namespace Level_Exporter.ViewModels
         #region Private Methods/Command Methods/Event Handling
 
         /// <summary>
-        /// The can ok command. Add logic as required.
+        /// The can ok command.
         /// </summary>
         /// <returns> The <see cref="bool"/> True if enabled, false otherwise. </returns>
         private bool CanOkCommand()
@@ -229,9 +229,10 @@ namespace Level_Exporter.ViewModels
         /// <returns></returns>
         private bool IsExportReady()
         {
-            if (!this._levels.Any(lvl => lvl.IsSelected))
+            if (_cadFormatSelected is null || !this._levels.Any(lvl => lvl.IsSelected))
             {
-                DialogManager.OK("Please Select level(s) to export", "No Level(s) selected");
+                DialogManager.OK("Please Select Cad Format and level(s) to export",
+                    "No Level(s) selected or Cad Format is not selected");
                 return false;
             }
 

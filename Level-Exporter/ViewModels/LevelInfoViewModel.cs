@@ -1,10 +1,7 @@
-﻿using System.Linq;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
 using Level_Exporter.Commands;
 using Level_Exporter.Models;
-using Mastercam.IO;
-using System;
 using System.Collections.Generic;
 
 namespace Level_Exporter.ViewModels
@@ -17,24 +14,48 @@ namespace Level_Exporter.ViewModels
         #region Construction
         public LevelInfoViewModel()
         {
-            ReadMastercamLevels = new DelegateCommand(OnReadMastercamLevels);
-            SelectAll = new DelegateCommand(OnSelectAll);
-            _levels = new ObservableCollection<Level>();
+            ReadMastercamLevels = new DelegateCommand(OnReadMastercamLevels, CanReadMastercamLevels);
+            SelectAll = new DelegateCommand(OnSelectAll, CanSelectAll);
+
+            LevelInfoHelper = new LevelInfoHelper();
+            _levels = LevelInfoHelper.Levels;
+        }
+
+        //Constructor for testing purposes
+        public LevelInfoViewModel(ILevelInfo iLevelInfo)
+        {
+            ReadMastercamLevels = new DelegateCommand(OnReadMastercamLevels, CanReadMastercamLevels);
+            SelectAll = new DelegateCommand(OnSelectAll, CanSelectAll);
+
+            LevelInfoHelper = iLevelInfo;
+            _levels = LevelInfoHelper.Levels;
         }
         #endregion
-        
+
         #region Private fields
 
-        private readonly ObservableCollection<Level> _levels;
         private bool _isSelectAll;
         private bool _isSyncButton;
         private bool _isSelected;
         private string _name;
 
-        private delegate Dictionary<int,string> LevelInfoHandler();
+        private readonly ObservableCollection<Level> _levels;
+
+        private delegate int EntityHandler(int n);
+        private delegate Dictionary<int, string> LevelInfoHandler();
         #endregion
 
         #region Public Properties
+
+        /// <summary>
+        /// Gets and sets Interface for getting Mastercam level info
+        /// </summary>
+        public ILevelInfo LevelInfoHelper { get; set; }
+
+        /// <summary>
+        ///  Gets and sets List of levels for view
+        /// </summary>
+        public IEnumerable<Level> Levels => _levels;
 
         //TODO Only allow numbers and letters in level datagrid cell
         /// <summary>
@@ -79,11 +100,6 @@ namespace Level_Exporter.ViewModels
         }
 
         /// <summary>
-        ///  Gets and sets List of levels for view
-        /// </summary>
-        public IEnumerable<Level> Levels => _levels;
-
-        /// <summary>
         ///  Gets and Sets bool for button state
         /// </summary>
         public bool IsSyncButton
@@ -115,56 +131,59 @@ namespace Level_Exporter.ViewModels
         #region Private Methods
 
         /// <summary>
+        /// Can Read Mastercam levels command, checks to do before execution.
+        /// </summary>
+        /// <returns></returns>
+        private bool CanReadMastercamLevels()
+        {
+            // Refresh Level manager in Mastercam to get rid of empty levels, named levels are not removed
+            LevelInfoHelper.RefreshLevelsManager();
+
+            return LevelInfoHelper.GetLevelsWithGeometry().Count != 0;
+        }
+
+        /// <summary>
         /// Command for button to read Mc Levels
         /// </summary>
         private void OnReadMastercamLevels()
         {
-            // Refresh Level manager in Mastercam to get rid of empty levels, named levels are not removed
-            LevelsManager.RefreshLevelsManager();
-
-            if (LevelsManager.GetLevelNumbersWithGeometry().Length == 0) return;
-
             // Get Level Info- Key: level num , Value: level name
-            LevelInfoHandler levelInfo = LevelInfo;
-            
+            LevelInfoHandler levels = LevelInfoHelper.GetLevelsWithGeometry;
+            EntityHandler entities = LevelInfoHelper.GetLevelEntityCount;
+
             IsSyncButton = true;
 
-            _levels.Clear(); // Clear instead of comparing and doing a 'proper sync'
+            _levels.Clear(); // Clear instead of comparing and doing a 'proper sync'/compare
 
-            foreach (var level in levelInfo())
+            foreach (KeyValuePair<int, string> lvl in levels())
             {
                 _levels.Add(new Level
                 {
-                    Name = level.Value,
-                    Number = level.Key,
-                    EntityCount = LevelsManager.GetLevelEntityCount(level.Key, false),
+                    Name = lvl.Value,
+                    Number = lvl.Key,
+                    EntityCount = entities(lvl.Key)
                 });
             }
         }
+
+        /// <summary>
+        /// Can Select All command bool, checks done before execution.
+        /// </summary>
+        /// <returns>bool indicating if corresponding command can execute</returns>
+        private bool CanSelectAll() => _levels.Count != 0;
 
         /// <summary>
         /// Command for Checkbox in header, sets IsSelected property of each level in levels collection
         /// </summary>
         private void OnSelectAll()
         {
-            if (_levels.Count == 0) return;
-
             foreach (var lvl in _levels)
             {
-                if (lvl.IsSelected == IsSelectAll) continue;
-
-                lvl.IsSelected = IsSelectAll;
+                if (lvl.IsSelected != IsSelectAll)
+                    lvl.IsSelected = IsSelectAll;
             }
         }
-
-        /// <summary>
-        /// Get level numbers that contain geometry and convert to dictionary
-        /// </summary>
-        /// <returns></returns>
-        private static Dictionary<int, string> LevelInfo() => LevelsManager.GetLevelNumbersWithGeometry()
-            .ToDictionary(n => n, LevelsManager.GetLevelName);
         #endregion
     }
-
 }
 

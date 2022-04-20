@@ -15,15 +15,19 @@
 
             CadFormat cadFormat = new CadFormat(CadTypes.Stl);
 
-            Assert.AreEqual(expectedValue,cadFormat.FileExtension);
+            Assert.AreEqual(expectedValue,cadFormat.FileExtension, "File extension property setter must add . at beginning of string value");
         }
 
         [Test]
         public void FileExtension_ShouldNotContain_UppercaseLetters()
-        {
-            var invalidFormat = new Regex(@"([^a-z])");
+        {   //Arrange
+            var invalidFormat = new Regex(@"([A-Z])");
 
+            //Act
+            string fileExtension = new CadFormat(CadTypes.Dwg).FileExtension;
 
+            //Assert
+            Assert.IsFalse(invalidFormat.IsMatch(fileExtension), "File Extension property must only be lower case letters");
         }
 
         [Test]
@@ -37,7 +41,7 @@
                 "12 (*.stl)",
                 "12 (*.stl)sss",
                 "12 (.stl)",
-                "ss (sss*sss.stl)",
+                "ss (sss*sss.stl)"
             };
 
             string actualDescription = new CadFormat(CadTypes.Emcam).Description;
@@ -47,10 +51,20 @@
                 Assert.IsTrue(validFormat.IsMatch(actualDescription));
 
                 Assert.That(invalidFormatExamples,
-                    Has.Exactly(invalidFormatExamples.Count).Matches<string>(invalidFormat => !validFormat.IsMatch(invalidFormat)),
+                    Has.All.Matches<string>(invalidFormat => !validFormat.IsMatch(invalidFormat)),
                     "Should not contain any valid regex match");
             });
+        }
 
+        [Test]
+        public void GenerateCadChoiceList_ShouldReturnCadFormatObjects_WithValidProperties()
+        {
+            var actualList = CadFormat.GenerateCadChoiceList();
+
+            Assert.That(actualList,
+                Has.All.Matches<CadFormat>(cadFormat =>
+                    !cadFormat.FileExtension.Equals(string.Empty) && !cadFormat.Description.Equals(string.Empty)),
+                "Created List must contain CadFormat objects with non empty properties");
         }
     }
 }

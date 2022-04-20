@@ -14,13 +14,12 @@ namespace Level_Exporter.ViewModels
         }
 
         private readonly ObservableCollection<CadFormat> _cadFormatChoiceChoices;
+
         private delegate List<CadFormat> CadTypesHandler();
 
         /// <summary>
         /// Gets and Sets Cad format choices for combobox
         /// </summary>
         public IEnumerable<CadFormat> CadFormats => _cadFormatChoiceChoices;
-
-
     }
 }

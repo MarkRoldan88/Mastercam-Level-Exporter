@@ -1,25 +1,28 @@
-﻿using NUnit.Framework;
+using NUnit.Framework;
 using Level_Exporter.Models;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Level_Exporter.Tests.Models
 {
     [TestFixture]
     public class LevelTests
     {
-        private readonly List<string> invalidNames = new List<string>
+        #region TestCaseSource
+
+        private static readonly List<string> InvalidNames = new List<string>
         {
-           "eLee@","$$$!L", "e##LL", 
-           "l%%ev", "!$LL*", "Lv:",@"\", "\""
+            "eLee@","$$$!L", "e##LL",
+            "l%%ev", "!$LL*", "Lv:",@"\", "\""
         };
 
-        private readonly List<string> validNames = new List<string>
+        private static readonly List<string> ValidNames = new List<string>
         {
-            "3l3La", "dj9Lj", "sm56e", 
-            "mlkdj", "sv4ll", "sf020", 
+            "3l3La", "dj9Lj", "sm56e",
+            "mlkdj", "sv4ll", "sf020",
             "9vj3d", "dedd5", "0je3s", "fvjd6"
         };
+
+        #endregion
 
         [Test]
         public void Name_IfValueIsEmptyString_SetsNameAsLevel()
@@ -29,27 +32,27 @@ namespace Level_Exporter.Tests.Models
 
             Level level = new Level { Name = name };
 
+            Assert.AreEqual(expectedName, level.Name,
+                "If value provided to name property is an empty string, name setter should set name as 'Level'");
+        }
+
+        [Test]
+        [TestCaseSource(nameof(InvalidNames))]
+        public void Name__IfValueContainsSymbols_SetsNameAsLevel(string invalidName)
+        {
+            var level = new Level { Name = invalidName };
+            const string expectedName = "Level";
+
             Assert.AreEqual(expectedName, level.Name);
         }
 
         [Test]
-        [TestCaseSource(nameof(invalidNames))]
-        public void Name__IfValueContainsSymbols_SetsNameAsLevel()
+        [TestCaseSource(nameof(ValidNames))]
+        public void Name_IfValidValue_SetsNameAsValue(string validName)
         {
-            List<Level> names = invalidNames.Select(name => new Level { Name = name }).ToList();
+            var level = new Level { Name = validName };
 
-            Assert.That(names, Has.Exactly(names.Count).Matches<Level>(c => c.Name.Equals("Level")),
-                $"Should contain {names.Count} names of Level");
-        }
-
-        [Test]
-        [TestCaseSource(nameof(validNames))]
-        public void Name_IfValidValue_SetsNameAsValue()
-        {
-           var levelObjects = invalidNames.Select(name => new Level { Name = name }).ToList();
-           var names = levelObjects.Select(x => x.Name).ToList();
-           
-            CollectionAssert.AreEqual(validNames, names);
+            Assert.AreEqual(validName, level.Name, "Name property setters should set name as value provided if it is a valid value");
         }
     }
 }
