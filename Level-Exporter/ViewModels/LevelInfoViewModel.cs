@@ -31,7 +31,7 @@ namespace Level_Exporter.ViewModels
 
         private readonly ObservableCollection<Level> _levels;
 
-        private delegate Dictionary<int,string> LevelInfoHandler();
+        private delegate Dictionary<int, string> LevelInfoHandler();
         #endregion
 
         #region Public Properties
