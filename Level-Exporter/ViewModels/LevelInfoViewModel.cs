@@ -47,6 +47,9 @@ namespace Level_Exporter.ViewModels
 
         #region Public Properties
 
+        /// <summary>
+        /// Gets and sets Interface for getting Mastercam level info
+        /// </summary>
         public ILevelInfo LevelInfoHelper { get; set; }
 
         /// <summary>
@@ -136,10 +139,7 @@ namespace Level_Exporter.ViewModels
             // Refresh Level manager in Mastercam to get rid of empty levels, named levels are not removed
             LevelInfoHelper.RefreshLevelsManager();
 
-            if (LevelInfoHelper.GetLevelsWithGeometry().Count == 0)
-                return false;
-
-            return true;
+            return LevelInfoHelper.GetLevelsWithGeometry().Count != 0;
         }
 
         /// <summary>
@@ -150,7 +150,7 @@ namespace Level_Exporter.ViewModels
             // Get Level Info- Key: level num , Value: level name
             LevelInfoHandler levels = LevelInfoHelper.GetLevelsWithGeometry;
             EntityHandler entities = LevelInfoHelper.GetLevelEntityCount;
-            
+
             IsSyncButton = true;
 
             _levels.Clear(); // Clear instead of comparing and doing a 'proper sync'/compare
@@ -179,9 +179,8 @@ namespace Level_Exporter.ViewModels
         {
             foreach (var lvl in _levels)
             {
-                if (lvl.IsSelected == IsSelectAll) continue;
-
-                lvl.IsSelected = IsSelectAll;
+                if (lvl.IsSelected != IsSelectAll)
+                    lvl.IsSelected = IsSelectAll;
             }
         }
         #endregion
