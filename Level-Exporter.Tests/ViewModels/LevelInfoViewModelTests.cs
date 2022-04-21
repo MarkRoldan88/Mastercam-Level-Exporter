@@ -6,6 +6,7 @@
     using Level_Exporter.ViewModels;
     using Moq;
     using NUnit.Framework;
+    using NSubstitute;
 
     [TestFixture]
     public class LevelInfoViewModelTests
@@ -17,14 +18,16 @@
             Level levelA = new Level { IsSelected = false };
             Level levelB = new Level { IsSelected = false };
 
+            LevelInfoViewModel.LevelInfoHelper = Substitute.For<ILevelInfo>();
             Mock<ILevelInfo> levelInfoHelperMock = new Mock<ILevelInfo>();
+            LevelInfoViewModel.LevelInfoHelper = levelInfoHelperMock.Object;
 
             levelInfoHelperMock.SetupGet(x => x.Levels).Returns(new ObservableCollection<Level>
             {
                 levelA, levelB
             });
 
-            LevelInfoViewModel levelInfoViewModel = new LevelInfoViewModel(levelInfoHelperMock.Object)
+            LevelInfoViewModel levelInfoViewModel = new LevelInfoViewModel()
             {
                 IsSelectAll = true
             };

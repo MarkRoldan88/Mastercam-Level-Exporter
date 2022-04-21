@@ -16,20 +16,8 @@ namespace Level_Exporter.ViewModels
         {
             ReadMastercamLevels = new DelegateCommand(OnReadMastercamLevels, CanReadMastercamLevels);
             SelectAll = new DelegateCommand(OnSelectAll, CanSelectAll);
-
-            LevelInfoHelper = new LevelInfoHelper();
-            _levels = LevelInfoHelper.Levels;
         }
 
-        //Constructor for testing purposes
-        public LevelInfoViewModel(ILevelInfo iLevelInfo)
-        {
-            ReadMastercamLevels = new DelegateCommand(OnReadMastercamLevels, CanReadMastercamLevels);
-            SelectAll = new DelegateCommand(OnSelectAll, CanSelectAll);
-
-            LevelInfoHelper = iLevelInfo;
-            _levels = LevelInfoHelper.Levels;
-        }
         #endregion
 
         #region Private fields
@@ -39,7 +27,7 @@ namespace Level_Exporter.ViewModels
         private bool _isSelected;
         private string _name;
 
-        private readonly ObservableCollection<Level> _levels;
+        private readonly ObservableCollection<Level> _levels = LevelInfoHelper.Levels;
 
         private delegate int EntityHandler(int n);
         private delegate Dictionary<int, string> LevelInfoHandler();
@@ -50,7 +38,7 @@ namespace Level_Exporter.ViewModels
         /// <summary>
         /// Gets and sets Interface for getting Mastercam level info
         /// </summary>
-        public ILevelInfo LevelInfoHelper { get; set; }
+        public static ILevelInfo LevelInfoHelper { get; set; } = new LevelInfoHelper();
 
         /// <summary>
         ///  Gets and sets List of levels for view
