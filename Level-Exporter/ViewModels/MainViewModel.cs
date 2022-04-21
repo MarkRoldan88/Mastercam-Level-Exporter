@@ -174,7 +174,7 @@ namespace Level_Exporter.ViewModels
         {
             // User confirm
             if (!IsExportReady() || DialogManager.YesNoCancel(
-                    $"Export selected levels as {this.CadFormatSelected.FileExtension} files to {this.DestinationDirectory}?",
+                    $"Save selected levels as {this.CadFormatSelected.FileExtension} files to {this.DestinationDirectory}?",
                     "Confirm") != DialogReturnType.Yes) return;
 
             if (ExportLevels())
@@ -286,15 +286,25 @@ namespace Level_Exporter.ViewModels
         /// <summary>
         /// Checks if destination directory contains any invalid chars
         /// </summary>
-        /// <param name="destination">Destination directory</param>
+        /// <param name="destination">Destination/Output directory</param>
         /// <returns></returns>
         private static bool IsDestinationValid(string destination)
         {
             if (string.IsNullOrEmpty(destination) || string.IsNullOrWhiteSpace(destination))
                 return true;
 
-            if (destination.Count(c => c.Equals(':')) > 1 || destination.Length < 4 || Path.HasExtension(destination) ||
-                !Path.IsPathRooted(destination))
+            try
+            {
+                if (Path.HasExtension(destination) || !Path.IsPathRooted(destination))
+                    return false;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return false;
+            }
+
+            if (destination.Count(c => c.Equals(':')) > 1 || destination.Length < 4)
                 return false;
 
             // Check string for invalid chars
