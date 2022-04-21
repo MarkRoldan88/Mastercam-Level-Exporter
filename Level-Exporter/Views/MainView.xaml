@@ -22,8 +22,7 @@
     <Window.Resources>
         <ResourceDictionary>
             <!-- Converts string name of asset to image source -->
-            <converters:StringToImageSourceConverter
-                x:Key="StringToImageSourceConverter" />
+            <converters:StringToImageSourceConverter x:Key="StringToImageSourceConverter" />
 
             <Style x:Key="ReadLevelsText" TargetType="{x:Type Button}">
                 <Setter Property="Content" 
@@ -74,8 +73,10 @@
                     HorizontalAlignment="Center" 
                     Height="Auto" 
                     Width="Auto">
+
             <!--Button for getting Mastercam Level information -->
-            <Button x:Name="GetLevelsButton" Margin="95,0"
+            <Button x:Name="GetLevelsButton" 
+                    Margin="95,0"
                     Command="{Binding Path=LevelInfoViewModel.ReadMastercamLevels}" >
                 <Button.Style>
                     <Style TargetType="{x:Type Button}" 
@@ -102,33 +103,31 @@
             </Grid.RowDefinitions>
 
             <!-- Stack panel for Combobox and stl resolution input text -->
-            <StackPanel
-            x:Uid="TextBlockStackPanel"
-            Grid.Row="0" 
-            HorizontalAlignment="Center" 
-            VerticalAlignment="Center" 
-            Width="Auto" Height="Auto">
+            <StackPanel x:Uid="TextBlockStackPanel"
+                        Grid.Row="0" 
+                        HorizontalAlignment="Center" 
+                        VerticalAlignment="Center" 
+                        Width="Auto" Height="Auto">
 
                 <!-- Text block prompting cad format selection -->
-                <TextBlock
-                FontSize="12"
-                Width="Auto" 
-                Text="{x:Static resx:WindowStrings.CadTypePrompt}"
-                ToolTip="{x:Static resx:WindowStrings.CadTypePromptToolTip}"
-                MinWidth="250"/>
+                <TextBlock FontSize="12"
+                           Width="Auto" MinWidth="250"
+                           Text="{x:Static resx:WindowStrings.CadTypePrompt}"
+                           ToolTip="{x:Static resx:WindowStrings.CadTypePromptToolTip}"/>
 
                 <!-- Combobox for Cad format selection-->
                 <ComboBox IsReadOnly="True" 
                           IsTextSearchEnabled="False"
+                          SelectedIndex="8"
+                          ItemContainerStyle="{StaticResource ComboBoxStyle}"
                           ToolTip="{x:Static resx:WindowStrings.CadTypePromptToolTip}"
                           SelectedValue="{Binding CadFormatSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                          ItemContainerStyle="{StaticResource ComboBoxStyle}"
                           ItemsSource="{Binding Path=CadFormatsViewModel.CadFormats}" DisplayMemberPath="Description"/>
                 
                 <!-- Text Block above STL resolution text box-->
-                <TextBlock Text="{x:Static resources:WindowStrings.StlResolution}" 
-                       FontSize="12" 
-                       Margin="0,24,0,5">
+                <TextBlock FontSize="12" 
+                           Text="{x:Static resources:WindowStrings.StlResolution}" 
+                           Margin="0,24,0,5">
                 <!-- Trigger for hiding stl resolution text box when stl is not selected -->
                     <TextBlock.Style>
                         <Style TargetType="TextBlock">
@@ -152,9 +151,9 @@
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="PreviewTextInput" SourceObject="{Binding ElementName=PreviewTextInputEvent}">
                             <i:InvokeCommandAction 
-                            Command="{Binding PreviewTextInputCommand}" 
-                            PassEventArgsToCommand="True" 
-                            x:Name="Required"/>
+                                Command="{Binding PreviewTextInputCommand}" 
+                                PassEventArgsToCommand="True" 
+                                x:Name="Required"/>
                             <!-- x:name required for this element, visual studio will complain about not finding xaml behavior dll -->
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
@@ -175,23 +174,25 @@
             <!-- Stack panel for Browse button and destination directory Text box -->
             <StackPanel Grid.Row="1" 
                         VerticalAlignment="Center" 
-                        Width="Auto" Height="Auto">
+                        Width="Auto" Height="Auto" 
+                        Margin="15,0,0,0">
+                <!--Text block above Destination directory Text box -->
                 <TextBlock Text="{x:Static resources:WindowStrings.DestinationPrompt}"
                            ToolTip="{x:Static resources:WindowStrings.BrowseTextFieldToolTip}" />
+
                 <StackPanel Orientation="Vertical" Width="Auto">
                     <!-- Text box for destination/output directory -->
-                    <TextBox Text="{Binding Path=DestinationDirectory, UpdateSourceTrigger=LostFocus}" 
-                         IsUndoEnabled="True"
-                         ToolTip="{x:Static resources:WindowStrings.BrowseTextFieldToolTip}" 
-                         VerticalAlignment="Center" 
-                         HorizontalAlignment="Left" 
-                         Width="375" MaxWidth="375"/>
+                    <TextBox IsUndoEnabled="True"
+                             VerticalAlignment="Center" 
+                             HorizontalAlignment="Left" 
+                             Width="375" MaxWidth="375"
+                             Text="{Binding Path=DestinationDirectory, UpdateSourceTrigger=LostFocus}" 
+                             ToolTip="{x:Static resources:WindowStrings.BrowseTextFieldToolTip}" />
 
                     <!-- Browse Button for destination directory -->
-                    <Button 
-                    Content="{x:Static resources:WindowStrings.BrowseButton}"
-                    Command="{Binding Path=BrowseCommand}"
-                    Width="125"/>
+                    <Button Content="{x:Static resources:WindowStrings.BrowseButton}"
+                            Command="{Binding Path=BrowseCommand}"
+                            Width="125"/>
                 </StackPanel>
             </StackPanel>
         </Grid>
@@ -207,11 +208,11 @@
             <!--Data grid for Level information -->
 
             <DataGrid CanUserAddRows="False"  
-                          AutoGenerateColumns="False"
-                          ItemsSource="{Binding Path=Levels}" 
-                          HorizontalScrollBarVisibility="Auto" 
-                          VerticalScrollBarVisibility="Auto"
-                          Height="Auto" Width="Auto">
+                      AutoGenerateColumns="False"
+                      ItemsSource="{Binding Path=Levels}" 
+                      HorizontalScrollBarVisibility="Auto" 
+                      VerticalScrollBarVisibility="Auto"
+                      Height="Auto" Width="Auto">
                 <DataGrid.Columns>
                     <DataGridTemplateColumn CanUserSort="False" Width="Auto" CanUserResize="False">
                         <DataGridTemplateColumn.HeaderTemplate>
@@ -236,40 +237,42 @@
                     </DataGridTemplateColumn>
 
                     <DataGridTextColumn Header="#"
-                                            IsReadOnly="True"
-                                            Binding="{Binding Number}" MinWidth="50"/>
+                                        IsReadOnly="True"
+                                        Binding="{Binding Number}" MinWidth="50"/>
+
                     <DataGridTextColumn Header="Name" 
-                                            Binding="{Binding Name}"
-                                            CanUserSort="False" CanUserResize="True" Width="*"/>
+                                        Binding="{Binding Name}"
+                                        CanUserSort="False" CanUserResize="True" Width="*"/>
+
                     <DataGridTextColumn Header="Entity Count"
-                                            IsReadOnly="True"
-                                            Binding="{Binding EntityCount}" 
-                                            CanUserSort="False" Width="Auto" CanUserResize="True"/>
+                                        IsReadOnly="True"
+                                        Binding="{Binding EntityCount}" 
+                                        CanUserSort="False" Width="Auto" CanUserResize="True"/>
                 </DataGrid.Columns>
             </DataGrid>
 
         </StackPanel>
 
         <!-- Stack panel for ok/close buttons -->
-        <StackPanel
-            x:Name="ButtonPanel"
-            x:Uid="ButtonStackPanel"
-            Grid.Row="2" 
-            Grid.Column="1"
-            Orientation="Horizontal"
-            HorizontalAlignment="Right"
-            VerticalAlignment="Bottom" Height="70" Width="203">
+        <StackPanel x:Name="ButtonPanel"
+                    x:Uid="ButtonStackPanel"
+                    Grid.Row="2" 
+                    Grid.Column="1"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right" 
+                    VerticalAlignment="Bottom" 
+                    Height="70" Width="203">
 
             <!-- Ok/Export Button -->
             <Button x:Name="OkButton"
                     x:Uid="OkButton"
+                    Width="102"
                     Style="{StaticResource AppButtonStyle}"
-                    Command="{Binding OkCommand}" Width="102">
+                    Command="{Binding OkCommand}">
                 <StackPanel HorizontalAlignment="Left">
-                    <Image
-                        Height="24"
-                        Width="24"
-                        Source="{Binding OkResource, Converter={StaticResource StringToImageSourceConverter}}" />
+                    <Image Height="24"
+                           Width="24"
+                           Source="{Binding OkResource, Converter={StaticResource StringToImageSourceConverter}}" />
                     <TextBlock FontSize="14" 
                                Text="{x:Static resources:WindowStrings.ExportButton}"/>
                 </StackPanel>
@@ -282,10 +285,9 @@
                     Command="{Binding CloseCommand}"
                     CommandParameter="{Binding ElementName=MainWindow}">
                 <Button.Content>
-                    <Image
-                        Height="24"
-                        Width="24"
-                        Source="{Binding CancelResource, Converter={StaticResource StringToImageSourceConverter}}" />
+                    <Image Height="24"
+                           Width="24"
+                           Source="{Binding CancelResource, Converter={StaticResource StringToImageSourceConverter}}" />
                 </Button.Content>
             </Button>
         </StackPanel>
