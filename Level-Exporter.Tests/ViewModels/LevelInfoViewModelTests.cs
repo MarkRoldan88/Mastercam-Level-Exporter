@@ -23,10 +23,8 @@
 
             LevelInfoViewModel.LevelInfoHelper = levelInfoHelperMock.Object;
 
-            levelInfoHelperMock.SetupGet(x => x.Levels).Returns(new ObservableCollection<Level>
-            {
-                levelA, levelB
-            });
+            levelInfoHelperMock.SetupGet(x => x.Levels)
+                .Returns(new ObservableCollection<Level> { levelA, levelB });
 
             LevelInfoViewModel levelInfoViewModel = new LevelInfoViewModel { IsSelectAll = true };
 
@@ -51,14 +49,16 @@
             int expectedCountA = 5;
             int expectedCountB = 10;
 
+
             iLevelInfoSub.GetLevelsWithGeometry().Returns(new Dictionary<int, string>
             {
                 { expectedCountA, expectedNameA }, {expectedCountB, expectedNameB }
             });
 
-            iLevelInfoSub.Levels.Returns(new ObservableCollection<Level>());
             iLevelInfoSub.GetLevelEntityCount(5).Returns(5);
             iLevelInfoSub.GetLevelEntityCount(10).Returns(10);
+
+            iLevelInfoSub.Levels.Returns(new ObservableCollection<Level>());
 
             LevelInfoViewModel.LevelInfoHelper = iLevelInfoSub;
             LevelInfoViewModel levelInfoViewModel = new LevelInfoViewModel();
