@@ -91,13 +91,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-<<<<<<< HEAD
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-=======
->>>>>>> main
     <ProjectReference Include="..\Level-Exporter\Level-Exporter.csproj">
       <Project>{3895bab5-218b-49e2-8a2c-4a22e24bd74c}</Project>
       <Name>Level-Exporter</Name>
