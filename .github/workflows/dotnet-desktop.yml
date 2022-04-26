@@ -59,7 +59,7 @@ jobs:
       Solution_Name: Level-Exporter.sln                       # Replace with your solution name, i.e. MyWpfApp.sln.
       Test_Project_Path: Level-Exporter.Tests\Level-Exporter.Tests.csproj               # Replace with the path to your test project, i.e. MyWpfApp.Tests\MyWpfApp.Tests.csproj.
   
-      Nunit_Console_Path: Level-Exporter\packages\NUnit.ConsoleRunner.3.15.0\tools\nunit3-console.exe Level-Exporter.Tests\Level-Exporter.Tests\bin\Debug\Level-Exporter.Tests.dll
+      Nunit_Console_Path: Level-Exporter\packages\NUnit.ConsoleRunner.3.15.0\tools\nunit3-console.exe Level-Exporter.Tests\bin\x64\Debug\Level-Exporter.Tests.dll
       
     steps:
     - name: Checkout
@@ -79,7 +79,7 @@ jobs:
 
     # Execute all unit tests in the solution
     - name: Execute unit tests
-      run: $Nunit_Console_Path
+      run: dir;$Nunit_Console_Path
 
     # Restore the application to populate the obj folder with RuntimeIdentifiers
     #- name: Restore the application
