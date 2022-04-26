@@ -95,8 +95,7 @@ jobs:
 
     # Execute all unit tests in the solution
     - name: Execute NUnit tests
-      run: $env:NUnit_Console_Path $env:Test_Dll_Path --noresult
+      run: $env:NUnit_Console_Path Level-Exporter.Tests/bin/x64/Debug/Level-Exporter.Tests.dll --noresult
       env:
         NUnit_Console_Path: Level-Exporter/packages/NUnit.ConsoleRunner.3.15.0/tools/nunit3-console.exe
-        Test_Dll_Path: Level-Exporter.Tests/bin/x64/Debug/Level-Exporter.Tests.dll
 
