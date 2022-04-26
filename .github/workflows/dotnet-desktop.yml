@@ -90,12 +90,10 @@ jobs:
         Configuration: ${{ matrix.configuration }}
         RuntimeIdentifier: ${{ matrix.targetplatform }}
 
-    - name: Echo Project directories
-      run: cd Level-Exporter; dir; cd ../
-
     # Execute all unit tests in the solution
     - name: Execute NUnit tests
-      run: $env:NUnit_Console_Path Level-Exporter.Tests/bin/x64/Debug/Level-Exporter.Tests.dll --noresult
+      run: Level-Exporter/packages/NUnit.ConsoleRunner.3.15.0/tools/nunit3-console.exe Level-Exporter.Tests/bin/x64/Release/Level-Exporter.Tests.dll --noresult
       env:
         NUnit_Console_Path: Level-Exporter/packages/NUnit.ConsoleRunner.3.15.0/tools/nunit3-console.exe
+        Test_Dll_Path: Level-Exporter.Tests/bin/x64/Release/Level-Exporter.Tests.dll
 
