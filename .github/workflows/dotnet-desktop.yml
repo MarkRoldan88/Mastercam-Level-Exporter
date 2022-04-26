@@ -50,7 +50,7 @@ jobs:
 
     strategy:
       matrix:
-        configuration: [Debug, Release]
+        configuration: [Debug]
 
     runs-on: windows-latest  # For a list of available runner types, refer to
                              # https://help.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idruns-on
@@ -58,8 +58,8 @@ jobs:
     env:
       Solution_Name: Level-Exporter.sln                       # Replace with your solution name, i.e. MyWpfApp.sln.
       Test_Project_Path: Level-Exporter.Tests\Level-Exporter.Tests.csproj               # Replace with the path to your test project, i.e. MyWpfApp.Tests\MyWpfApp.Tests.csproj.
-      Test_Dll_Path: Level-Exporter.Tests\Level-Exporter.Tests\bin\Debug\Level-Exporter.Tests.dll
-      Nunit_Console_Path: Level-Exporter\packages\NUnit.ConsoleRunner.3.15.0\tools\nunit3-console.exe
+  
+      Nunit_Console_Path: Level-Exporter\packages\NUnit.ConsoleRunner.3.15.0\tools\nunit3-console.exe Level-Exporter.Tests\Level-Exporter.Tests\bin\Debug\Level-Exporter.Tests.dll
       
     steps:
     - name: Checkout
@@ -79,13 +79,13 @@ jobs:
 
     # Execute all unit tests in the solution
     - name: Execute unit tests
-      run: NUnit_Console_Path Test_Dll_Path
+      run: $Nunit_Console_Path
 
     # Restore the application to populate the obj folder with RuntimeIdentifiers
-    - name: Restore the application
-      run: msbuild $env:Solution_Name /t:Restore /p:Configuration=$env:Configuration
-      env:
-        Configuration: ${{ matrix.configuration }}
+    #- name: Restore the application
+    #  run: msbuild $env:Solution_Name /t:Restore /p:Configuration=$env:Configuration
+    #  env:
+    #    Configuration: ${{ matrix.configuration }}
 
     # Decode the base 64 encoded pfx and save the Signing_Certificate
    # - name: Decode the pfx
