@@ -170,4 +170,11 @@ copy "$(ProjectDir)Resources\FunctionTable\$(TargetName).ft" "C:\Program Files\M
 copy "$(TargetDir)Microsoft.Xaml.Behaviors.dll" "C:\Program Files\Mastercam 2021\Mastercam\chooks"
 </PostBuildEvent>
   </PropertyGroup>
+  <Import Project="packages\Microsoft.NETFramework.ReferenceAssemblies.net461.1.0.2\build\Microsoft.NETFramework.ReferenceAssemblies.net461.targets" Condition="Exists('packages\Microsoft.NETFramework.ReferenceAssemblies.net461.1.0.2\build\Microsoft.NETFramework.ReferenceAssemblies.net461.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('packages\Microsoft.NETFramework.ReferenceAssemblies.net461.1.0.2\build\Microsoft.NETFramework.ReferenceAssemblies.net461.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.NETFramework.ReferenceAssemblies.net461.1.0.2\build\Microsoft.NETFramework.ReferenceAssemblies.net461.targets'))" />
+  </Target>
 </Project>
