@@ -27,7 +27,7 @@ namespace Level_Exporter.Tests.Models
         [Test]
         public void Name_IfValueIsEmptyString_SetsNameAsLevel()
         {
-            string expectedName = "Level";
+            string expectedName = "sad";
 
             Level level = new Level { Name = "" };
 
