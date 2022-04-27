@@ -26,8 +26,10 @@ namespace Level_Exporter.Models
         public CadExportHelper(string destination, string cadFormat, double stlResolution) : this(destination,
             cadFormat)
         {
-            if (stlResolution != 0.0)
+            if (stlResolution > 0.0 && stlResolution < 2.0)
                 _stlResolution = stlResolution;
+            else 
+                _stlResolution = 0.75;
         }
 
         #endregion
@@ -42,12 +44,12 @@ namespace Level_Exporter.Models
         /// <summary>
         /// Cad Format (file extension)
         /// </summary>
-        private readonly string _cadFormat = "stl";
+        private readonly string _cadFormat;
 
         /// <summary>
         /// STL resolution
         /// </summary>
-        private readonly double _stlResolution = 0.75;
+        private readonly double _stlResolution;
 
         /// <summary>
         /// Full path created from level name and cad format (file extension)

@@ -37,7 +37,7 @@ namespace Level_Exporter.Tests.Models
 
         [Test]
         [TestCaseSource(nameof(InvalidNames))]
-        public void Name__IfValueContainsSymbols_SetsNameAsLevel(string invalidName)
+        public void Name_IfValueContainsSymbols_SetsNameAsLevel(string invalidName)
         {
             var level = new Level { Name = invalidName };
             const string expectedName = "Level";

@@ -173,9 +173,9 @@ namespace Level_Exporter.ViewModels
         private void OnOkCommand()
         {
             // User confirm
-            if (DialogManager.YesNoCancel(
-                    $"Export selected levels as {this.CadFormatSelected.FileExtension} files to {this.DestinationDirectory}?",
-                    "Confirm") != DialogReturnType.Yes || !IsExportReady()) return;
+            if (!IsExportReady() || DialogManager.YesNoCancel(
+                    $"Save selected levels as {this.CadFormatSelected.FileExtension} files to {this.DestinationDirectory}?",
+                    "Confirm") != DialogReturnType.Yes) return;
 
             if (ExportLevels())
             {
@@ -183,7 +183,6 @@ namespace Level_Exporter.ViewModels
                     $"Level entities saved to {this.DestinationDirectory} as {this.CadFormatSelected.FileExtension} files",
                     "Success!");
             }
-            
         }
 
         /// <summary> Executes the close command action. </summary>
@@ -228,10 +227,10 @@ namespace Level_Exporter.ViewModels
         /// <returns></returns>
         private bool IsExportReady()
         {
-            if (_cadFormatSelected is null || !this.Levels.Any(lvl => lvl.IsSelected))
+            if (!this.Levels.Any(lvl => lvl.IsSelected))
             {
-                DialogManager.OK("Please Select Cad Format and level(s) to export",
-                    "No Level(s) selected or Cad Format is not selected");
+                DialogManager.OK("Please select cad format and level(s) to export",
+                    "No Level(s) or cad format selected");
                 return false;
             }
             // If format is stl and stl resolution is invalid
@@ -287,15 +286,25 @@ namespace Level_Exporter.ViewModels
         /// <summary>
         /// Checks if destination directory contains any invalid chars
         /// </summary>
-        /// <param name="destination">Destination directory</param>
+        /// <param name="destination">Destination/Output directory</param>
         /// <returns></returns>
         private static bool IsDestinationValid(string destination)
         {
             if (string.IsNullOrEmpty(destination) || string.IsNullOrWhiteSpace(destination))
                 return true;
 
-            if (destination.Count(c => c.Equals(':')) > 1 || destination.Length < 4 || Path.HasExtension(destination) ||
-                !Path.IsPathRooted(destination))
+            try
+            {
+                if (Path.HasExtension(destination) || !Path.IsPathRooted(destination))
+                    return false;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return false;
+            }
+
+            if (destination.Count(c => c.Equals(':')) > 1 || destination.Length < 4)
                 return false;
 
             // Check string for invalid chars
