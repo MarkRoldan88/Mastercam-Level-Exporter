@@ -8,6 +8,7 @@
     [TestFixture]
     public class MainViewModelTests
     {
+        //TODO Add tests for
         // 2. File output for on ok command
 
         public static List<string> ValidDestinationPaths = new List<string>
