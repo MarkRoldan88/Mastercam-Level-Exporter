@@ -29,13 +29,13 @@
 
         [Test]
         [TestCaseSource(nameof(ValidDestinationPaths))]
-        public void DestinationDirectorySetter_ShouldSetToValue_IfValueIsValid(string expected)
+        public void DestinationDirectorySetter_ShouldSetToValue_IfValueIsValid(string validValue)
         {
             // Arrange
-            MainViewModel mainViewModel = new MainViewModel { DestinationDirectory = expected };
+            MainViewModel mainViewModel = new MainViewModel { DestinationDirectory = validValue };
 
             // Assert
-            Assert.AreEqual(expected, mainViewModel.DestinationDirectory, 
+            Assert.AreEqual(validValue, mainViewModel.DestinationDirectory, 
                 $"{nameof(mainViewModel.DestinationDirectory)} Should match valid value");
         }
 
