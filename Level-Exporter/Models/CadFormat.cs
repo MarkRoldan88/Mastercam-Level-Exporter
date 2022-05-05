@@ -111,6 +111,7 @@ namespace Level_Exporter.Models
     {
         Dwg, Dxf, Emcam, Iges, Igs,
         Mcam, Sat, Step, Stl, Stp,
+        // ReSharper disable once InconsistentNaming
         Xb, XmtTxt, X_t
     }
     #endregion
