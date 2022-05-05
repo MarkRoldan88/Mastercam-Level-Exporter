@@ -81,7 +81,7 @@ namespace Level_Exporter.Models
                 case CadTypes.Xb:
                     return "Parasolid Binary File";
 
-                case CadTypes.Xt:
+                case CadTypes.X_t:
                 case CadTypes.XmtTxt:
                     return "Parasolid Text File";
 
@@ -111,7 +111,7 @@ namespace Level_Exporter.Models
     {
         Dwg, Dxf, Emcam, Iges, Igs,
         Mcam, Sat, Step, Stl, Stp,
-        Xb, XmtTxt, Xt
+        Xb, XmtTxt, X_t
     }
     #endregion
     
