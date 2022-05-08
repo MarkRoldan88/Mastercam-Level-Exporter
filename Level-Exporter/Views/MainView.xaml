@@ -197,7 +197,7 @@
             </StackPanel>
         </Grid>
         <!-- Stack panel for Level info grid -->
-        <StackPanel DataContext="{Binding LevelInfoViewModel}" 
+        <DockPanel DataContext="{Binding LevelInfoViewModel}" 
                     Grid.Row="1" 
                     Grid.Column="0"
                     HorizontalAlignment="Center" 
@@ -251,7 +251,7 @@
                 </DataGrid.Columns>
             </DataGrid>
 
-        </StackPanel>
+        </DockPanel>
 
         <!-- Stack panel for ok/close buttons -->
         <StackPanel x:Name="ButtonPanel"
