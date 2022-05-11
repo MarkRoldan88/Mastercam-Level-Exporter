@@ -7,6 +7,8 @@ It can be used to automate the process of exporting CAD entities within levels t
 
 Similar to the `Save Some` function within Mastercam; it would be used when you want to save a CAD entity as a separate file of a certain CAD format.
 
+**TODO: Add picture here**
+
 ## Compatible Mastercam Versions
 - Mastercam 2021
 - Mastercam 2020
@@ -20,7 +22,9 @@ _Proper artifacts will be created/deployed soon so the user will not have to dow
 3. In Visual Studio, Open the `Level-Exporter.sln` (located in _Mastercam-Level-Exporter/Level-Exporter_)
 4. Follow Method 1 **or** 2 below 
 
-#### Method 1
+---
+
+### Method 1
 1. Set configuration to Release/x64
    - ![image](https://user-images.githubusercontent.com/56398786/167949149-41a62689-8424-4a14-9275-b24b919c4f72.png)
 
@@ -36,20 +40,21 @@ _Proper artifacts will be created/deployed soon so the user will not have to dow
    
 **If your C:\Program Files\Mastercam 2021\Mastercam directory _does not_ contain `NETHook3_0.dll`, make sure to copy it from the bin folder**
 
-After completing the above steps: 
-The Mastercam chooks directory should contain
+---
+The Mastercam chooks directory (_C:\Program Files\Mastercam 2021\Mastercam\chooks_) should now contain
 1. `Level-Exporter.dll`
 2. `Microsoft.Xaml.Behaviors`
 
-The Mastercam Directory should contain
+The Mastercam Directory (_C:\Program Files\Mastercam 2021\Mastercam_) should now contain
 1. `NETHook3_0.dll` (This file usually comes with the Mastercam installation)
 
-#### Method 2
+---
+### Method 2
 _Note: Visual Studio must be run in Adminstrator mode for this method to work_
 - Set configuration to Debug/x64
 ![image](https://user-images.githubusercontent.com/56398786/167948586-6b4ac143-0f16-42ed-8d0d-9403d89ec6ae.png)
 - Build the Project
 
-TODO: 
-Complete Method 2 steps
-How to use section (in mastercam)
+**TODO:** 
+- Complete Method 2 steps
+- How to use section (in mastercam)
