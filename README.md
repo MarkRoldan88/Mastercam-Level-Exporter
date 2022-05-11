@@ -1,5 +1,5 @@
 # Mastercam-Level-Exporter
-_This is currently a work in progress_
+_Work in progress_
 
 This is a 'NetHook' (chook) made for Mastercam 2021. 
 
@@ -7,7 +7,7 @@ It can be used to automate the process of exporting CAD entities within levels t
 
 Similar to the `Save Some` function within Mastercam; it would be used when you want to save a CAD entity as a separate file of a certain CAD format.
 
-**TODO: Add picture here**
+**TODO: Add screenshot**
 
 ## Compatible Mastercam Versions
 - Mastercam 2021
@@ -38,7 +38,7 @@ _Proper artifacts will be created/deployed soon so the user will not have to dow
 4. Copy `Level-Exporter.dll`, `Microsoft.Xaml.Behaviors.dll` into the Chooks directory for your Mastercam version
    - The Chooks directory is usually located at _C:\Program Files\Mastercam 2021\Mastercam\chooks_
 
-5. Navigate to _Level-Exporter\Resources\FunctionTable_ copy `Level-Exporter.ft` into the Chooks directory (same as above)
+5. Navigate to _Level-Exporter\Resources\FunctionTable_ & copy `Level-Exporter.ft` into the Chooks directory (same as above)
    
 **If your C:\Program Files\Mastercam 2021\Mastercam directory _does not_ contain `NETHook3_0.dll`, make sure to copy it from the bin folder**
 
@@ -48,9 +48,6 @@ The Mastercam chooks directory (_C:\Program Files\Mastercam 2021\Mastercam\chook
 2. `Microsoft.Xaml.Behaviors`
 3. `Level-Exporter.ft`
 
-The Mastercam Directory (_C:\Program Files\Mastercam 2021\Mastercam_) should now contain
-1. `NETHook3_0.dll` (This file usually comes with the Mastercam installation)
-
 ---
 ### Method 2 
 **_Note: Visual Studio must be run in Adminstrator mode due to post build events which copy the necessary files to the Mastercam directory_**
@@ -59,8 +56,7 @@ The Mastercam Directory (_C:\Program Files\Mastercam 2021\Mastercam_) should now
 
 2. Build the Solution
    - ![image](https://user-images.githubusercontent.com/56398786/167949983-9376219f-2600-4433-85b0-faf60ca41602.png)
-
-3. Visual studio post build events will try to copy the necessary files to the proper Mastercam directories
+   - Visual studio post build events will try to copy the necessary files to the proper Mastercam directories
 
 ---
 The Mastercam chooks directory (_C:\Program Files\Mastercam 2021\Mastercam\chooks_) should now contain
@@ -71,4 +67,4 @@ The Mastercam chooks directory (_C:\Program Files\Mastercam 2021\Mastercam\chook
 **If your C:\Program Files\Mastercam 2021\Mastercam directory _does not_ contain `NETHook3_0.dll`, make sure to copy it from the bin folder**
 - It can be found in _\Level-Exporter\bin\x64\Debug_
 
-**TODO** Add how to use section
+## How to Use the Level Exporter
