@@ -16,6 +16,7 @@
     Title="{x:Static res:Resources.Title}"
     Width="800"
     Height="450"
+    Background="LightGray"
     Name="MainWindow"
     x:Uid="MainWindow">
 
@@ -29,25 +30,78 @@
                         Value="{x:Static resources:WindowStrings.GetLevelsButton}"/>
             </Style>
 
-            <Style x:Key="ComboBoxStyle" TargetType="ComboBoxItem">
-                <Setter Property="FontSize" Value="12"/>
+            <!-- For centering data grid cell content -->
+            <Style x:Key="ElementStyle" TargetType="{x:Type TextBlock}">
+                <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+            </Style>
+            
+            <!-- For Setting Data grid Styles -->
+            <Style x:Key="DataGridStyle" TargetType="{x:Type DataGrid}">
+                <Setter Property="ColumnHeaderStyle" Value="{DynamicResource DataGridHeaderStyle}"/>
+                <Setter Property="RowBackground" Value="#99A4AC"/>
+                <Setter Property="HeadersVisibility" Value="Column"/>
+            </Style>
+            
+            <!-- For styling data grid column headers -->
+            <Style x:Key="DataGridHeaderStyle" TargetType="DataGridColumnHeader">
+                <Setter Property="Background" Value="#324B4C"/>
+                <Setter Property="BorderBrush" Value="Black"/>
+                <Setter Property="BorderThickness" Value="0,0,1,0"/>
+                <Setter Property="Padding" Value="1,0,0,0"/>
+                <Setter Property="Foreground" Value="#D3D3D3"/>
+                <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
             </Style>
 
-            <Style
-                x:Key="AppButtonStyle"
-                TargetType="{x:Type Button}">
-                <Setter
-                    Property="Margin"
-                    Value="10" />
-                <Setter
-                    Property="Width"
-                    Value="65" />
-                <Setter
-                    Property="Height"
-                    Value="50" />
-                <Setter
-                    Property="Background"
-                    Value="Transparent" />
+            <!-- Style Trigger for hiding stl resolution text box and text block when stl is not selected CAD format -->
+            <Style x:Key="FrameworkStyle" TargetType="{x:Type FrameworkElement}">
+                <Setter Property="Visibility" Value="Hidden"/>
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding Path=CadFormatSelected.FileExtension}" Value=".stl">
+                        <Setter Property="Visibility" Value="Visible"/>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+
+            <!-- Inherits from key: Framework Style to prevent duplicate code -->
+            <Style x:Key="StlTextBlockStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource FrameworkStyle}"/>
+
+            <!-- Stl Text input box style --> 
+            <Style x:Key="StlTextBoxStyle" TargetType="{x:Type TextBox}" BasedOn="{StaticResource FrameworkStyle}">
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <SolidColorBrush Color="#99A4AC" Opacity="0.95"/>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="ComboBoxItemStyle" TargetType="ComboBoxItem">
+                <Setter Property="FontSize" Value="12"/>
+                <Setter Property="Background" Value="#99A4AC"/>
+                <Setter Property="Opacity" Value="0.835"/>
+                <Setter Property="BorderBrush" Value="#FF99A4AC"/>
+            </Style>
+
+            <Style x:Key="ComboBoxStyle" TargetType="ComboBox">
+                <Setter Property="Background" Value="#99A4AC"/>
+                <Setter Property="Opacity" Value="0.835"/>
+                <Setter Property="BorderBrush" Value="#FF99A4AC"/>
+            </Style>
+
+            <Style x:Key="TextBoxStyle" TargetType="TextBox">
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <SolidColorBrush Color="#99A4AC" Opacity="0.90"/>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="Width" Value="365"/>
+                <Setter Property="MaxWidth" Value="365"/>
+            </Style>
+
+            <Style x:Key="AppButtonStyle" TargetType="{x:Type Button}">
+                <Setter Property="Margin" Value="10" />
+                <Setter Property="Width" Value="65" />
+                <Setter Property="Height" Value="50" />
+                <Setter Property="Background" Value="Transparent" />
             </Style>
         </ResourceDictionary>
 
@@ -76,8 +130,10 @@
 
             <!--Button for getting Mastercam Level information -->
             <Button x:Name="GetLevelsButton" 
-                    Margin="95,0"
-                    Command="{Binding Path=LevelInfoViewModel.ReadMastercamLevels}" >
+                    Margin="95,0,95,5"
+                    Width="150"
+                    Command="{Binding Path=LevelInfoViewModel.ReadMastercamLevels}" 
+                    Padding="-5,2,2,2" >
                 <Button.Style>
                     <Style TargetType="{x:Type Button}" 
                            BasedOn="{StaticResource ReadLevelsText}">
@@ -112,37 +168,27 @@
                 <!-- Text block prompting cad format selection -->
                 <TextBlock FontSize="12"
                            Width="Auto" MinWidth="250"
-                           Text="{x:Static resx:WindowStrings.CadTypePrompt}"
-                           ToolTip="{x:Static resx:WindowStrings.CadTypePromptToolTip}"/>
+                           Text="{x:Static resx:WindowStrings.CadTypePrompt}"/>
 
                 <!-- Combobox for Cad format selection-->
                 <ComboBox IsReadOnly="True" 
+                          Style="{StaticResource ComboBoxStyle}"
                           IsTextSearchEnabled="False"
                           SelectedIndex="8"
-                          ItemContainerStyle="{StaticResource ComboBoxStyle}"
-                          ToolTip="{x:Static resx:WindowStrings.CadTypePromptToolTip}"
+                          ItemContainerStyle="{StaticResource ComboBoxItemStyle}"
                           SelectedValue="{Binding CadFormatSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                          ItemsSource="{Binding Path=CadFormatsViewModel.CadFormats}" DisplayMemberPath="Description"/>
-                
+                          ItemsSource="{Binding Path=CadFormatsViewModel.CadFormats}" 
+                          DisplayMemberPath="Description" />
+
                 <!-- Text Block above STL resolution text box-->
                 <TextBlock FontSize="12" 
                            Text="{x:Static resources:WindowStrings.StlResolution}" 
-                           Margin="0,24,0,5">
-                <!-- Trigger for hiding stl resolution text box when stl is not selected -->
-                    <TextBlock.Style>
-                        <Style TargetType="TextBlock">
-                            <Setter Property="Visibility" Value="Hidden"/>
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding Path=CadFormatSelected.FileExtension}" Value=".stl">
-                                    <Setter Property="Visibility" Value="Visible"/>
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </TextBlock.Style>
-                </TextBlock>
+                           Style="{StaticResource StlTextBlockStyle}"
+                           Margin="0,24,0,5"/>
 
                 <!-- Stl Resolution input text box -->
-                <TextBox MaxLength="4" 
+                <TextBox MaxLength="4"
+                         Style="{StaticResource StlTextBoxStyle}"
                          FontSize="12" 
                          MinWidth="45"
                          Width="Auto"
@@ -157,17 +203,6 @@
                             <!-- x:name required for this element, visual studio will complain about not finding xaml behavior dll -->
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
-                    <TextBox.Style>
-                        <!-- Trigger for hiding stl resolution text box when stl is not selected -->
-                        <Style TargetType="TextBox">
-                            <Setter Property="Visibility" Value="Hidden"/>
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding Path=CadFormatSelected.FileExtension}" Value=".stl">
-                                    <Setter Property="Visibility" Value="Visible"/>
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </TextBox.Style>
                 </TextBox>
             </StackPanel>
 
@@ -176,23 +211,28 @@
                         VerticalAlignment="Center" 
                         Width="Auto" Height="Auto" 
                         Margin="15,0,0,0">
+
                 <!--Text block above Destination directory Text box -->
                 <TextBlock Text="{x:Static resources:WindowStrings.DestinationPrompt}"
-                           ToolTip="{x:Static resources:WindowStrings.BrowseTextFieldToolTip}" />
+                           ToolTip="{x:Static resources:WindowStrings.BrowseTextFieldToolTip}" 
+                           Margin="10,0,0,0" />
 
                 <StackPanel Orientation="Vertical" Width="Auto">
+
                     <!-- Text box for destination/output directory -->
                     <TextBox IsUndoEnabled="True"
+                             Style="{StaticResource TextBoxStyle}"
                              VerticalAlignment="Center" 
                              HorizontalAlignment="Left" 
-                             Width="375" MaxWidth="375"
+                             Margin="10,0,15,0"
                              Text="{Binding Path=DestinationDirectory, UpdateSourceTrigger=LostFocus}" 
-                             ToolTip="{x:Static resources:WindowStrings.BrowseTextFieldToolTip}" />
+                             ToolTip="{x:Static resources:WindowStrings.BrowseTextFieldToolTip}" >
+                    </TextBox>
 
                     <!-- Browse Button for destination directory -->
                     <Button Content="{x:Static resources:WindowStrings.BrowseButton}"
                             Command="{Binding Path=BrowseCommand}"
-                            Width="125"/>
+                            Width="125" Margin="0,5,0,0"/>
                 </StackPanel>
             </StackPanel>
         </Grid>
@@ -212,19 +252,23 @@
                       ItemsSource="{Binding Path=Levels}" 
                       HorizontalScrollBarVisibility="Auto" 
                       VerticalScrollBarVisibility="Auto"
-                      Height="Auto" Width="Auto">
+                      Height="Auto" 
+                      Width="Auto"
+                      Style="{StaticResource DataGridStyle}"
+                      Margin="5,0">
                 <DataGrid.Columns>
-                    <DataGridTemplateColumn CanUserSort="False" Width="Auto" CanUserResize="False">
+                    <DataGridTemplateColumn CanUserSort="False" 
+                                            Width="Auto" 
+                                            CanUserResize="False">
                         <DataGridTemplateColumn.HeaderTemplate>
                             <DataTemplate>
                                 <!--Header Check box for selecting all levels -->
-                                <CheckBox
-                                        IsChecked="{Binding DataContext.IsSelectAll, 
+                                <CheckBox IsChecked="{Binding DataContext.IsSelectAll, 
                                                                 RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}},
                                                                 UpdateSourceTrigger=PropertyChanged}"
-                                        Command="{Binding DataContext.SelectAll, 
+                                          Command="{Binding DataContext.SelectAll, 
                                                             RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}"/>
-                                <!-- Since Datagrid column *header* is not part of UI logic, must use relative source to bump up and get properties datagrid -->
+                                <!-- Since Datagrid column *header* is not part of UI logic, must use relative source to bump up and get properties of datagrid -->
                             </DataTemplate>
                         </DataGridTemplateColumn.HeaderTemplate>
 
@@ -238,16 +282,23 @@
 
                     <DataGridTextColumn Header="#"
                                         IsReadOnly="True"
-                                        Binding="{Binding Number}" MinWidth="50"/>
+                                        MinWidth="50" 
+                                        Binding="{Binding Number}" 
+                                        ElementStyle="{StaticResource ElementStyle}"/>
 
                     <DataGridTextColumn Header="Name" 
-                                        Binding="{Binding Name}"
-                                        CanUserSort="False" CanUserResize="True" Width="*"/>
+                                        CanUserSort="False" 
+                                        CanUserResize="True" 
+                                        Width="*"
+                                        Binding="{Binding Name}"/>
 
                     <DataGridTextColumn Header="Entity Count"
                                         IsReadOnly="True"
+                                        CanUserSort="False" 
+                                        CanUserResize="True"
+                                        Width="75" 
                                         Binding="{Binding EntityCount}" 
-                                        CanUserSort="False" Width="Auto" CanUserResize="True"/>
+                                        ElementStyle="{StaticResource ElementStyle}"/>
                 </DataGrid.Columns>
             </DataGrid>
 

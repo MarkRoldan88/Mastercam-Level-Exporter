@@ -124,11 +124,8 @@
     <value>If this text field is blank, a save file dialog will open for every level when exporting</value>
   </data>
   <data name="CadTypePrompt" xml:space="preserve">
-    <value>Select a CAD Format (see tooltip)</value>
+    <value>Select a CAD Format</value>
     <comment>Prompt above Combobox</comment>
-  </data>
-  <data name="CadTypePromptToolTip" xml:space="preserve">
-    <value>If blank, levels will be exported as STL files</value>
   </data>
   <data name="DestinationPrompt" xml:space="preserve">
     <value>Destination Directory (see tooltip)</value>
