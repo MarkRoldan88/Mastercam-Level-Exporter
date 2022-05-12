@@ -16,6 +16,7 @@
     Title="{x:Static res:Resources.Title}"
     Width="800"
     Height="450"
+    Background="LightGray"
     Name="MainWindow"
     x:Uid="MainWindow">
 
