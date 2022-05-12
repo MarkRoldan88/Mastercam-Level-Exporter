@@ -168,8 +168,7 @@
                 <!-- Text block prompting cad format selection -->
                 <TextBlock FontSize="12"
                            Width="Auto" MinWidth="250"
-                           Text="{x:Static resx:WindowStrings.CadTypePrompt}"
-                           ToolTip="{x:Static resx:WindowStrings.CadTypePromptToolTip}"/>
+                           Text="{x:Static resx:WindowStrings.CadTypePrompt}"/>
 
                 <!-- Combobox for Cad format selection-->
                 <ComboBox IsReadOnly="True" 
@@ -177,7 +176,6 @@
                           IsTextSearchEnabled="False"
                           SelectedIndex="8"
                           ItemContainerStyle="{StaticResource ComboBoxItemStyle}"
-                          ToolTip="{x:Static resx:WindowStrings.CadTypePromptToolTip}"
                           SelectedValue="{Binding CadFormatSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                           ItemsSource="{Binding Path=CadFormatsViewModel.CadFormats}" 
                           DisplayMemberPath="Description" />
