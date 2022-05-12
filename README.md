@@ -3,17 +3,19 @@ _Work in progress_
 
 This is a 'NetHook' (chook) made for Mastercam 2021. 
 
-It can be used to automate the process of exporting CAD entities within levels to individual files of a specified CAD format. 
+It can be used to automate the process of exporting CAD entities within levels to individual files of a specified CAD format. Most Mastercam formats are supported. 
 
 Similar to the `Save Some` function within Mastercam; it would be used when you want to save a CAD entity as a separate file of a certain CAD format.
 
-**TODO: Add screenshot**
+
+![image](https://user-images.githubusercontent.com/56398786/168148534-0477e054-0162-43f8-878a-c3cb4bcdffe2.png)
+
 
 ## Compatible Mastercam Versions
 - Mastercam 2021
 - Mastercam 2020
 
-_Note: It **may** be compatible with Mastercam 2018 & 2019 if the NETHook3_0.dll reference is updated to the proper file location for those versions; this has not been tested yet_
+_Note: This chook **may** be compatible with Mastercam 2018 & 2019 if the NETHook3_0.dll reference is updated to the proper file location for those versions; this has not been tested yet_
 
 ## How To Install the Chook
 _Proper artifacts will be created/deployed soon so the user will not have to download and use visual studio_
@@ -40,7 +42,7 @@ _Proper artifacts will be created/deployed soon so the user will not have to dow
 
 5. Navigate to _Level-Exporter\Resources\FunctionTable_ & copy `Level-Exporter.ft` into the Chooks directory (same as above)
    
-**If your C:\Program Files\Mastercam 2021\Mastercam directory _does not_ contain `NETHook3_0.dll`, make sure to copy it from the bin folder**
+⚠️ **If your C:\Program Files\Mastercam 2021\Mastercam directory _does not_ contain `NETHook3_0.dll`, make sure to copy it from the bin folder**
 
 ---
 The Mastercam chooks directory (_C:\Program Files\Mastercam 2021\Mastercam\chooks_) should now contain
@@ -61,10 +63,21 @@ The Mastercam chooks directory (_C:\Program Files\Mastercam 2021\Mastercam\chook
 ---
 The Mastercam chooks directory (_C:\Program Files\Mastercam 2021\Mastercam\chooks_) should now contain
 1. `Level-Exporter.dll`
-2. `Microsoft.Xaml.Behaviors`
-3. `Level-Exporter.ft`
+2. `Level-Exporter.ft`
+3. `Microsoft.Xaml.Behaviors.dll`
 
-**If your C:\Program Files\Mastercam 2021\Mastercam directory _does not_ contain `NETHook3_0.dll`, make sure to copy it from the bin folder**
+⚠️**If your C:\Program Files\Mastercam 2021\Mastercam directory _does not_ contain `NETHook3_0.dll`, make sure to copy it from the bin folder**
 - It can be found in _\Level-Exporter\bin\x64\Debug_
 
 ## How to Use the Level Exporter
+1. Organize the CAD entities of your Mastercam session into different levels
+   - ⚠️ _Levels that have no entities are ignored, and will be cleared from **Mastercam**_
+3. When naming levels in Mastercam, avoid using symbols (such as ()%#* etc.)
+   - If the level names in Mastercam are left blank, they will be named 'level' in the level-exporter
+4. Open the Level-Exporter by using the _Run Add-In_ feature under the _Home_ tab
+5. Select the checkbox next to the levels you would like to export (select the checkbox in the header to select or deselect all levels)
+6. Select a CAD format from the drop down menu
+   - If Stl is selected, the default resolution is 0.02; value must be a value between 0.02 - 2.0
+   - ⚠️ If Iges is selected, a dialogue for a comment will open in **Mastercam** after clicking export; you must fill in a comment and press enter.
+7. Select a destination/output directory
+   - ⚠️ If this is left blank, a `Save Some` dialogue will open for every level selected; you can then select the name, file extension, and destination for each level.
