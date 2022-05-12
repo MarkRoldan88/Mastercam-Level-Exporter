@@ -30,25 +30,78 @@
                         Value="{x:Static resources:WindowStrings.GetLevelsButton}"/>
             </Style>
 
-            <Style x:Key="ComboBoxStyle" TargetType="ComboBoxItem">
-                <Setter Property="FontSize" Value="12"/>
+            <!-- For centering data grid cell content -->
+            <Style x:Key="ElementStyle" TargetType="{x:Type TextBlock}">
+                <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+            </Style>
+            
+            <!-- For Setting Data grid Styles -->
+            <Style x:Key="DataGridStyle" TargetType="{x:Type DataGrid}">
+                <Setter Property="ColumnHeaderStyle" Value="{DynamicResource DataGridHeaderStyle}"/>
+                <Setter Property="RowBackground" Value="#99A4AC"/>
+                <Setter Property="HeadersVisibility" Value="Column"/>
+            </Style>
+            
+            <!-- For styling data grid column headers -->
+            <Style x:Key="DataGridHeaderStyle" TargetType="DataGridColumnHeader">
+                <Setter Property="Background" Value="#324B4C"/>
+                <Setter Property="BorderBrush" Value="Black"/>
+                <Setter Property="BorderThickness" Value="0,0,1,0"/>
+                <Setter Property="Padding" Value="1,0,0,0"/>
+                <Setter Property="Foreground" Value="#D3D3D3"/>
+                <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
             </Style>
 
-            <Style
-                x:Key="AppButtonStyle"
-                TargetType="{x:Type Button}">
-                <Setter
-                    Property="Margin"
-                    Value="10" />
-                <Setter
-                    Property="Width"
-                    Value="65" />
-                <Setter
-                    Property="Height"
-                    Value="50" />
-                <Setter
-                    Property="Background"
-                    Value="Transparent" />
+            <!-- Style Trigger for hiding stl resolution text box and text block when stl is not selected CAD format -->
+            <Style x:Key="FrameworkStyle" TargetType="{x:Type FrameworkElement}">
+                <Setter Property="Visibility" Value="Hidden"/>
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding Path=CadFormatSelected.FileExtension}" Value=".stl">
+                        <Setter Property="Visibility" Value="Visible"/>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+
+            <!-- Inherits from key: Framework Style to prevent duplicate code -->
+            <Style x:Key="StlTextBlockStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource FrameworkStyle}"/>
+
+            <!-- Stl Text input box style --> 
+            <Style x:Key="StlTextBoxStyle" TargetType="{x:Type TextBox}" BasedOn="{StaticResource FrameworkStyle}">
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <SolidColorBrush Color="#99A4AC" Opacity="0.95"/>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="ComboBoxItemStyle" TargetType="ComboBoxItem">
+                <Setter Property="FontSize" Value="12"/>
+                <Setter Property="Background" Value="#99A4AC"/>
+                <Setter Property="Opacity" Value="0.835"/>
+                <Setter Property="BorderBrush" Value="#FF99A4AC"/>
+            </Style>
+
+            <Style x:Key="ComboBoxStyle" TargetType="ComboBox">
+                <Setter Property="Background" Value="#99A4AC"/>
+                <Setter Property="Opacity" Value="0.835"/>
+                <Setter Property="BorderBrush" Value="#FF99A4AC"/>
+            </Style>
+
+            <Style x:Key="TextBoxStyle" TargetType="TextBox">
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <SolidColorBrush Color="#99A4AC" Opacity="0.90"/>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="Width" Value="365"/>
+                <Setter Property="MaxWidth" Value="365"/>
+            </Style>
+
+            <Style x:Key="AppButtonStyle" TargetType="{x:Type Button}">
+                <Setter Property="Margin" Value="10" />
+                <Setter Property="Width" Value="65" />
+                <Setter Property="Height" Value="50" />
+                <Setter Property="Background" Value="Transparent" />
             </Style>
         </ResourceDictionary>
 
