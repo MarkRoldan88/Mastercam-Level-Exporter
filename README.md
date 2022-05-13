@@ -18,7 +18,9 @@ Similar to the `Save Some` function within Mastercam; it would be used when you 
 _Note: This chook **may** be compatible with Mastercam 2018 & 2019 if the NETHook3_0.dll reference is updated to the proper file location for those versions; this has not been tested yet_
 
 ## How To Install the Chook
-_Proper artifacts will be created/deployed soon so the user will not have to download and use visual studio_
+🚧_Proper artifacts will be created/deployed soon so the user will not have to download and use visual studio_
+
+💡 Feel free to also reference the Readme folder within the project for additional context
 1. Clone this repository
 2. Install Visual Studio 2019
 3. In Visual Studio, open `Level-Exporter.sln` (located in _Mastercam-Level-Exporter/Level-Exporter_)
@@ -74,10 +76,12 @@ The Mastercam chooks directory (_C:\Program Files\Mastercam 2021\Mastercam\chook
    - ⚠️ _Levels that have no entities are ignored, and will be cleared from **Mastercam**_
 3. When naming levels in Mastercam, avoid using symbols (such as ()%#* etc.)
    - If the level names in Mastercam are left blank, they will be named 'level' in the level-exporter
-4. Open the Level-Exporter by using the _Run Add-In_ feature under the _Home_ tab
-5. Select the checkbox next to the levels you would like to export (select the checkbox in the header to select or deselect all levels)
-6. Select a CAD format from the drop down menu
+4. Open the Level-Exporter by using the `Run Add-In` feature under the `Home` tab, and look for the `level-exporter.dll`
+5. Click on the `Get Mastercam Levels` button
+   -  If you update the levels in Mastercam, you can click the `Sync Mastercam levels` button to update the list in the level-exporter
+7. Select the checkbox next to the levels you would like to export (select the checkbox in the header to select or deselect all levels)
+8. Select a CAD format from the drop down menu
    - If Stl is selected, the default resolution is 0.02; value must be a value between 0.02 - 2.0
    - ⚠️ If Iges is selected, a dialogue for a comment will open in **Mastercam** after clicking export; you must fill in a comment and press enter.
-7. Select a destination/output directory
+9. Select a destination/output directory
    - ⚠️ If this is left blank, a `Save Some` dialogue will open for every level selected; you can then select the name, file extension, and destination for each level.
