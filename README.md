@@ -85,3 +85,6 @@ The Mastercam chooks directory (_C:\Program Files\Mastercam 2021\Mastercam\chook
    - ⚠️ If Iges is selected, a dialogue for a comment will open in **Mastercam** after clicking export; you must fill in a comment and press enter.
 9. Select a destination/output directory
    - ⚠️ If this is left blank, a `Save Some` dialogue will open for every level selected; you can then select the name, file extension, and destination for each level.
+10. Click `Export Levels`
+
+Each selected level will be saved as a separate CAD file.
