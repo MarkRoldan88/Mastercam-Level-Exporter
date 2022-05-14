@@ -165,8 +165,7 @@
     </PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PostBuildEvent>if $(ConfigurationName) == Debug  (
-
+    <PostBuildEvent>if "$(ConfigurationName)" == "Debug" (
 copy "$(TargetPath)" "C:\Program Files\Mastercam 2021\Mastercam\chooks" 
 
 copy "$(ProjectDir)Resources\FunctionTable\$(TargetName).ft" "C:\Program Files\Mastercam 2021\Mastercam\chooks"
