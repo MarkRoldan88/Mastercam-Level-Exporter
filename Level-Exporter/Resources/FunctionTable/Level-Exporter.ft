@@ -1,9 +1,9 @@
-﻿###############################################################################
+###############################################################################
 # NETHook function table			
 ###############################################################################
 #
-# Name		: Level_Exporter.ft
-# NETHook 	: Level_Exporter.dll
+# Name		: Level-Exporter.ft
+# NETHook 	: Level-Exporter.dll
 # Date		: March 22, 2022
 # Author	: mark.roldan
 # Notes		: Contact sdk@mastercam.com for additional assistance.  
@@ -22,10 +22,10 @@ APPLICATION "_Level_Exporter_"
 # NETHook LOCATION
 ######################
 #
-FUNC_DLL   "CHOOKS\Level_Exporter.dll"
+FUNC_DLL   "CHOOKS\Level-Exporter.dll"
 RES_DLL    "SAME"
 dnRES_NAME "Level_Exporter.Resources.FunctionTable.NETHook"
-CATEGORY   "NET-Hook Add-In"
+CATEGORY   "Level-Exporter NetHook"
 
 ##############################################################################
 # Public functions here
