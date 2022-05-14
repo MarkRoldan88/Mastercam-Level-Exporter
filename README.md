@@ -7,9 +7,9 @@ It can be used to automate the process of exporting CAD entities within levels t
 
 Similar to the `Save Some` function within Mastercam; it would be used when you want to save a CAD entity as a separate file of a certain CAD format.
 
-
 ![image](https://user-images.githubusercontent.com/56398786/168148534-0477e054-0162-43f8-878a-c3cb4bcdffe2.png)
 
+🧑‍🎨 Colors will be updated soon
 
 ## Compatible Mastercam Versions
 - Mastercam 2021
