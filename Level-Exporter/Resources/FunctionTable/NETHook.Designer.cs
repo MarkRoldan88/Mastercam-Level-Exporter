@@ -8,10 +8,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System;
-
-namespace Level_Exporter.Resources.FunctionTable
-{
+namespace Level_Exporter.Resources.FunctionTable {
+    using System;
+    
+    
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -22,118 +22,98 @@ namespace Level_Exporter.Resources.FunctionTable
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class Level_Exporter
-    {
-
+    public class NETHook {
+        
         private static global::System.Resources.ResourceManager resourceMan;
-
+        
         private static global::System.Globalization.CultureInfo resourceCulture;
-
+        
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Level_Exporter()
-        {
+        internal NETHook() {
         }
-
+        
         /// <summary>
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Resources.ResourceManager ResourceManager
-        {
-            get
-            {
-                if (object.ReferenceEquals(resourceMan, null))
-                {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Level_Exporter.Resources.FunctionTable.Level_Exporter", typeof(Level_Exporter).Assembly);
+        public static global::System.Resources.ResourceManager ResourceManager {
+            get {
+                if (object.ReferenceEquals(resourceMan, null)) {
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Level_Exporter.Resources.FunctionTable.NETHook", typeof(NETHook).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
             }
         }
-
+        
         /// <summary>
         ///   Overrides the current thread's CurrentUICulture property for all
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Globalization.CultureInfo Culture
-        {
-            get
-            {
+        public static global::System.Globalization.CultureInfo Culture {
+            get {
                 return resourceCulture;
             }
-            set
-            {
+            set {
                 resourceCulture = value;
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap cancel_24
-        {
-            get
-            {
+        public static System.Drawing.Bitmap cancel_24 {
+            get {
                 object obj = ResourceManager.GetObject("cancel_24", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap ok_24
-        {
-            get
-            {
+        public static System.Drawing.Bitmap ok_24 {
+            get {
                 object obj = ResourceManager.GetObject("ok_24", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-
+        
         /// <summary>
-        ///   Looks up a localized string similar to Main Function.
+        ///   Looks up a localized string similar to Level-Exporter.
         /// </summary>
-        public static string Run
-        {
-            get
-            {
+        public static string Run {
+            get {
                 return ResourceManager.GetString("Run", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Run16
-        {
-            get
-            {
+        public static System.Drawing.Bitmap Run16 {
+            get {
                 object obj = ResourceManager.GetObject("Run16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Run32
-        {
-            get
-            {
+        public static System.Drawing.Bitmap Run32 {
+            get {
                 object obj = ResourceManager.GetObject("Run32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to User Defined Function.
         /// </summary>
-        public static string RunUserDefined
-        {
-            get
-            {
+        public static string RunUserDefined {
+            get {
                 return ResourceManager.GetString("RunUserDefined", resourceCulture);
             }
         }
