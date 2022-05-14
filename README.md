@@ -17,7 +17,7 @@ Similar to the `Save Some` function within Mastercam; it would be used when you 
 
 _Note: This chook **may** be compatible with Mastercam 2018 & 2019 if the NETHook3_0.dll reference is updated to the proper file location for those versions; this has not been tested yet_
 
-## How To Install the Chook
+## How To Install
 Download files from [**releases**](https://github.com/MarkRoldan88/Mastercam-Level-Exporter/releases) and place them into the Mastercam Chooks directory, usually located at:
 
 _C:\Program Files\Mastercam 2021\Mastercam\chooks_
