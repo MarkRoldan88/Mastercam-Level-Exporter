@@ -70,7 +70,7 @@ By adding it to the context menu, it will appear in the menu that appears when y
    - If the level names in Mastercam are left blank, they will be named 'level' in the level-exporter
 2. Open the Level-Exporter by using the `Run Add-In` feature under the `Home` tab, and look for the `level-exporter.dll`
    -  Alternatively if you've added it to the Mastercam ribbon, click on the icon
-   -  If you've added it to the context menu, right click and select the Level-Exporter
+   -  Alternatively if you've added it to the context menu, right click and select the Level-Exporter
 4. Click on the `Get Mastercam Levels` button
    -  If you update the levels in Mastercam, you can click the `Sync Mastercam levels` button to update the list in the level-exporter
 5. Select the checkbox next to the levels you would like to export (select the checkbox in the header to select or deselect all levels)
