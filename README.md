@@ -31,7 +31,7 @@ The Mastercam chooks directory should contain
 
 ---
 ### Alternate Installation Method
-**_Note: Visual Studio must be run in Adminstrator mode due to post build events which copy the necessary files to the Mastercam directories_**
+⚠️ **_Note: Visual Studio must be run in Adminstrator mode due to post build events which copy the necessary files to the Mastercam directories_**
 
 💡 Feel free to also reference the Readme folder within the project for additional context
 1. Clone this repository
