@@ -18,7 +18,7 @@ Similar to the `Save Some` function within Mastercam; it would be used when you 
 _Note: This chook **may** be compatible with Mastercam 2018 & 2019 if the NETHook3_0.dll reference is updated to the proper file location for those versions; this has not been tested yet_
 
 ## How To Install the Chook
-🚧_Proper artifacts will be created/deployed soon so the user will not have to download and use visual studio_
+🚧 _Proper artifacts will be created/deployed soon so the user will not have to download and use visual studio_
 
 💡 Feel free to also reference the Readme folder within the project for additional context
 1. Clone this repository
