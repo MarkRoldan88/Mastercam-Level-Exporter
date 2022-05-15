@@ -16,7 +16,7 @@
     Title="{x:Static res:Resources.Title}"
     Width="800"
     Height="450"
-    Background="LightGray"
+    Background="#BEBEBE"
     Name="MainWindow"
     x:Uid="MainWindow">
 
@@ -37,13 +37,13 @@
             <!-- For Setting Data grid Styles -->
             <Style x:Key="DataGridStyle" TargetType="{x:Type DataGrid}">
                 <Setter Property="ColumnHeaderStyle" Value="{DynamicResource DataGridHeaderStyle}"/>
-                <Setter Property="RowBackground" Value="#99A4AC"/>
+                <Setter Property="RowBackground" Value="#E8E8E8"/>
                 <Setter Property="HeadersVisibility" Value="Column"/>
             </Style>
             
             <!-- For styling data grid column headers -->
             <Style x:Key="DataGridHeaderStyle" TargetType="DataGridColumnHeader">
-                <Setter Property="Background" Value="#324B4C"/>
+                <Setter Property="Background" Value="#454545"/>
                 <Setter Property="BorderBrush" Value="Black"/>
                 <Setter Property="BorderThickness" Value="0,0,1,0"/>
                 <Setter Property="Padding" Value="1,0,0,0"/>
@@ -68,7 +68,7 @@
             <Style x:Key="StlTextBoxStyle" TargetType="{x:Type TextBox}" BasedOn="{StaticResource FrameworkStyle}">
                 <Setter Property="Background">
                     <Setter.Value>
-                        <SolidColorBrush Color="#99A4AC" Opacity="0.95"/>
+                        <SolidColorBrush Color="#E8E8E8" Opacity="0.95"/>
                     </Setter.Value>
                 </Setter>
             </Style>
@@ -89,7 +89,7 @@
             <Style x:Key="TextBoxStyle" TargetType="TextBox">
                 <Setter Property="Background">
                     <Setter.Value>
-                        <SolidColorBrush Color="#99A4AC" Opacity="0.90"/>
+                        <SolidColorBrush Color="#E8E8E8" Opacity="0.90"/>
                     </Setter.Value>
                 </Setter>
                 <Setter Property="Width" Value="365"/>
@@ -334,11 +334,13 @@
                     Style="{StaticResource AppButtonStyle}"
                     Command="{Binding CloseCommand}"
                     CommandParameter="{Binding ElementName=MainWindow}">
-                <Button.Content>
+                <StackPanel HorizontalAlignment="Center">
                     <Image Height="24"
                            Width="24"
                            Source="{Binding CancelResource, Converter={StaticResource StringToImageSourceConverter}}" />
-                </Button.Content>
+                    <TextBlock FontSize="14" 
+                               Text="{x:Static resources:WindowStrings.ExitButton}"/>
+                </StackPanel>
             </Button>
         </StackPanel>
 
