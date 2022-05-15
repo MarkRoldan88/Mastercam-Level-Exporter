@@ -11,6 +11,8 @@ Similar to the `Save Some` function within Mastercam; it would be used when you 
 
 🧑‍🎨 Colors will be updated soon
 
+_Note: If you clone or fork this repo and you are using Visual Studio, there are post build events which require admin access; therefore you must either run visual studio as admin or remove the post build events if building in debug mode._
+
 ## Compatible Mastercam Versions
 - Mastercam 2021
 - Mastercam 2020
