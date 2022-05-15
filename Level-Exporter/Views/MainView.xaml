@@ -26,13 +26,12 @@
             <converters:StringToImageSourceConverter x:Key="StringToImageSourceConverter" />
 
             <Style x:Key="ReadLevelsText" TargetType="{x:Type Button}">
-                <Setter Property="Content" 
-                        Value="{x:Static resources:WindowStrings.GetLevelsButton}"/>
+                <Setter Property="Content" Value="{x:Static resources:WindowStrings.GetLevelsButton}"/>
             </Style>
 
             <!-- For centering data grid cell content -->
             <Style x:Key="ElementStyle" TargetType="{x:Type TextBlock}">
-                <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                <Setter Property="HorizontalAlignment" Value="Center"/>
             </Style>
             
             <!-- For Setting Data grid Styles -->
@@ -49,7 +48,7 @@
                 <Setter Property="BorderThickness" Value="0,0,1,0"/>
                 <Setter Property="Padding" Value="1,0,0,0"/>
                 <Setter Property="Foreground" Value="#D3D3D3"/>
-                <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
+                <Setter Property="HorizontalContentAlignment" Value="Center"/>
             </Style>
 
             <!-- Style Trigger for hiding stl resolution text box and text block when stl is not selected CAD format -->
