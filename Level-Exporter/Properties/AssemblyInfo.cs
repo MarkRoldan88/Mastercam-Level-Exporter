@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="AssemblyInfo.cs" company="TODO: Company Name">
-//   Copyright (c) 2022 TODO: Company Name
+// <copyright file="AssemblyInfo.cs" company="MarkRoldan88@Github">
+//   Copyright (c) 2022 MarkRoldan88@Github
 // </copyright>
 // <summary>
 //   AssemblyInfo.cs
@@ -16,9 +16,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Level_Exporter")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("TODO: Company Name")]
+[assembly: AssemblyCompany("MarkRoldan88@Github")]
 [assembly: AssemblyProduct("Level_Exporter")]
-[assembly: AssemblyCopyright("Copyright ©  2022 TODO: Company Name")]
+[assembly: AssemblyCopyright("Copyright ©  2022 TODO: MarkRoldan88@Github")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
