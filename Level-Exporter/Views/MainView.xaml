@@ -14,8 +14,8 @@
     xmlns:viewmodels="clr-namespace:Level_Exporter.ViewModels" 
 
     d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
-
     Title="{x:Static res:Resources.Title}"
+
     Width="800"
     Height="450"
     Background="#BEBEBE"
@@ -43,8 +43,15 @@
                 <Setter Property="RowBackground" Value="#E8E8E8"/>
                 <Setter Property="HeadersVisibility" Value="Column"/>
                 <Setter Property="CellStyle" Value="{DynamicResource DataGridCellStyle}"/>
+                <Setter Property="CanUserDeleteRows" Value="False"/>
+                <Setter Property="CanUserAddRows" Value="False"/>
+                <Setter Property="AutoGenerateColumns" Value="False"/>
+                <Setter Property="HorizontalScrollBarVisibility" Value="Auto"/>
+                <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
+                <Setter Property="BorderThickness" Value="1"/>
             </Style>
-
+            
+            <!--For Data grid cell style -->
             <Style x:Key="DataGridCellStyle" TargetType="{x:Type DataGridCell}">
                 <Setter Property="BorderBrush" Value="DimGray"/>
             </Style>
@@ -124,24 +131,21 @@
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="83*"/>
-            <ColumnDefinition Width="314*"/>
-            <ColumnDefinition Width="397*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
         <StackPanel Grid.Column="0" 
                     Grid.Row="0" 
-                    VerticalAlignment="Bottom"
                     HorizontalAlignment="Center" 
-                    Height="Auto" 
-                    Width="Auto" Grid.ColumnSpan="2" Margin="28,0,29,0">
+                    VerticalAlignment="Center"
+                    Height="Auto" Width="Auto">
 
             <!--Button for getting Mastercam Level information -->
             <Button x:Name="GetLevelsButton" 
-                    Margin="95,0,95,5"
                     Width="150"
                     Command="{Binding Path=LevelInfoViewModel.ReadMastercamLevels}" 
-                    Padding="-5,2,2,2" >
+                    Padding="2,2,2,2" >
                 <Button.Style>
                     <Style TargetType="{x:Type Button}" 
                            BasedOn="{StaticResource ReadLevelsText}">
@@ -160,7 +164,7 @@
             </Button>
         </StackPanel>
 
-        <Grid Grid.Row="1" Grid.Column="2">
+        <Grid Grid.Row="1" Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
@@ -174,34 +178,33 @@
                         Width="Auto" Height="Auto">
 
                 <!-- Text block prompting cad format selection -->
-                <TextBlock FontSize="12"
-                           Width="Auto" MinWidth="250"
+                <TextBlock Width="Auto" 
+                           MinWidth="250"
                            TextAlignment="Center"
-                           Text="{x:Static resx:WindowStrings.CadTypePrompt}"/>
+                           Text="{x:Static resx:WindowStrings.CadTypePrompt}" 
+                           Margin="0,0,0,5"/>
 
                 <!-- Combobox for Cad format selection-->
                 <ComboBox IsReadOnly="True" 
-                          Style="{StaticResource ComboBoxStyle}"
                           IsTextSearchEnabled="False"
                           SelectedIndex="8"
+                          Style="{StaticResource ComboBoxStyle}"
                           ItemContainerStyle="{StaticResource ComboBoxItemStyle}"
                           SelectedValue="{Binding CadFormatSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                           ItemsSource="{Binding Path=CadFormatsViewModel.CadFormats}" 
                           DisplayMemberPath="Description" />
 
                 <!-- Text Block above STL resolution text box-->
-                <TextBlock FontSize="12" 
+                <TextBlock TextAlignment="Center"
+                           Margin="0,45,0,5"
                            Text="{x:Static resources:WindowStrings.StlResolution}" 
-                           Style="{StaticResource StlTextBlockStyle}"
-                           TextAlignment="Center"
-                           Margin="0,24,0,5"/>
+                           Style="{StaticResource StlTextBlockStyle}"/>
 
                 <!-- Stl Resolution input text box -->
                 <TextBox MaxLength="4"
-                         Style="{StaticResource StlTextBoxStyle}"
-                         FontSize="12" 
                          MinWidth="45"
-                         Width="Auto"
+                         Width="130"
+                         Style="{StaticResource StlTextBoxStyle}"
                          Text="{Binding StlResolution, UpdateSourceTrigger=LostFocus, Mode=TwoWay}" >
                     <!-- Trigger for validating stl resolution text box input -->
                     <i:Interaction.Triggers>
@@ -225,16 +228,17 @@
                 <!--Text block above Destination directory Text box -->
                 <TextBlock Text="{x:Static resources:WindowStrings.DestinationPrompt}"
                            ToolTip="{x:Static resources:WindowStrings.BrowseTextFieldToolTip}" 
-                           HorizontalAlignment="Center"/>
+                           HorizontalAlignment="Center" 
+                           Margin="0,0,0,5"/>
 
                 <StackPanel Orientation="Vertical" Width="Auto">
 
                     <!-- Text box for destination/output directory -->
                     <TextBox IsUndoEnabled="True"
-                             Style="{StaticResource TextBoxStyle}"
                              VerticalAlignment="Center" 
                              HorizontalAlignment="Left" 
                              Margin="10,0,15,0"
+                             Style="{StaticResource TextBoxStyle}"
                              Text="{Binding Path=DestinationDirectory, UpdateSourceTrigger=LostFocus}" 
                              ToolTip="{x:Static resources:WindowStrings.BrowseTextFieldToolTip}" >
                     </TextBox>
@@ -242,7 +246,9 @@
                     <!-- Browse Button for destination directory -->
                     <Button Content="{x:Static resources:WindowStrings.BrowseButton}"
                             Command="{Binding Path=BrowseCommand}"
-                            Width="125" Margin="0,5,0,0"/>
+                            Width="125" 
+                            Margin="0,5,0,0" 
+                            Padding="2,2,2,2"/>
                 </StackPanel>
             </StackPanel>
         </Grid>
@@ -253,19 +259,15 @@
                     HorizontalAlignment="Center" 
                     VerticalAlignment="Top" 
                     Height="Auto" 
-                    Width="Auto" Grid.ColumnSpan="2" >
+                    Width="Auto">
 
             <!--Data grid for Level information -->
 
-            <DataGrid CanUserAddRows="False"  
-                      AutoGenerateColumns="False"
-                      ItemsSource="{Binding Path=Levels}" 
-                      HorizontalScrollBarVisibility="Auto" 
-                      VerticalScrollBarVisibility="Auto"
-                      Height="Auto" 
+            <DataGrid Height="Auto" 
                       Width="Auto"
-                      Style="{StaticResource DataGridStyle}"
-                      Margin="5,0" BorderThickness="1">
+                      Margin="5,0"
+                      ItemsSource="{Binding Path=Levels}"
+                      Style="{StaticResource DataGridStyle}">
                 <DataGrid.Columns>
                     <DataGridTemplateColumn CanUserSort="False" 
                                             Width="Auto" 
@@ -297,14 +299,14 @@
                                         ElementStyle="{StaticResource ElementStyle}"/>
 
                     <DataGridTextColumn Header="Name" 
-                                        CanUserSort="False" 
-                                        CanUserResize="True" 
+                                        CanUserSort="True" 
+                                        CanUserResize="True"
                                         Width="*"
                                         Binding="{Binding Name}"/>
 
                     <DataGridTextColumn Header="Entity Count"
                                         IsReadOnly="True"
-                                        CanUserSort="False" 
+                                        CanUserSort="True" 
                                         CanUserResize="True"
                                         Width="75" 
                                         Binding="{Binding EntityCount}" 
@@ -318,24 +320,24 @@
         <StackPanel x:Name="ButtonPanel"
                     x:Uid="ButtonStackPanel"
                     Grid.Row="2" 
-                    Grid.Column="2"
+                    Grid.Column="1"
                     Orientation="Horizontal"
                     HorizontalAlignment="Right" 
-                    VerticalAlignment="Bottom" 
-                    Height="70" Width="203">
+                    Height="Auto">
 
             <!-- Ok/Export Button -->
             <Button x:Name="OkButton"
                     x:Uid="OkButton"
-                    Width="102"
                     Style="{StaticResource AppButtonStyle}"
-                    Command="{Binding OkCommand}">
+                    Command="{Binding OkCommand}" Width="Auto">
+
                 <StackPanel HorizontalAlignment="Left">
                     <Image Height="24"
                            Width="24"
                            Source="{Binding OkResource, Converter={StaticResource StringToImageSourceConverter}}" />
-                    <TextBlock FontSize="14" 
-                               Text="{x:Static resources:WindowStrings.ExportButton}"/>
+                    <TextBlock Text="{x:Static resources:WindowStrings.ExportButton}" 
+                               TextAlignment="Center"
+                               Padding="5,0"/>
                 </StackPanel>
             </Button>
 
@@ -345,12 +347,14 @@
                     Style="{StaticResource AppButtonStyle}"
                     Command="{Binding CloseCommand}"
                     CommandParameter="{Binding ElementName=MainWindow}">
+
                 <StackPanel HorizontalAlignment="Center">
                     <Image Height="24"
                            Width="24"
                            Source="{Binding CancelResource, Converter={StaticResource StringToImageSourceConverter}}" />
-                    <TextBlock FontSize="14" 
-                               Text="{x:Static resources:WindowStrings.ExitButton}"/>
+                    <TextBlock Text="{x:Static resources:WindowStrings.ExitButton}" 
+                               TextAlignment="Center"
+                               Padding="0,2,0,0"/>
                 </StackPanel>
             </Button>
         </StackPanel>
