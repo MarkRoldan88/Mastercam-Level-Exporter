@@ -12,13 +12,16 @@
     xmlns:resources="clr-namespace:Level_Exporter.Resources"
     xmlns:resx ="clr-namespace:Level_Exporter.Resources" 
     xmlns:viewmodels="clr-namespace:Level_Exporter.ViewModels" 
+
     d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
+
     Title="{x:Static res:Resources.Title}"
     Width="800"
     Height="450"
     Background="#BEBEBE"
+    BorderBrush="#FF454545"
     Name="MainWindow"
-    x:Uid="MainWindow">
+    x:Uid="MainWindow" >
 
     <Window.Resources>
         <ResourceDictionary>
@@ -33,18 +36,23 @@
             <Style x:Key="ElementStyle" TargetType="{x:Type TextBlock}">
                 <Setter Property="HorizontalAlignment" Value="Center"/>
             </Style>
-            
+
             <!-- For Setting Data grid Styles -->
             <Style x:Key="DataGridStyle" TargetType="{x:Type DataGrid}">
                 <Setter Property="ColumnHeaderStyle" Value="{DynamicResource DataGridHeaderStyle}"/>
                 <Setter Property="RowBackground" Value="#E8E8E8"/>
                 <Setter Property="HeadersVisibility" Value="Column"/>
+                <Setter Property="CellStyle" Value="{DynamicResource DataGridCellStyle}"/>
             </Style>
-            
+
+            <Style x:Key="DataGridCellStyle" TargetType="{x:Type DataGridCell}">
+                <Setter Property="BorderBrush" Value="DimGray"/>
+            </Style>
+
             <!-- For styling data grid column headers -->
             <Style x:Key="DataGridHeaderStyle" TargetType="DataGridColumnHeader">
                 <Setter Property="Background" Value="#454545"/>
-                <Setter Property="BorderBrush" Value="Black"/>
+                <Setter Property="BorderBrush" Value="DimGray"/>
                 <Setter Property="BorderThickness" Value="0,0,1,0"/>
                 <Setter Property="Padding" Value="1,0,0,0"/>
                 <Setter Property="Foreground" Value="#D3D3D3"/>
@@ -64,7 +72,7 @@
             <!-- Inherits from key: Framework Style to prevent duplicate code -->
             <Style x:Key="StlTextBlockStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource FrameworkStyle}"/>
 
-            <!-- Stl Text input box style --> 
+            <!-- Stl Text input box style -->
             <Style x:Key="StlTextBoxStyle" TargetType="{x:Type TextBox}" BasedOn="{StaticResource FrameworkStyle}">
                 <Setter Property="Background">
                     <Setter.Value>
@@ -116,8 +124,9 @@
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="83*"/>
+            <ColumnDefinition Width="314*"/>
+            <ColumnDefinition Width="397*"/>
         </Grid.ColumnDefinitions>
 
         <StackPanel Grid.Column="0" 
@@ -125,7 +134,7 @@
                     VerticalAlignment="Bottom"
                     HorizontalAlignment="Center" 
                     Height="Auto" 
-                    Width="Auto">
+                    Width="Auto" Grid.ColumnSpan="2" Margin="28,0,29,0">
 
             <!--Button for getting Mastercam Level information -->
             <Button x:Name="GetLevelsButton" 
@@ -151,7 +160,7 @@
             </Button>
         </StackPanel>
 
-        <Grid Grid.Row="1" Grid.Column="1">
+        <Grid Grid.Row="1" Grid.Column="2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
@@ -167,6 +176,7 @@
                 <!-- Text block prompting cad format selection -->
                 <TextBlock FontSize="12"
                            Width="Auto" MinWidth="250"
+                           TextAlignment="Center"
                            Text="{x:Static resx:WindowStrings.CadTypePrompt}"/>
 
                 <!-- Combobox for Cad format selection-->
@@ -183,6 +193,7 @@
                 <TextBlock FontSize="12" 
                            Text="{x:Static resources:WindowStrings.StlResolution}" 
                            Style="{StaticResource StlTextBlockStyle}"
+                           TextAlignment="Center"
                            Margin="0,24,0,5"/>
 
                 <!-- Stl Resolution input text box -->
@@ -214,7 +225,7 @@
                 <!--Text block above Destination directory Text box -->
                 <TextBlock Text="{x:Static resources:WindowStrings.DestinationPrompt}"
                            ToolTip="{x:Static resources:WindowStrings.BrowseTextFieldToolTip}" 
-                           Margin="10,0,0,0" />
+                           HorizontalAlignment="Center"/>
 
                 <StackPanel Orientation="Vertical" Width="Auto">
 
@@ -242,7 +253,7 @@
                     HorizontalAlignment="Center" 
                     VerticalAlignment="Top" 
                     Height="Auto" 
-                    Width="Auto" >
+                    Width="Auto" Grid.ColumnSpan="2" >
 
             <!--Data grid for Level information -->
 
@@ -254,7 +265,7 @@
                       Height="Auto" 
                       Width="Auto"
                       Style="{StaticResource DataGridStyle}"
-                      Margin="5,0">
+                      Margin="5,0" BorderThickness="1">
                 <DataGrid.Columns>
                     <DataGridTemplateColumn CanUserSort="False" 
                                             Width="Auto" 
@@ -307,7 +318,7 @@
         <StackPanel x:Name="ButtonPanel"
                     x:Uid="ButtonStackPanel"
                     Grid.Row="2" 
-                    Grid.Column="1"
+                    Grid.Column="2"
                     Orientation="Horizontal"
                     HorizontalAlignment="Right" 
                     VerticalAlignment="Bottom" 
