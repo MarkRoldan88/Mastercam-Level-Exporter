@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Level-Exporter", "Level-Exp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Level-Exporter.Tests", "..\Level-Exporter.Tests\Level-Exporter.Tests.csproj", "{0DA6B45C-B9C6-435A-9887-22FDF5425BDB}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Level-Exporter.InstallerMC2021", "..\Level-Exporter.InstallerMC2021\Level-Exporter.InstallerMC2021.vdproj", "{11D136C7-83EA-442B-849D-0376CCB8905A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,7 +28,11 @@ Global
 		{0DA6B45C-B9C6-435A-9887-22FDF5425BDB}.Debug|x64.Build.0 = Debug|x64
 		{0DA6B45C-B9C6-435A-9887-22FDF5425BDB}.Release|Any CPU.ActiveCfg = Release|x64
 		{0DA6B45C-B9C6-435A-9887-22FDF5425BDB}.Release|x64.ActiveCfg = Release|x64
-		{0DA6B45C-B9C6-435A-9887-22FDF5425BDB}.Release|x64.Build.0 = Release|x64
+		{11D136C7-83EA-442B-849D-0376CCB8905A}.Debug|Any CPU.ActiveCfg = Debug
+		{11D136C7-83EA-442B-849D-0376CCB8905A}.Debug|x64.ActiveCfg = Debug
+		{11D136C7-83EA-442B-849D-0376CCB8905A}.Release|Any CPU.ActiveCfg = Release
+		{11D136C7-83EA-442B-849D-0376CCB8905A}.Release|x64.ActiveCfg = Release
+		{11D136C7-83EA-442B-849D-0376CCB8905A}.Release|x64.Build.0 = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
