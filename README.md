@@ -18,7 +18,16 @@ _Note: If you clone or fork this repo and you are using Visual Studio, there are
 _Note: This chook **may** be compatible with Mastercam 2018 & 2019 if the NETHook3_0.dll reference is updated to the proper file location for those versions; this has not been tested yet_
 
 ## How To Install
-Download files from [**releases**](https://github.com/MarkRoldan88/Mastercam-Level-Exporter/releases) and place them into the Mastercam Chooks directory, usually located at:
+
+### Method 1
+Download the `Level-Exporter.InstallerMC2021.msi` from [**releases**](https://github.com/MarkRoldan88/Mastercam-Level-Exporter/releases) and choose the Mastercam 2020 or 2021 chooks directory. 
+
+Usually located at _C:\Program Files\Mastercam 2021\Mastercam\chooks_
+
+---
+
+### Method 2
+Download the zip from [**releases**](https://github.com/MarkRoldan88/Mastercam-Level-Exporter/releases) and extract it into the Mastercam Chooks directory, usually located at:
 
 _C:\Program Files\Mastercam 2021\Mastercam\chooks_
 
@@ -27,31 +36,24 @@ The Mastercam chooks directory should contain
 2. `Microsoft.Xaml.Behaviors`
 3. `Level-Exporter.ft`
 
-⚠️ **If your C:\Program Files\Mastercam 2021\Mastercam directory _does not_ contain `NETHook3_0.dll`, copy it from the release**
-
----
-### Alternate Installation Method
+## Debugging the NEThook
 ⚠️ **_Note: Visual Studio must be run in Adminstrator mode due to post build events which copy the necessary files to the Mastercam directories_**
 
-💡 Feel free to also reference the Readme folder within the project for additional context
+💡 See the Readme folder (_Level-Exporter/ReadMe_) within the project for additional context on debugging
 1. Clone this repository
 2. Install Visual Studio 2019
 3. In Visual Studio, open `Level-Exporter.sln` (located in _Mastercam-Level-Exporter/Level-Exporter_)
-4. Set configuration to _Debug/x64_
+4. Right click the Level-Exporter project and set the _Debug_ properties
+   - Make sure to point to the proper Mastercam.exe and working directory
+   - ![image](https://user-images.githubusercontent.com/56398786/169348490-4a2ef4b5-d280-4f1d-bbf7-8b6e39537fa9.png)
+
+6. Set configuration to _Debug/x64_
    - ![image](https://user-images.githubusercontent.com/56398786/167948586-6b4ac143-0f16-42ed-8d0d-9403d89ec6ae.png)
-5. Build the Solution
-   - ![image](https://user-images.githubusercontent.com/56398786/167949983-9376219f-2600-4433-85b0-faf60ca41602.png)
+7. Click the Start button or press F5
    - Visual studio post build events will try to copy the necessary files to the proper Mastercam directories
+   - You will be able to set breakpoints and step through the program.
 
 ---
-
-The Mastercam chooks directory (_C:\Program Files\Mastercam 2021\Mastercam\chooks_) should now contain
-1. `Level-Exporter.dll`
-2. `Level-Exporter.ft`
-3. `Microsoft.Xaml.Behaviors.dll`
-
-⚠️**If your C:\Program Files\Mastercam 2021\Mastercam directory _does not_ contain `NETHook3_0.dll`, make sure to copy it from the bin folder**
-- It can be found in _\Level-Exporter\bin\x64\Debug_
 
 ## Adding the Level-Exporter to the Mastercam ribbon or context menu
 ![image](https://user-images.githubusercontent.com/56398786/168441340-8f80355a-5355-46fe-bc56-6b34d2ea7bdb.png)
