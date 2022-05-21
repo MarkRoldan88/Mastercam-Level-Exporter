@@ -49,6 +49,7 @@
                 <Setter Property="HorizontalScrollBarVisibility" Value="Auto"/>
                 <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
                 <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="BorderBrush" Value="DimGray"/>
             </Style>
             
             <!--For Data grid cell style -->
@@ -294,9 +295,11 @@
                         </DataGridTemplateColumn.HeaderTemplate>
 
                         <DataGridTemplateColumn.CellTemplate>
+
                             <DataTemplate>
                                 <!-- Checkbox for selecting level for export -->
-                                <CheckBox IsChecked="{Binding Path=IsSelected, UpdateSourceTrigger=PropertyChanged}"/>
+                                <CheckBox HorizontalAlignment="Center"
+                                          IsChecked="{Binding Path=IsSelected, UpdateSourceTrigger=PropertyChanged}" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
