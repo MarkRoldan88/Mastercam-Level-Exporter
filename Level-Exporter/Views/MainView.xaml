@@ -268,10 +268,19 @@
                       Margin="5,0"
                       ItemsSource="{Binding Path=Levels}"
                       Style="{StaticResource DataGridStyle}">
+                <DataGrid.Resources>
+                    <Style TargetType="{x:Type DataGridCell}">
+                        <Style.Triggers>
+                            <!--Data trigger for modifying row color when row checkbox is selected -->
+                            <DataTrigger Binding="{Binding Path=IsSelected}" Value="True">
+                                <Setter Property="Background" Value="#7EAC97"/>
+                                <Setter Property="BorderBrush" Value="#7EAC97"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </DataGrid.Resources>
                 <DataGrid.Columns>
-                    <DataGridTemplateColumn CanUserSort="False" 
-                                            Width="Auto" 
-                                            CanUserResize="False">
+                    <DataGridTemplateColumn CanUserSort="False" CanUserResize="False" Width="Auto">
                         <DataGridTemplateColumn.HeaderTemplate>
                             <DataTemplate>
                                 <!--Header Check box for selecting all levels -->
