@@ -3,19 +3,24 @@
 
 This is a 'NetHook' (chook) made for Mastercam 2021. 
 
-It can automate the process of exporting CAD entities within levels to individual files of a specified CAD format; most Mastercam CAD formats are supported. 
+It can automate the process of exporting CAD entities within levels to individual files of a specified CAD format. 
 
 Similar to the `Save Some` function within Mastercam; it would be used when you want to save a CAD entity as a separate file of a certain CAD format.
 
-![image](https://user-images.githubusercontent.com/56398786/168626771-c026355e-5c72-4930-8d36-ac042887fee9.png)
+![image](https://user-images.githubusercontent.com/56398786/169664681-10def80d-eeb1-49ef-9e24-00b5790e994b.png)
 
 _Note: If you clone or fork this repo and you are using Visual Studio, there are post build events which require admin access; therefore you must either run visual studio as admin or remove the post build events if building in debug mode._
 
-## Compatible Mastercam Versions
+## Compatible Mastercam Versions & CAD Formats
 - Mastercam 2021
 - Mastercam 2020
 
 ❔ _Note: This chook **may** be compatible with Mastercam 2018 & 2019 if the NETHook3_0.dll reference is updated to the proper file location for those versions; this has not been tested yet_
+
+This chooks allows you to export level entities to formats such as
+
+![image](https://user-images.githubusercontent.com/56398786/169664626-0a59fc1c-6c99-43e2-85bb-57e4aa9f55a5.png)
+
 
 ## Installation
 
@@ -70,6 +75,7 @@ By adding it to the context menu, it will appear in the right click menu.
    - ⚠️ _Levels that have no entities are ignored, and will be cleared from **Mastercam**_
    - When naming levels in Mastercam, avoid using symbols (such as ()%#* etc.)
    - If the level names in Mastercam are left blank, they will be named 'level' in the level-exporter
+   - You can name levels within the level-exporter, to use for the file export (this will not affect the level names within Mastercam)
 2. Open the Level-Exporter by using the `Run Add-In` feature under the `Home` tab, and look for the `level-exporter.dll`
    -  Alternatively if you've added it to the Mastercam ribbon, click on the icon
    -  Alternatively if you've added it to the context menu, right click and select the Level-Exporter
@@ -81,6 +87,7 @@ By adding it to the context menu, it will appear in the right click menu.
    - ⚠️ If Iges is selected, a dialogue for a comment will open in **Mastercam** after clicking export; you must fill in a comment and press enter.
 7. Select a destination/output directory
    - ⚠️ If this is left blank, a `Save Some` dialogue will open for every level selected; you can then select the name, file extension, and destination for each level.
+   - The level names in the _level-exporter_ will be used for the exported file names.
 8. Click `Export Levels`
 
 🥳 📁 Each selected level will be saved as a separate CAD file to the specified directory. 🏁
