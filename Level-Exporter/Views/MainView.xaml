@@ -272,6 +272,11 @@
                 <DataGrid.Resources>
                     <Style TargetType="{x:Type DataGridCell}">
                         <Style.Triggers>
+                            <!-- Trigger for modifying left click highlight color of row  -->
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Background" Value="#99A4AC"/>
+                                <Setter Property="BorderBrush" Value="#99A4AC"/>
+                            </Trigger>
                             <!--Data trigger for modifying row color when row checkbox is selected -->
                             <DataTrigger Binding="{Binding Path=IsSelected}" Value="True">
                                 <Setter Property="Background" Value="#7EAC97"/>
