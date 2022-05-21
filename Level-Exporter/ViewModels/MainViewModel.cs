@@ -1,6 +1,6 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="MainViewModel.cs" company="TODO: Company Name">
-//   Copyright (c) 2022 TODO: Company Name
+// <copyright file="MainViewModel.cs">
+//   Copyright (c) 2022
 // </copyright>
 // <summary>
 //   Defines the MainViewModel type.

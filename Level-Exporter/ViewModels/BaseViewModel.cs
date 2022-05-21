@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="BaseViewModel.cs" company="TODO: Company Name">
-//   Copyright (c) 2022 TODO: Company Name
+// <copyright file="BaseViewModel.cs" >
+//   Copyright (c) 2022
 // </copyright>
 // <summary>
 //   The base view model.

@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Result.cs" company="TODO: Company Name">
-//   Copyright (c) 2022 TODO: Company Name
+// <copyright file="Result.cs">
+//   Copyright (c) 2022
 // </copyright>
 // <summary>
 //   If this project is helpful please take a short survey at ->

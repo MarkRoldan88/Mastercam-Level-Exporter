@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="CommandManagerHelper.cs" company="TODO: Company Name">
-//   Copyright (c) 2022 TODO: Company Name
+// <copyright file="CommandManagerHelper.cs">
+//   Copyright (c) 2022
 // </copyright>
 // <summary>
 //   This class contains methods for the CommandManager that help avoid memory leaks by using weak references.

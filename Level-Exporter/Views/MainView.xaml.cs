@@ -1,6 +1,6 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="MainView.xaml.cs" company="TODO: Company Name">
-//   Copyright (c) 2022 TODO: Company Name
+// <copyright file="MainView.xaml.cs" company="MarkRoldan88@github">
+//   Copyright (c) 2022 MarkRoldan88@github
 // </copyright>
 // <summary>
 //   Interaction logic for MainView.xaml

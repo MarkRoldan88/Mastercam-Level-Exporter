@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="StringToImageSourceConverter.cs" company="TODO: Company Name">
-//   Copyright (c) 2022 TODO: Company Name
+// <copyright file="StringToImageSourceConverter.cs">
+//   Copyright (c) 2022
 // </copyright>
 // <summary>
 //   A string to image source converter.

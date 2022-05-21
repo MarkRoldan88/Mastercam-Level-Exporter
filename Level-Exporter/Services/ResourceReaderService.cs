@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ResourceReaderService.cs" company="TODO: Company Name">
-//   Copyright (c) 2022 TODO: Company Name
+// <copyright file="ResourceReaderService.cs" company="MarkRoldan88@github">
+//   Copyright (c) 2022 MarkRoldan88@github
 // </copyright>
 // <summary>
 //   If this project is helpful please take a short survey at ->

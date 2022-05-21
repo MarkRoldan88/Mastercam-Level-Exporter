@@ -130,6 +130,9 @@
   <data name="DestinationPrompt" xml:space="preserve">
     <value>Destination Directory (see tooltip)</value>
   </data>
+  <data name="ExitButton" xml:space="preserve">
+    <value>Exit</value>
+  </data>
   <data name="ExportButton" xml:space="preserve">
     <value>Export Levels</value>
   </data>
