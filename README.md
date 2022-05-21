@@ -17,7 +17,7 @@ _Note: If you clone or fork this repo and you are using Visual Studio, there are
 
 ❔ _Note: This chook **may** be compatible with Mastercam 2018 & 2019 if the NETHook3_0.dll reference is updated to the proper file location for those versions; this has not been tested yet_
 
-This chooks allows you to export level entities to formats such as
+### Supported CAD Formats
 
 ![image](https://user-images.githubusercontent.com/56398786/169664626-0a59fc1c-6c99-43e2-85bb-57e4aa9f55a5.png)
 
