@@ -49,6 +49,7 @@
                 <Setter Property="HorizontalScrollBarVisibility" Value="Auto"/>
                 <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
                 <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="BorderBrush" Value="DimGray"/>
             </Style>
             
             <!--For Data grid cell style -->
@@ -268,10 +269,19 @@
                       Margin="5,0"
                       ItemsSource="{Binding Path=Levels}"
                       Style="{StaticResource DataGridStyle}">
+                <DataGrid.Resources>
+                    <Style TargetType="{x:Type DataGridCell}">
+                        <Style.Triggers>
+                            <!--Data trigger for modifying row color when row checkbox is selected -->
+                            <DataTrigger Binding="{Binding Path=IsSelected}" Value="True">
+                                <Setter Property="Background" Value="#7EAC97"/>
+                                <Setter Property="BorderBrush" Value="#7EAC97"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </DataGrid.Resources>
                 <DataGrid.Columns>
-                    <DataGridTemplateColumn CanUserSort="False" 
-                                            Width="Auto" 
-                                            CanUserResize="False">
+                    <DataGridTemplateColumn CanUserSort="False" CanUserResize="False" Width="Auto">
                         <DataGridTemplateColumn.HeaderTemplate>
                             <DataTemplate>
                                 <!--Header Check box for selecting all levels -->
@@ -285,9 +295,11 @@
                         </DataGridTemplateColumn.HeaderTemplate>
 
                         <DataGridTemplateColumn.CellTemplate>
+
                             <DataTemplate>
                                 <!-- Checkbox for selecting level for export -->
-                                <CheckBox IsChecked="{Binding Path=IsSelected, UpdateSourceTrigger=PropertyChanged}"/>
+                                <CheckBox HorizontalAlignment="Center"
+                                          IsChecked="{Binding Path=IsSelected, UpdateSourceTrigger=PropertyChanged}" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
