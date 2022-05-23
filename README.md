@@ -7,7 +7,7 @@ It can automate the process of exporting CAD entities within levels to individua
 
 Similar to the `Save Some` function within Mastercam; it would be used when you want to save a CAD entity as a separate file of a certain CAD format.
 
-![image](https://user-images.githubusercontent.com/56398786/169664681-10def80d-eeb1-49ef-9e24-00b5790e994b.png)
+![image](https://user-images.githubusercontent.com/56398786/169858267-b608f504-eaf1-44e9-93dc-861174a00dc4.png)
 
 _Note: If you clone or fork this repo and you are using Visual Studio, there are post build events which require admin access; therefore you must either run visual studio as admin or remove the post build events if building in debug mode._
 
