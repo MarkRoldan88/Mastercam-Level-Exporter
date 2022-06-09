@@ -277,6 +277,7 @@ namespace Level_Exporter.ViewModels
                         "Error");
             }
 
+            // Restore levels that were hidden to visible
             foreach (var levelNumber in LevelInfoHelper.CachedVisibleLevelNumbers)
             {
                 _ = LevelsManager.SetLevelVisible(levelNumber, true);
