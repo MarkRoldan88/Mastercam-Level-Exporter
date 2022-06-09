@@ -83,7 +83,10 @@ By adding it to the context menu, it will appear in the right click menu.
    -  If you update the levels in Mastercam, you can click the `Sync Mastercam levels` button to update the list in the level-exporter
 5. Select the checkbox next to the levels you would like to export (select the checkbox in the header to select or deselect all levels)
 6. Select a CAD format from the drop down menu
-   - If Stl is selected, the default resolution is 0.02; value must be a value between 0.02 - 2.0
+   - If Stl is selected: 
+     - Default resolution is 0.02 
+     - Value must be a value between 0.02 - 5.0; a lower value means a _bigger_ file size.
+     - If set to 0, Mastercam's system tolerance will be used (from Mastercam configuration)
    - ⚠️ If Iges is selected, a dialogue for a comment will open in **Mastercam** after clicking export; you must fill in a comment and press enter.
 7. Select a destination/output directory
    - ⚠️ If this is left blank, a `Save Some` dialogue will open for every level selected; you can then select the name, file extension, and destination for each level.

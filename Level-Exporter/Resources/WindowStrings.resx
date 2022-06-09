@@ -142,6 +142,9 @@
   <data name="StlResolution" xml:space="preserve">
     <value>STL Resolution</value>
   </data>
+  <data name="StlResolutionTooltip" xml:space="preserve">
+    <value>Must be a number between 0 and 5. If set to 0, Mastercam system tolerance is used.</value>
+  </data>
   <data name="SyncLevelsButton" xml:space="preserve">
     <value>Sync Mastercam Levels</value>
   </data>
