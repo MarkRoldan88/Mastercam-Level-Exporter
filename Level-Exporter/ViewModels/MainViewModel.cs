@@ -35,6 +35,7 @@ namespace Level_Exporter.ViewModels
         /// Gets LevelInfoViewModel
         /// </summary>
         public LevelInfoViewModel LevelInfoViewModel { get; }
+
         /// <summary>
         /// Gets CadFormatsViewModel
         /// </summary>
@@ -44,7 +45,7 @@ namespace Level_Exporter.ViewModels
         /// Initializes a new instance of the <see cref="MainViewModel"/> class.
         /// </summary>
         public MainViewModel()
-        { 
+        {
             this.CadFormatsViewModel = new CadFormatsViewModel();
             this.LevelInfoViewModel = new LevelInfoViewModel();
             this.Levels = LevelInfoViewModel.Levels;
@@ -89,14 +90,14 @@ namespace Level_Exporter.ViewModels
         private string _destinationDirectory;
         private double _stlResolution = 0.02;
 
+        #endregion
+
+        #region Public Properties
+
         /// <summary>
         /// IEnumerable of levels from levelinfo view model
         /// </summary>
         public readonly IEnumerable<Level> Levels;
-
-        #endregion
-
-        #region Public Properties
 
         /// <summary>
         /// Gets or Sets Default File directory path for destination text box
@@ -196,7 +197,7 @@ namespace Level_Exporter.ViewModels
         private void OnBrowseCommand()
         {
             using (var folderDialog = new FolderBrowserDialog
-            { Description = "Select Folder", SelectedPath = this.DestinationDirectory })
+            { Description = @"Select Folder", SelectedPath = this.DestinationDirectory })
             {
                 DialogResult result = folderDialog.ShowDialog();
 
@@ -226,7 +227,7 @@ namespace Level_Exporter.ViewModels
         /// </summary>
         /// <returns></returns>
         private bool IsExportReady()
-        {
+        { 
             if (!this.Levels.Any(lvl => lvl.IsSelected))
             {
                 DialogManager.OK("Please select cad format and level(s) to export",
@@ -262,11 +263,8 @@ namespace Level_Exporter.ViewModels
             foreach (var level in this.Levels.Where(it => it.IsSelected))
             {
                 if (cachedNames.ContainsKey(level.Name)) // If level name has been used, append a number to avoid duplicate file names
-                {
                     level.Name += nameCounter++;
-                    cachedNames.Add(level.Name, 1);
-                }
-                else
+                else 
                     cachedNames.Add(level.Name, 1); // Add level name to cached names
 
                 // Mastercam select levels
