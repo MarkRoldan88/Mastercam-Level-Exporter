@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using Mastercam.App.Exceptions;
 using Mastercam.IO;
+using System.Collections.Generic;
 
 namespace Level_Exporter.Models
 {
@@ -12,24 +13,17 @@ namespace Level_Exporter.Models
     {
         #region Constructor
 
-        public CadExportHelper(string destination)
-        {
-            _destination = destination;
-        }
-
-        public CadExportHelper(string destination, string cadFormat) : this(destination)
+        public CadExportHelper(string destination, string cadFormat, double stlResolution, IEnumerable<Level> levels)
         {
             _destination = destination;
             _cadFormat = cadFormat;
-        }
+            _levels = levels;
 
-        public CadExportHelper(string destination, string cadFormat, double stlResolution) : this(destination,
-            cadFormat)
-        {
             if (stlResolution >= 0.0 && stlResolution < 5.0)
+            {
                 _stlResolution = stlResolution;
-            else 
-                _stlResolution = 0.75;
+            }
+            else _stlResolution = 0.75;
         }
 
         #endregion
@@ -56,6 +50,8 @@ namespace Level_Exporter.Models
         /// </summary>
         private string _fullPath;
 
+        private readonly IEnumerable<Level> _levels;
+
         #endregion
 
         #region Public Methods
@@ -75,7 +71,7 @@ namespace Level_Exporter.Models
                 _fullPath = Path.Combine(_destination, $"{level.Name}{_cadFormat}");
 
                 return _cadFormat.Contains(CadTypes.Stl.ToString().ToLower())
-                    ? FileManager.WriteSTL(_fullPath, 0, _stlResolution, false, true, true, true, false) 
+                    ? SaveAsStl(level)
                     : FileManager.SaveSome(_fullPath, true);
             }
             catch (Exception e)
@@ -88,6 +84,26 @@ namespace Level_Exporter.Models
             }
         }
         #endregion
+
+        private void ToggleLevelVisibility(Level levelToExport)
+        {
+            foreach (var level in _levels)
+            {
+                if (level.Number != levelToExport.Number)
+                {
+                    _ = LevelsManager.SetLevelVisible(level.Number, false);
+                    continue;
+                }
+
+                _ = LevelsManager.SetLevelVisible(levelToExport.Number, true);
+            }
+        }
+
+        private bool SaveAsStl(Level level)
+        {
+            ToggleLevelVisibility(level);
+            return FileManager.WriteSTL(_fullPath, 0, _stlResolution, false, false, true, false, false);
+        }
     }
 
 }

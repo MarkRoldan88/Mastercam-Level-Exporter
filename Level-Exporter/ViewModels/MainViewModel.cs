@@ -251,8 +251,7 @@ namespace Level_Exporter.ViewModels
         /// <returns></returns>
         private bool ExportLevels()
         {
-            var cadExportHelper =
-                new CadExportHelper(this.DestinationDirectory, this.CadFormatSelected.FileExtension, this.StlResolution);
+            var cadExportHelper = new CadExportHelper(this.DestinationDirectory, this.CadFormatSelected.FileExtension, this.StlResolution, this.Levels);
 
             // For checking if user has input duplicate level names
             var cachedNames = new Dictionary<string, int>();
@@ -276,6 +275,11 @@ namespace Level_Exporter.ViewModels
                     DialogManager.OK(
                         $"There was an error when saving {level.Name}{CadFormatSelected.FileExtension} to {this.DestinationDirectory}",
                         "Error");
+            }
+
+            foreach (var levelNumber in LevelInfoHelper.CachedVisibleLevelNumbers)
+            {
+                _ = LevelsManager.SetLevelVisible(levelNumber, true);
             }
 
             return isSuccess;
