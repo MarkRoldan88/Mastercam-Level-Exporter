@@ -74,7 +74,9 @@ namespace Level_Exporter.Models
 
                 _fullPath = Path.Combine(_destination, $"{level.Name}{_cadFormat}");
 
-                return _cadFormat.Contains(CadTypes.Stl.ToString().ToLower()) ? SaveAsStl() : SaveAsCadFormat();
+                return _cadFormat.Contains(CadTypes.Stl.ToString().ToLower())
+                    ? FileManager.WriteSTL(_fullPath, 0, _stlResolution, false, true, true, true, false) 
+                    : FileManager.SaveSome(_fullPath, true);
             }
             catch (Exception e)
             {
@@ -86,22 +88,7 @@ namespace Level_Exporter.Models
             }
         }
         #endregion
-
-        #region Private Methods
-
-        /// <summary>
-        /// Helper method for saving level CAD as STL
-        /// </summary>
-        /// <returns>Bool indicating successful operation</returns>
-        private bool SaveAsStl() => 
-            FileManager.WriteSTL(_fullPath, 0, _stlResolution, false, true, true, true, false);
-
-        /// <summary>
-        /// Helper method for saving level CAD as every format, except STL
-        /// </summary>
-        /// <returns>Bool indicating successful operation</returns>
-        private bool SaveAsCadFormat() => FileManager.SaveSome(_fullPath, true);
     }
-    #endregion
+
 }
 
