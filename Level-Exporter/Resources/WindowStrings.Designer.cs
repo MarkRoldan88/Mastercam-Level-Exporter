@@ -133,6 +133,15 @@ namespace Level_Exporter.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Must be a number between 0 and 5. If set to 0, Mastercam system tolerance is used..
+        /// </summary>
+        public static string StlResolutionTooltip {
+            get {
+                return ResourceManager.GetString("StlResolutionTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sync Mastercam Levels.
         /// </summary>
         public static string SyncLevelsButton {
