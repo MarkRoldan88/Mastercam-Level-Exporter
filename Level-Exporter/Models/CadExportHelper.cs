@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using Mastercam.App.Exceptions;
 using Mastercam.IO;
@@ -26,7 +26,7 @@ namespace Level_Exporter.Models
         public CadExportHelper(string destination, string cadFormat, double stlResolution) : this(destination,
             cadFormat)
         {
-            if (stlResolution > 0.0 && stlResolution < 2.0)
+            if (stlResolution >= 0.0 && stlResolution < 5.0)
                 _stlResolution = stlResolution;
             else 
                 _stlResolution = 0.75;
@@ -74,7 +74,7 @@ namespace Level_Exporter.Models
 
                 _fullPath = Path.Combine(_destination, $"{level.Name}{_cadFormat}");
 
-                return _cadFormat == CadTypes.Stl.ToString() ? SaveAsStl() : SaveAsCadFormat();
+                return _cadFormat.Contains(CadTypes.Stl.ToString().ToLower()) ? SaveAsStl() : SaveAsCadFormat();
             }
             catch (Exception e)
             {
