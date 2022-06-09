@@ -50,6 +50,9 @@ namespace Level_Exporter.Models
         /// </summary>
         private string _fullPath;
 
+        /// <summary>
+        /// Levels pulled from Mastercam
+        /// </summary>
         private readonly IEnumerable<Level> _levels;
 
         #endregion
@@ -85,6 +88,11 @@ namespace Level_Exporter.Models
         }
         #endregion
 
+        /// <summary>
+        /// Toggles visibility of levels when exporting as STL. 
+        /// Levels that are not selected must be hidden in order for Mastercam Write stl method to work.
+        /// </summary>
+        /// <param name="levelToExport"></param>
         private void ToggleLevelVisibility(Level levelToExport)
         {
             foreach (var level in _levels)
@@ -99,6 +107,11 @@ namespace Level_Exporter.Models
             }
         }
 
+        /// <summary>
+        /// Exports level as an STL
+        /// </summary>
+        /// <param name="level"></param>
+        /// <returns></returns>
         private bool SaveAsStl(Level level)
         {
             ToggleLevelVisibility(level);

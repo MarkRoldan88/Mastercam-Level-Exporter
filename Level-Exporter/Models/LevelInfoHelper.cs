@@ -7,6 +7,9 @@ namespace Level_Exporter.Models
 {
     public class LevelInfoHelper : ILevelInfo
     {
+        /// <summary>
+        /// Used for tracking levels that were visible in Mastercam
+        /// </summary>
         public static int[] CachedVisibleLevelNumbers { get; private set; } = LevelsManager.GetVisibleLevelNumbers();
 
         /// <summary>
@@ -33,6 +36,9 @@ namespace Level_Exporter.Models
         /// </summary>
         public void RefreshLevelsManager() => LevelsManager.RefreshLevelsManager();
 
+        /// <summary>
+        /// Updates Cache for visisble Mastercam levels
+        /// </summary>
         public void UpdateCachedVisibleLevels()
         {
             CachedVisibleLevelNumbers = LevelsManager.GetVisibleLevelNumbers();
