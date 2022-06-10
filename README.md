@@ -14,6 +14,7 @@ _Note: If you clone or fork this repo and you are using Visual Studio, there are
 ## Compatible Mastercam Versions & CAD Formats
 - Mastercam 2021
 - Mastercam 2020
+- Mastercam 2022?
 
 ❔ _Note: This chook **may** be compatible with Mastercam 2018 & 2019 if the NETHook3_0.dll reference is updated to the proper file location for those versions; this has not been tested yet_
 
