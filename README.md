@@ -12,9 +12,9 @@ Similar to the `Save Some` function within Mastercam; it would be used when you 
 _Note: If you clone or fork this repo and you are using Visual Studio, there are post build events which require admin access; therefore you must either run visual studio as admin or remove the post build events if building in debug mode._
 
 ## Compatible Mastercam Versions & CAD Formats
-- Mastercam 2021
 - Mastercam 2020
-- Mastercam 2022?
+- Mastercam 2021
+- Mastercam 2022? (seems to work)
 
 ❔ _Note: This chook **may** be compatible with Mastercam 2018 & 2019 if the NETHook3_0.dll reference is updated to the proper file location for those versions; this has not been tested yet_
 
