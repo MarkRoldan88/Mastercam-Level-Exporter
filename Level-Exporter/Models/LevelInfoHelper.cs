@@ -8,6 +8,11 @@ namespace Level_Exporter.Models
     public class LevelInfoHelper : ILevelInfo
     {
         /// <summary>
+        /// Used for tracking levels that were visible in Mastercam
+        /// </summary>
+        public static int[] CachedVisibleLevelNumbers { get; private set; } = LevelsManager.GetVisibleLevelNumbers();
+
+        /// <summary>
         /// Observable collection for level data grid
         /// </summary>
         public ObservableCollection<Level> Levels { get; set; } = new ObservableCollection<Level>();
@@ -16,10 +21,8 @@ namespace Level_Exporter.Models
         /// Get level numbers that contain geometry and convert to dictionary
         /// </summary>
         /// <returns></returns>
-        public Dictionary<int, string> GetLevelsWithGeometry()
-        {
-            return LevelsManager.GetLevelNumbersWithGeometry().ToDictionary(n => n, LevelsManager.GetLevelName);
-        }
+        public Dictionary<int, string> GetLevelsWithGeometry() => LevelsManager.GetLevelNumbersWithGeometry()
+            .ToDictionary(n => n, LevelsManager.GetLevelName);
 
         /// <summary>
         /// Get the amount of entities in a level
@@ -32,13 +35,25 @@ namespace Level_Exporter.Models
         /// Refreshes mastercam level manager (removes empty levels from mastercam list)
         /// </summary>
         public void RefreshLevelsManager() => LevelsManager.RefreshLevelsManager();
+
+        /// <summary>
+        /// Updates Cache for visisble Mastercam levels
+        /// </summary>
+        public void UpdateCachedVisibleLevels()
+        {
+            CachedVisibleLevelNumbers = LevelsManager.GetVisibleLevelNumbers();
+        }
     }
 
     public interface ILevelInfo
     {
-        Dictionary<int, string> GetLevelsWithGeometry();
         int GetLevelEntityCount(int num);
+
         void RefreshLevelsManager();
+        void UpdateCachedVisibleLevels();
+
+        Dictionary<int, string> GetLevelsWithGeometry();
+
         ObservableCollection<Level> Levels { get; set; }
     }
 }

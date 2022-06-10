@@ -1,4 +1,4 @@
-﻿using System.Collections.ObjectModel;
+using System.Collections.ObjectModel;
 using System.Windows.Input;
 using Level_Exporter.Commands;
 using Level_Exporter.Models;
@@ -142,6 +142,8 @@ namespace Level_Exporter.ViewModels
             IsSyncButton = true;
 
             _levels.Clear(); // Clear instead of comparing and doing a 'proper sync'/compare
+
+            LevelInfoHelper.UpdateCachedVisibleLevels();
 
             foreach (KeyValuePair<int, string> lvl in levels())
             {
